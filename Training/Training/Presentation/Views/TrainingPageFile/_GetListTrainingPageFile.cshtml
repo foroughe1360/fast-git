@@ -1,0 +1,229 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.TrainingPageFileEntity>
+@{
+    int ViewBagPageID = ViewBag.PageID;
+    int ViewBagPageCount = ViewBag.PageCount;
+    int ViewBagSkip = ViewBag.Skip;
+}
+
+<script type="text/javascript">
+    $('[data-rel=tooltip]').tooltip();
+</script>
+
+<div class="row">
+
+    <div class="col-md-12" style="margin-bottom:10px">
+        <table class="ui-pg-table ui-common-table ui-paging-pager col-md-offset-4">
+            <tbody>
+                <tr>
+
+                    @if (ViewBagPageID == 1)
+                    {
+                        <td id="BtnFirst" data-Id="1" data-disable="true" class="ui-pg-button ui-corner-all  ui-state-disabled" title="First Page" style="cursor: default;">
+                            <span class="ui-icon ace-icon fa fa-angle-double-right bigger-140"></span>
+                        </td>
+                        <td id="BtnPrevious" data-disable="true" class="ui-pg-button ui-corner-all ui-state-disabled" title="Previous Page" style="cursor: default;">
+                            <span class="ui-icon ace-icon fa fa-angle-right bigger-140"></span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td id="BtnFirst" data-Id="1" class="ui-pg-button ui-corner-all" title="First Page" style="cursor: pointer;">
+                            <span class="ui-icon ace-icon fa fa-angle-double-right bigger-140"></span>
+                        </td>
+                        <td id="BtnPrevious" data-Id="1" class="ui-pg-button ui-corner-all" title="Previous Page" style="cursor: pointer;">
+                            <span class="ui-icon ace-icon fa fa-angle-right bigger-140"></span>
+                        </td>
+                    }
+                    <td class="ui-pg-button ui-state-disabled" style="cursor: default;">
+                        <span class="ui-separator"></span>
+                    </td>
+                    <td id="input_grid-pager" dir="rtl">
+                        صفحه
+                        <input id="PageNumber" class="ui-pg-input ui-corner-all center" type="text" size="2" maxlength="7" value="@ViewBagPageID" role="textbox">
+                        از <span id="ToPage">@ViewBagPageCount</span>
+                    </td>
+                    <td class="ui-pg-button ui-state-disabled" style="cursor: default;">
+                        <span class="ui-separator"></span>
+                    </td>
+                    @if (ViewBagPageID == ViewBagPageCount || ViewBagPageCount == 0)
+                    {
+                        <td id="BtnNext" class="ui-pg-button ui-corner-all ui-state-disabled" title="Next Page" style="cursor: pointer;">
+                            <span class="ui-icon ace-icon fa fa-angle-left bigger-140"></span>
+                        </td>
+                        <td id="BtnLast" data-Id="@ViewBagPageCount" data-disable="true" class="ui-pg-button ui-corner-all ui-state-disabled" title="Last Page">
+                            <span class="ui-icon ace-icon fa fa-angle-double-left bigger-140"></span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td id="BtnNext" class="ui-pg-button ui-corner-all" title="Next Page" style="cursor: pointer;">
+                            <span class="ui-icon ace-icon fa fa-angle-left bigger-140"></span>
+                        </td>
+                        <td id="BtnLast" data-Id="@ViewBagPageCount" class="ui-pg-button ui-corner-all" title="Last Page" style="cursor: pointer;">
+                            <span class="ui-icon ace-icon fa fa-angle-double-left bigger-140"></span>
+                        </td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<table id="sample-table-1" class="table table-striped table-bordered table-hover center">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th class="center">توضیحات</th>
+            <th class="center">تاریخ ذخیره فایل</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody id="contacts">
+        @{
+            int i = ViewBagSkip;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td class="center">
+                        <label class="position-relative">
+                            @i
+                        </label>
+                    </td>
+                    <td>
+                        @item.TrainingPageFileDesc
+                    </td>
+                    <td>
+                        @item.TimeCreated.MiladiToPersion()
+                    </td>
+
+                    <td>
+                        <div class="hidden-sm hidden-xs btn-group">
+                            <button data-original-title="مشاهده" data-ImageUrl="@item.ImageUrl" data-placement="top" data-toggle="tooltip" class="btnShowFilePDF btn btn-xs btn-warning tooltip1">
+                                <i class="ace-icon fa fa-eye bigger-120"></i>
+                            </button>
+
+                            <button data-original-title="حذف" data-placement="top" data-toggle="tooltip" data-TrainingPageFileId="@item.TrainingPageFileId" class="btnDeleteTrainingPageFile btn btn-xs btn-danger tooltip1">
+                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                            </button>
+                        </div>
+
+                        <div class="hidden-md hidden-lg">
+                            <div class="inline position-relative">
+                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                    <li>
+                                        <a data-Id="@item.TrainingPageFileId" class="tooltip-success" data-rel="tooltip" title="ویرایش">
+                                            <span class="green">
+                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a data-Id="@item.TrainingPageFileId" class="tooltip-error" data-rel="tooltip" title="حدف">
+                                            <span class="red">
+                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>
+
+
+
+
+@*@using Bussiness
+    @model IEnumerable<InterfaceEntity.TrainingPageFileEntity>
+    <table id="sample-table-1" class="table table-striped table-bordered table-hover center">
+        <thead>
+            <tr>
+                <th class="center">
+                    <label class="position-relative">
+                        #
+                    </label>
+                </th>
+                <th class="center">توضیحات</th>
+                <th class="center">تاریخ ذخیره فایل</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody id="contacts">
+            @{
+                int i = 1;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="center">
+                            <label class="position-relative">
+                                @i
+                            </label>
+                        </td>
+                        <td>
+                            @item.TrainingPageFileDesc
+                        </td>
+                        <td>
+                            @item.TimeCreated.MiladiToPersion()
+                        </td>
+
+                        <td>
+                            <div class="hidden-sm hidden-xs btn-group">
+                                <button data-original-title="مشاهده" data-ImageUrl ="@item.ImageUrl" data-placement="top" data-toggle="tooltip" class="btnShowFilePDF btn btn-xs btn-warning tooltip1">
+                                    <i class="ace-icon fa fa-eye bigger-120"></i>
+                                </button>
+
+                                <button data-original-title="حذف" data-placement="top" data-toggle="tooltip" data-TrainingPageFileId="@item.TrainingPageFileId" class="btnDeleteTrainingPageFile btn btn-xs btn-danger tooltip1">
+                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                </button>
+                            </div>
+
+                            <div class="hidden-md hidden-lg">
+                                <div class="inline position-relative">
+                                    <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                        <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                    </button>
+
+                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                        <li>
+                                            <a data-Id="@item.TrainingPageFileId" class="tooltip-success" data-rel="tooltip" title="ویرایش">
+                                                <span class="green">
+                                                    <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a data-Id="@item.TrainingPageFileId" class="tooltip-error" data-rel="tooltip" title="حدف">
+                                                <span class="red">
+                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>*@

@@ -1,0 +1,421 @@
+﻿
+@model IEnumerable<InterfaceEntity.DepartmentEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+
+        //Operation Department-------------------------
+        function SaveDataDepartment() {
+            var result = ValidationDepartment();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.UnitSCenterId = $("#UnitSCenterId").val();
+            myObject.Name = $("#Name").val();
+
+            var url = "/Department/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListDepartment();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+        function EditDataDepartment() {
+            var result = ValidationDepartment();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.DepartmentId = $("#DepartmentId").val();
+            myObject.UnitSCenterId = $("#UnitSCenterId").val();
+            myObject.Name = $("#Name").val();
+
+            var url = "/Department/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListDepartment();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+        function DeleteDataDepartment() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/Department/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListDepartment();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function _GetListDepartment() {
+            $.ajax({
+                url: "/Department/_GetListDepartment",
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGrid').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function ValidationDepartment() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#UnitSCenterId').val() == '') {
+                $('#UnitSCenterId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#UnitSCenterId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#Name').val() == '') {
+                $('#Name').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Name').css('border-color', '#d5d5d5');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        //--------------------------------------------
+
+        //Operation Section-------------------------
+        function SaveDataSection() {
+            var result = ValidationSection();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.DepartmentId = $("#DepartmentId").val();
+            myObject.Name = $("#Name").val();
+
+            var url = "/Section/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListSection();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+        function EditDataSection() {
+            var result = ValidationSection();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.SectionId = $("#SectionId").val();
+            myObject.DepartmentId = $("#DepartmentId").val();
+            myObject.Name = $("#Name").val();
+
+            var url = "/Section/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListSection();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+        function DeleteDataSection(ID) {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = ID;
+            var url = "/Section/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListSection();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function ValidationSection() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#DepartmentId').val() == '') {
+                $('#DepartmentId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DepartmentId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#Name').val() == '') {
+                $('#Name').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Name').css('border-color', '#d5d5d5');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        //--------------------------------------------
+        $(document).ready(function () {
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $("#btnAddNew").click(function () {
+                $.get('/Department/Create', null, function (data) {
+                    $("div#divLoading").addClass('show');
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت بخش</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+            });
+
+            $(document).on('click', '.BtnEdit',function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم ویرایش بخش</span>");
+                var Departmentld = $(this).attr('data-Id');
+                $.get('/Department/Edit', "ID=" + Departmentld, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+                                     
+            $(document).on('click', '.BtnDelete',function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم حذف بخش</span>");
+                var Departmentld = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: Departmentld, viewname: ViewName }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+                                     
+            $(document).on('click', '.BtnSection',function () {
+                $("div#divLoading").addClass('show');
+                var SectionId = $(this).attr('data-Id');
+                $.get('/Section/Index', "ID=" + SectionId, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>قسمت</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+        });
+
+    </script>
+   
+</head>
+
+<body>
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">اطلاعات اولیه</li>
+            <li class="active">بخش</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-11 col-md-9" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListDepartment", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+

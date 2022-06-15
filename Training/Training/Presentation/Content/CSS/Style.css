@@ -1,0 +1,23 @@
+﻿body {
+}
+th {
+    text-align:center;
+}
+
+#divLoading {
+    display: none;
+}
+    #divLoading.show {
+        display: block;
+        position: fixed;
+        z-index: 100;
+        background-image: url('../../AceTemplate/assets/img/ajax-loader4.gif');
+        /*background-image: url('../Image/loading4.gif');*/
+        opacity: 0.4;
+        background-repeat: no-repeat;
+        background-position: center;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        top: 0;
+    }

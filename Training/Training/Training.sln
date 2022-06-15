@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bussiness", "Bussiness\Bussiness.csproj", "{5C4028E5-43F7-4B08-BF93-639927860372}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{104DEFC3-EC8A-4045-BEB7-662B106DECC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModel", "DomainModel\DomainModel.csproj", "{F7D45FA4-823F-4B01-946F-F300344EBD30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{4F914968-31BB-408A-AD43-6BE083D40FF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfaceEntity", "InterfaceEntity\InterfaceEntity.csproj", "{D1528832-93DD-43C8-AAC7-B21C19AE7758}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C4028E5-43F7-4B08-BF93-639927860372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C4028E5-43F7-4B08-BF93-639927860372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C4028E5-43F7-4B08-BF93-639927860372}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C4028E5-43F7-4B08-BF93-639927860372}.Release|Any CPU.Build.0 = Release|Any CPU
+		{104DEFC3-EC8A-4045-BEB7-662B106DECC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{104DEFC3-EC8A-4045-BEB7-662B106DECC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{104DEFC3-EC8A-4045-BEB7-662B106DECC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{104DEFC3-EC8A-4045-BEB7-662B106DECC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7D45FA4-823F-4B01-946F-F300344EBD30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7D45FA4-823F-4B01-946F-F300344EBD30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7D45FA4-823F-4B01-946F-F300344EBD30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7D45FA4-823F-4B01-946F-F300344EBD30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F914968-31BB-408A-AD43-6BE083D40FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F914968-31BB-408A-AD43-6BE083D40FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F914968-31BB-408A-AD43-6BE083D40FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F914968-31BB-408A-AD43-6BE083D40FF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1528832-93DD-43C8-AAC7-B21C19AE7758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1528832-93DD-43C8-AAC7-B21C19AE7758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1528832-93DD-43C8-AAC7-B21C19AE7758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1528832-93DD-43C8-AAC7-B21C19AE7758}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.0.17:8080/tfs/rmrc%20training%20project
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Bussiness\\Bussiness.csproj
+		SccProjectName1 = Bussiness
+		SccLocalPath1 = Bussiness
+		SccProjectUniqueName2 = DataAccess\\DataAccess.csproj
+		SccProjectName2 = DataAccess
+		SccLocalPath2 = DataAccess
+		SccProjectUniqueName3 = DomainModel\\DomainModel.csproj
+		SccProjectName3 = DomainModel
+		SccLocalPath3 = DomainModel
+		SccProjectUniqueName4 = Presentation\\Presentation.csproj
+		SccProjectName4 = Presentation
+		SccLocalPath4 = Presentation
+		SccProjectUniqueName5 = InterfaceEntity\\InterfaceEntity.csproj
+		SccProjectName5 = InterfaceEntity
+		SccLocalPath5 = InterfaceEntity
+	EndGlobalSection
+EndGlobal

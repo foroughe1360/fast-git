@@ -1,0 +1,380 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.EducationEmployemeEntity>
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "فعال",
+        Value = "True",
+        //Selected = true
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "غیرفعال",
+        Value = "False"
+    });
+
+    List<SelectListItem> listItemsEducation = new List<SelectListItem>();
+    listItemsEducation.Add(new SelectListItem
+    {
+        Text = "دارد",
+        Value = "True",
+        //Selected = true
+    });
+    listItemsEducation.Add(new SelectListItem
+    {
+        Text = "ندارد",
+        Value = "False"
+    });
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <script type="text/javascript">
+
+        var files="";
+        var temppath="";
+        var filename="";
+
+        var EmployemeId = '@ViewBag.EmployemeId';
+
+        new AMIB.persianCalendar('DateOfGraduationStr');
+
+        $('.tooltip1').tooltip();
+
+        function _GetListEducationEmployeme() {
+            $.ajax({
+                url: "/EducationEmployeme/_GetListEducationEmployeme",
+                type: 'GET',
+                datatype: 'json',
+                data: { employemeid: EmployemeId },
+                success: function (data) {
+                    $('#theGridEducationEmployeme').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        $('#btnAddEducationEmployeme').click(function () {
+            $("#EducationEmployemeId").val('');
+            $("#EmployemeId").val(EmployemeId);
+            $("#EducationId").val('');
+            $("#FieldOfStudy").val('');
+            $("#AcademicOrientation").val('');
+            $("#DateOfGraduationStr").val('');
+            $("#TableTypeOfUniversityId").val('');
+            $("#NameOfUniversity").val('');
+        });
+
+        $(document).on('click', '.btnEditEducationEmployeme', function () {
+
+            $("#WidgetBoxEducationEmployeme").removeClass("collapsed");
+            $("#AceIconEducationEmployeme").removeClass("fa-chevron-down");
+            $("#AceIconEducationEmployeme").addClass("fa-chevron-up");
+            $("#WidgetBodyEducationEmployeme").css("display", "block");
+
+            $("#FormUploadFile").hide("slow")
+            $("#FormData").show("slow");
+
+            $("#EducationEmployemeId").val($(this).attr('data-EducationEmployemeId'));
+            $("#EmployemeId").val($(this).attr('data-EmployemeId'));
+            $("#EducationId").val($(this).attr('data-EducationId'));
+            $("#FieldOfStudy").val($(this).attr('data-FieldOfStudy'));
+            $("#AcademicOrientation").val($(this).attr('data-AcademicOrientation'));
+            $("#DateOfGraduationStr").val($(this).attr('data-DateOfGraduation'));
+            $("#LastEducationalCertificate").val($(this).attr('data-LastEducationalCertificate'));
+
+            $("#TableTypeOfUniversityId").val($(this).attr('data-TableTypeOfUniversityId'));
+            $("#NameOfUniversity").val($(this).attr('data-NameOfUniversity'));
+        });
+
+        $('#btnSaveEducationEmployeme').click(function () {
+
+            if ($("#EducationEmployemeId").val() == "") {
+                SaveDataEducationEmployeme();
+                return;
+            }
+            else {
+                EditDataEducationEmployeme();
+                return;
+            }
+        });
+
+        $(document).on('click', '.btnDeleteEducationEmployeme',function () {
+            var ID = $(this).attr('data-EducationEmployemeId');
+            DeleteDataEducationEmployeme(ID);
+        });
+
+        $('#UploadedFile').change(function (event) {
+            
+            //Set Title In Span
+            $('.ace-file-name').attr('data-title', $("#UploadedFile").val());
+            //Read Path URL Select File In Input File
+            temppath = URL.createObjectURL(event.target.files[0]);
+            files = event.target.files;
+            //Set Path to Src Element Image
+            $("#Imagecontainer").attr("src", temppath);
+            //Getting just the filename from a path with Javascript
+            var fileNameIndex = temppath.lastIndexOf("/") + 1;
+            filename = temppath.substr(fileNameIndex);
+        });
+
+        $('#BackToFormData').click(function () {
+            $("#FormUploadFile").hide("slow")
+            $("#FormData").show("slow");
+        });
+
+        $('#btnShowFilePDF').click(function () {
+            window.open(temppath);
+        });
+        
+    </script>
+
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxEducationEmployeme">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">ثبت / ویرایش</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEducationEmployeme"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;" id="WidgetBodyEducationEmployeme">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form" id="FormData">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد تحصیلات کارمند : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("EducationEmployemeId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد تحصیلات کارمند" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد کارمند : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("EmployemeId", null, new { @Value = ViewBag.EmployemeId, @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد کارمند" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تحصیلات : </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("EducationId", new MultiSelectList(ViewBag.TableInterfaceValueId, "Value", "Text"), "-- تحصیلات را انتخاب نمائید --", new { @id = "EducationId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">رشته تحصیلی : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("FieldOfStudy", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "رشته تحصیلی" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">گرایش تحصیلی : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("AcademicOrientation", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "گرایش تحصیلی" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نوع دانشگاه یا موسسه : </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("TableTypeOfUniversityId", new MultiSelectList(ViewBag.TableInterfaceValueIdUniversityId, "Value", "Text"), "-- نوع دانشگاه یا موسسه را انتخاب نمائید --", new { @id = "TableTypeOfUniversityId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نام دانشگاه یا موسسه : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("NameOfUniversity", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام دانشگاه یا موسسه" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label id="lblActivePostGroupName" class="col-sm-3 control-label no-padding-right" for="form-field-1">وضعیت تحصیلات دانشگاهی : </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("ActiveTypeOfUniversity", listItemsEducation, "-- وضعیت تحصیلات دانشگاهی را انتخاب نمائید --", new { @id = "ActiveTypeOfUniversity", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">وضعیت آخرین مدرک تحصیلی : </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("LastEducationalCertificate", listItems, "-- وضعیت آخرین مدرک تحصیلی را انتخاب نمائید --", new { @id = "LastEducationalCertificate", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تاریخ اخذ مدرک : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("DateOfGraduationStr", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs pdate align-right", @placeholder = "تاریخ اخذ مدرک" })
+                                </div>
+                            </div>
+
+                            <div class="breadcrumbs" id="breadcrumbs">
+
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button id="btnAddEducationEmployeme" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        جدید
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button id="btnSaveEducationEmployeme" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        ذخیره
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                        <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                        بازگشت
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="form-horizontal" role="form" id="FormUploadFile" style="display:none">
+                            <!-- #section:elements.form -->
+
+                            <input type="text" id="FileRepositoryId" value="@ViewBag.FileRepositoryId" hidden="hidden"/>
+                            <input type="text" id="ContentId" value="@ViewBag.ContentId"   hidden="hidden"/>
+                            <input type="text" id="FileFormId" value="@ViewBag.FileFormId"  hidden="hidden" />
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">مدرک تحصیلی : </label>
+                                <div class="col-md-7">
+                                    <label class="ace-file-input">
+                                        <input id="UploadedFile" type="file">
+                                        <span class="ace-file-container" data-title="Choose">
+                                            <span class="ace-file-name" data-title="No File ...">
+                                                <i class="ace-icon fa fa-upload"></i>
+                                            </span>
+                                        </span>
+                                        <a class="remove" href="#">
+                                            <i class="ace-icon fa fa-times"></i>
+                                        </a>
+                                    </label>
+                                </div>
+                            </div>
+                            <!--<div>
+                                <span class="profile-picture center width-50" style="margin-right:200px;">
+                                    <img style="width:500px; height:300px" id="Imagecontainer"  class="editable img-responsive editable-click editable-empty" alt="" src="../assets/avatars/profile-pic.jpg">
+                                </span>
+                                <!-- /section:pages/profile.picture -->
+                                <!--<div class="space-4"></div>
+
+                                <div class="width-50 label label-info label-xlg arrowed-in arrowed-in-right" style="margin-right:200px">
+                                    <div class="inline position-relative">
+                                        <i class="ace-icon fa fa-circle light-green"></i>
+                                        &nbsp;
+                                        <span class="white">مدرک تحصیلی</span>
+
+                                    </div>
+                                </div>
+                            </div><br />-->
+                            <div class="breadcrumbs" id="breadcrumbs">
+                                <div class="col-md-offset-3">
+                                    
+                                    <button id="btnShowFilePDF" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-eye bigger-125"></i>
+                                        مشاهده فایل PDF
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button id="btnSaveFileRepository" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        ذخیره
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-danger btn-white btn-round" id="BackToFormData">
+                                        <i class="ace-icon fa fa-undo bigger-125"></i>
+                                        بازگشت به فرم اطلاعات
+                                    </button>
+                                    <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGridEducationEmployeme">
+                        @Html.Partial("_GetListEducationEmployeme", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+

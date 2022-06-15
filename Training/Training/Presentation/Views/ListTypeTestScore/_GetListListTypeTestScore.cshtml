@@ -1,0 +1,90 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.ListTypeTestScoreEntity>
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th>عنوان دوره</th>
+            <th>نوع آزمون</th>
+            <th>تاریخ برگزاری</th>
+            <th>جمعیت هدف آزمون</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td class="center">
+                    <label class="position-relative">
+                        @i
+                    </label>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DesignTrainingCourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VarietyOfTestName)
+                </td>
+                <td>
+                    @item.ExamDates.MiladiToPersion()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurposeTest)
+                </td>
+                <td>
+                    <div class="hidden-sm hidden-xs btn-group">
+                        <button data-Id="@item.ListTypeTestScoreId" class="BtnEdit btn btn-xs btn-warning">
+                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                        </button>
+
+                        <button data-Id="@item.ListTypeTestScoreId" data-DeleteName="DeleteDataListTypeTestScore()" class="BtnDelete btn btn-xs btn-danger">
+                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                        </button>
+                        <a href="/TestScore/Index/?listtypetestscoreid=@item.ListTypeTestScoreId
+                                                  &designtrainingcourseid=@ViewBag.DesignTrainingCourseId
+                                                  &designtrainingcoursedateid=@ViewBag.DesignTrainingCourseDateId" 
+                                                      class="BtnDelete btn btn-xs btn-info">
+                            <i class="ace-icon fa fa-list bigger-120"></i>
+                        </a>
+                    </div>
+
+                    <div class="hidden-md hidden-lg">
+                        <div class="inline position-relative">
+                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                <li>
+                                    <a data-Id="@item.ListTypeTestScoreId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                        <span class="green">
+                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a data-Id="@item.ListTypeTestScoreId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                        <span class="red">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+            i++;
+        }
+    }
+</table>
+

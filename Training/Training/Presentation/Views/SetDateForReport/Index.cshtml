@@ -1,0 +1,246 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.SetDateForReportEntity>
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    @*<script src="~/scripts/moment.js"></script>
+        <script src="~/scripts/moment-jalaali.js"></script>
+
+        <script src="~/Content/Scripts/persian-date.js"></script>
+        <script src="~/Content/Date/1/js-persian-cal.min.js"></script>*@
+
+
+    <script type="text/javascript">
+        var PublicCode = '@ViewBag.PlacementTabJobTrainingId';
+        var EmployemeId = '@ViewBag.EmployemeId';
+      
+        //$(document).ready(function () {
+        //    alert("extraInputID");
+
+        //    new AMIB.persianCalendar(('DateOfProducerstr'), { extraInputID: "DateOfProducerstr", extraInputFormat: "yyyy/mm/dd" })
+        //    new AMIB.persianCalendar(('DateOfApproverstr'), { extraInputID: "DateOfApproverstr", extraInputFormat: "yyyy/mm/dd" })
+        //});
+
+        new AMIB.persianCalendar('DateOfProducerstr');
+        new AMIB.persianCalendar('DateOfApproverstr');
+        new AMIB.persianCalendar('DateOfRegistrarstr');
+
+        $("#btnAddSetDateForReport").click(function () {
+
+            $("#SetDateForReportId").val('');
+            $("#PublicCode").val('');
+            $("#EmployemeId").val('');
+            $("#DateOfProducerstr").val('');
+            $("#DateOfApproverstr").val('');
+            $("#DateOfRegistrarstr").val('');
+            $("#ReportNameId").val('');
+
+            $("#MessageOperation").css("display", "none");
+            $('#DateOfProducer').css('border-color', '#d5d5d5');
+            $('#DateOfApprover').css('border-color', '#d5d5d5');
+            $('#ReportNameId').css('border-color', '#d5d5d5');
+        });
+
+        $("#btnSaveSetDateForReport").click(function () {
+            if ($("#SetDateForReportId").val() == "") {
+                SaveDataSetDateForReport();
+            }
+            else {
+                EditDataSetDateForReport();
+            }
+        });
+
+        $(document).on('click', '.btnEditSetDateForReport', function () {
+            debugger;
+
+            $("#WidgetBoxSetDateForReport").removeClass("collapsed");
+            $("#AceIconSetDateForReportng").removeClass("fa-chevron-down");
+            $("#AceIconSetDateForReport").addClass("fa-chevron-up");
+            $("#WidgetBodySetDateForReport").css("display", "block");
+
+            $("#SetDateForReportId").val($(this).attr('data-SetDateForReportId'));
+            $("#PublicCode").val($(this).attr('data-PublicCode'));
+            $("#EmployemeId").val($(this).attr('data-EmployemeId'));
+            $("#DateOfProducerstr").val($(this).attr('data-DateOfProducerstr'));
+            $("#DateOfApproverstr").val($(this).attr('data-DateOfApproverstr'));
+            $("#DateOfRegistrarstr").val($(this).attr('data-DateOfRegistrarstr'));
+
+            $("#ReportNameId").val($(this).attr('data-ReportNameId'));
+        });
+
+        $(document).on('click', '#btnPrint', function () {
+            debugger;
+            PrintDateForReport();
+        });
+
+    </script>
+</head>
+
+<body>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxSetDateForReport">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">ثبت / ویرایش</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collaps">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconSetDateForReport"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="widget-body" style="height:auto;display:block" id="WidgetBodySetDateForReport">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد تاریخ : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("SetDateForReportId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد تاریخ" })
+                                </div>
+                            </div>
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد تعیین سطح آموزش حین کار : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("PlacementTabJobTrainingId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد تعیین  آموزش حین کار" })
+                                </div>
+                            </div>
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد عنوان آموزش مورد نظر : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("EmployemeId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد پرسنل" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد  : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("PublicCode", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد " })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="lblTableValue" class="col-sm-3 control-label no-padding-right" for="form-field-1">تاریخ تهیه کننده : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("DateOfProducer", null, new { @id = "DateOfProducerstr", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "تاریخ تهیه" })
+                                </div>
+                            </div>
+                            @*<div class="form-group" id="FromTimeDiv">
+                                    <label id="lblFromTime" class="col-sm-3 control-label no-padding-right" for="form-field-1">از ساعت : </label>
+                                    <div class="col-md-9">
+                                        @Html.TextBox("FromTime", String.Format("{0:HH:mm}", DateTime.Now), new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "..:.." })
+                                    </div>
+                                </div>*@
+                            <div class="form-group">
+                                <label id="lblTableValue" class="col-sm-3 control-label no-padding-right" for="form-field-1">تاریخ تایید کننده : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("DateOfApprover", null, new { @id = "DateOfApproverstr", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "تاریخ تایید" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="lblTableValue" class="col-sm-3 control-label no-padding-right" for="form-field-1">تاریخ تصویب کننده : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("DateOfRegistrar", null, new { @id = "DateOfRegistrarstr", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "تاریخ تصویب" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان گزارش: </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("ReportNameId", new MultiSelectList(ViewBag.TableInterfaceIdReportNameId, "Value", "Text"), "-- عنوان فرم را انتخاب نمائید --", new { @id = "ReportNameId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+                            <div class="breadcrumbs" id="breadcrumbs">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button id="btnAddSetDateForReport" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        جدید
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button id="btnSaveSetDateForReport" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        ذخیره
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button id="btnPrint" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-print bigger-125"></i>
+                                        پرینت
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                        <i class="ace-icon fa fa-undo bigger-125"></i>
+                                        بازگشت
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGridSetDateForReport">
+                        @Html.Partial("_GetListSetDateForReport", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

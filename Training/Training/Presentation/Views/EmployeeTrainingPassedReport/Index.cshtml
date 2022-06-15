@@ -1,0 +1,188 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.EmployeeTrainingPassedEntity>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <script type="text/javascript">
+
+        function _GetListEmployeeTrainingPassedReport() {
+            var myObjectSearch = new Object();
+            myObjectSearch.TrainingCourseName = $("#TrainingCourseNameSearch").val();
+            myObjectSearch.EmployemeId = $("#EmployemeId").val();
+
+            var url = "/EmployeeTrainingPassedReport/_GetListEmployeeTrainingPassedReport"; // the url to the controller
+            $.post(url, myObjectSearch, function (data) {
+                $('#theGridEmployeeTrainingPassedReport').html(data);
+            });
+        }
+
+        function _GetSumDurationTrainingPassed() {
+            var myObjectSearch = new Object();
+            myObjectSearch.EmployemeId = $("#EmployemeId").val();
+
+            var url = "/EmployeeTrainingPassedReport/_GetSumDurationTrainingPassed"; // the url to the controller
+            $.post(url, myObjectSearch, function (data) {
+                alert(data);
+            });
+
+           
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">اطلاعات اولیه</li>
+            <li class="active">مشخصات عمومی شاغل ( کارمند)،(برگه شناسنامه آموزشی)</li>
+        </ul>
+        <!-- /.breadcrumb -->
+
+    </div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxEmployemeSearch">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active bigger-150"><a href="#">جستجو</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEmployemeSearch"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;height:120px" id="WidgetBodyEmployemeSearch">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-md-2 control-label no-padding-right"  for="form-field-1">EmployemeId : </label>
+                                <div class="col-md-10">
+                                    @Html.TextBox("EmployemeId", null, new { @id = "EmployemeId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "EmployemeId" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">عنوان دوره : </label>
+                                <div class="col-md-10">
+                                    @Html.TextBox("TrainingCourseNameSearch", null, new { @id = "TrainingCourseNameSearch", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "عنوان دوره" })
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-12">
+                        <div class="col-md-offset-10">
+                            <button onclick="_GetListEmployeeTrainingPassedReport()" class="btn btn-info btn-white btn-round" type="button">
+                                <i class="ace-icon fa fa-search bigger-125"></i>
+                                جستجو
+                            </button>
+                            <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-10" style="margin-bottom: 5px">
+                &nbsp; &nbsp; &nbsp;
+                <a href="/Employeme/Index" class="btn btn-danger btn-white btn-round" type="button">
+                    <i class="ace-icon fa fa-check bigger-125"></i>
+                    بازگشت
+                </a>
+
+                &nbsp; &nbsp; &nbsp;
+                <button onclick="_GetSumDurationTrainingPassed()" class="btn btn-info btn-white btn-round" type="button">
+                    <i class="ace-icon fa fa-star bigger-125"></i>
+                   جمع مدت آموزش
+                </button>
+
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    @*<div id="theGridListEmployeeTrainingPassedReport">
+                      @Html.Partial("_GetListEmployeeTrainingPassedReport", Model)
+                </div>*@
+                    <div id="theGridEmployeeTrainingPassedReport">
+                        @Html.Partial("_GetListEmployeeTrainingPassedReport", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+﻿@model IEnumerable<InterfaceEntity.DetailOfferTrainingForJobEntity>
+<table id="sample-table-1" class="table table-striped table-bordered table-hover center">
+    <thead>
+        <tr>
+            <th rowspan="2">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th rowspan="2" class="center">آموزش موردنیاز</th>
+            <th colspan="3">شکل آموزش پیشنهادی</th>
+            <th colspan="3">شکل تصویب شده</th>
+            <th rowspan="2" class="center">الویت</th>
+            <th rowspan="2" class="center">عملیات</th>
+        </tr>
+        <tr>
+            <th>SD</th>
+            <th>OJT</th>
+            <th>C</th>
+
+            <th>SD</th>
+            <th>OJT</th>
+            <th>C</th>
+        </tr>
+
+    </thead>
+    @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td class="center">
+                    <label class="position-relative">
+                        @i
+                    </label>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NeedTraining)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OJT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.C)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SDSet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OJTSet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CSet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriorityName)
+                </td>
+                <td>
+                    <div class="hidden-sm hidden-xs btn-group">
+                        <button data-original-title="ویرایش" data-placement="top" data-toggle="tooltip" class="btnEditDetailOfferTrainingForJob btn btn-xs btn-warning tooltip1" data-DetailOfferTrainingForJobId="@item.DetailOfferTrainingForJobId" data-OfferTrainingForJobsId="@item.OfferTrainingForJobsId" data-NeedTraining="@item.NeedTraining" data-PriorityId="@item.PriorityId" data-TableTypeOfTrainingOfferId="@item.TableTypeOfTrainingOfferId" data-TableTypeOfTrainingSetId="@item.TableTypeOfTrainingSetId" data-SD="@item.SD" data-OJT="@item.OJT" data-C="@item.C" data-SDSet="@item.SDSet" data-OJTSet="@item.OJTSet" data-CSet="@item.CSet">
+                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                        </button>
+
+                        <button data-original-title="حذف" data-placement="top" data-toggle="tooltip"  class="btnDeleteDetailOfferTrainingForJob btn btn-xs btn-danger tooltip1" data-DetailOfferTrainingForJobId="@item.DetailOfferTrainingForJobId" data-TableTypeOfTrainingOfferId="@item.TableTypeOfTrainingOfferId" data-TableTypeOfTrainingSetId="@item.TableTypeOfTrainingSetId">
+                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                        </button>
+                    </div>
+
+                    <div class="hidden-md hidden-lg">
+                        <div class="inline position-relative">
+                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                <li>
+                                    <a data-Id="@item.DetailOfferTrainingForJobId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                        <span class="green">
+                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a data-Id="@item.DetailOfferTrainingForJobId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                        <span class="red">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            i++;
+        }
+    }
+</table>
+

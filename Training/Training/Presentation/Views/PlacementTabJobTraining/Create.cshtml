@@ -1,0 +1,197 @@
+﻿@model InterfaceEntity.PlacementTabJobTrainingEntity
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+
+        $("#EmployemeId").select2();
+        $("#CorporateResponsibility").select2();
+
+        function GetCurrentPostGroup(_employemeid) {
+            $('#DateStartPostGroupNameStr').val('');
+            $('#UnitSCenterId').empty();
+            $('#DepartmentId').empty();
+            $('#SectionId').empty();
+            
+
+            var procemessage = "<option value=''> لطفا صبر کنید ....</option>";
+            $("#CurrentPostGroup").html(procemessage).show();
+            var url = "/EmployemeJob/_GetListCurrentPostGroupDPD";
+
+            $.ajax({
+                url: url,
+                data: { employemeid: _employemeid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>-- شغل فعلی را انتخاب نمائبد --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#CurrentPostGroup").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+        function GetCurrentPostGroupInfo(_employemejobid) {
+
+            var url = "/EmployemeJob/_GetListCurrentPostGroupInfo";
+
+            $.ajax({
+                url: url,
+                data: { employemejobid: _employemejobid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    debugger;
+                    $("#DateStartPostGroupNameStr").val(data.DateStartPostGroupNameStr);
+
+                    $('#PostGroupId').val(data.PostGroupId);
+
+                    var unitcenter = "<option value=" + data.UnitSCenterId + ">" + data.UnitSCenterName + "</option>";
+                    $("#UnitSCenterId").html(unitcenter).show();
+
+                    var department = "<option value=" + data.DepartmentId + ">" + data.DepartmentName + "</option>";
+                    $("#DepartmentId").html(department).show();
+
+                    var section = "<option value=" + data.SectionId + ">" + data.SectionName + "</option>";
+                    $("#SectionId").html(section).show();
+
+                    $('#PreviousJobs').val(data.PreviousJobs);
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+                        <div class="form-group">
+                            <label id="lblEmployemeId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام کارمند: </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("EmployemeId", new MultiSelectList(ViewBag.EmployemeId, "Value", "Text"), "-- نام  کارمند را انتخاب نمائید --", new { @id = "EmployemeId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @onchange = "javascript: GetCurrentPostGroup(this.value);" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblCurrentPostGroup" class="col-sm-3 control-label no-padding-right" for="form-field-1">شغل فعلی : </label>
+                            <div class="col-md-9">
+                                <select id="CurrentPostGroup" name="CurrentPostGroup" class="col-xs-10 col-sm-5 col-md-10 fs" onchange = "javascript: GetCurrentPostGroupInfo(this.value);"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblDateStartPostGroupNameStr" class="col-sm-3 control-label no-padding-right" for="form-field-1">تاریخ شروع به کار : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.DateStartPostGroupName, new { @id = "DateStartPostGroupNameStr", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "تاریخ شروع به کار " , @disabled="true", style = "background-color:white !important" })
+                                @Html.ValidationMessageFor(model => model.DateStartPostGroupName)
+                            </div>
+                        </div>
+
+                        <div class="form-group" hidden="hidden">
+                            <label id="lblPostGroupId" class="col-sm-3 control-label no-padding-right" for="form-field-1">شغل فعلی : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.PostGroupId, new { @id = "PostGroupId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "شغل فعلی ", @disabled = "true", style = "background-color:white !important" })
+                                @Html.ValidationMessageFor(model => model.PostGroupId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblUnitSCenterId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام واحد : </label>
+                            <div class="col-md-9">
+                                <select id="UnitSCenterId" name="UnitSCenterId" class="col-xs-10 col-sm-5 col-md-10 fs" disabled></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblDepartmentId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام بخش : </label>
+                            <div class="col-md-9">
+                                <select id="DepartmentId" name="DepartmentId" class="col-xs-10 col-sm-5 col-md-10 fs" disabled></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblSectionId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام قسمت : </label>
+                            <div class="col-md-9">
+                                <select id="SectionId" name="SectionId" class="col-xs-10 col-sm-5 col-md-10 fs" disabled></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblPreviousJobs" class="col-sm-3 control-label no-padding-right" for="form-field-1">مشاغل قبلی : </label>
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(model => model.PreviousJobs,5,50, new { @id = "PreviousJobs", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "مشاغل قبلی ", @disabled = "true", style = "background-color:white !important" })
+                                @Html.ValidationMessageFor(model => model.PreviousJobs)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblEmployemeId" class="col-sm-3 control-label no-padding-right" for="form-field-1">مسئولیت سازمانی بالاتر : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("CorporateResponsibility", new MultiSelectList(ViewBag.PostType, "Value", "Text"), "-- مسئولیت سازمانی را انتخاب نمائید --", new { @id = "CorporateResponsibility", @class = "col-xs-10 col-sm-5 col-md-10 fs"})
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <div class="col-md-offset-3">
+                                <button id="btnSave" onclick="SaveDataPlacementTabJobTraining()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+</body>
+
+</html>
+
+
+

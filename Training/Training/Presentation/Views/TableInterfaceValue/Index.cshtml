@@ -1,0 +1,284 @@
+﻿
+@model IEnumerable<InterfaceEntity.TableInterfaceValueEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        var TableInterfaceId = '@ViewBag.TableInterfaceId';
+
+        function SaveData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.TableInterfaceId = $("#TableInterfaceId").val();
+            myObject.TableValue = $("#TableValue").val();
+            myObject.TableInterfaceValueCode = $("#TableInterfaceValueCode").val();
+            
+            var url = "/TableInterfaceValue/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListTableInterfaceValue();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.TableInterfaceValueId = $("#TableInterfaceValueId").val();
+            myObject.TableInterfaceId = $("#TableInterfaceId").val();
+            myObject.TableValue = $("#TableValue").val();
+            myObject.TableInterfaceValueCode = $("#TableInterfaceValueCode").val();
+            var url = "/TableInterfaceValue/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListTableInterfaceValue();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataTableInterfaceValue() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/TableInterfaceValue/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListTableInterfaceValue();
+            });
+
+        }
+        function _GetListTableInterfaceValue() {
+            $.ajax({
+                url: "/TableInterfaceValue/_GetListTableInterfaceValue",
+                type: 'GET',
+                datatype: 'json',
+                data:{tableinterfaceid:TableInterfaceId},
+                success: function (data) {
+                    $('#theGrid').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#TableInterfaceId').val() == '') {
+                $('#lblTableInterfaceId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblTableInterfaceId').css('color', 'black');
+            }
+
+            if ($('#TableValue').val() == '') {
+                $('#lblTableValue').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblTableValue').css('color', 'black');
+            }
+
+            if ($('#TableInterfaceValueCode').val() == '') {
+                $('#TableInterfaceValueCode').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#TableInterfaceValueCode').css('color', 'black');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+
+        $(document).ready(function () {
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on('click', '#btnAddNew', function () {
+                $("div#divLoading").addClass('show');
+                $.get('/TableInterfaceValue/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت مقادیر جدول رابط اطلاعات اولیه</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(document).on('click', '.BtnEdit', function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم ویرایش مقادیر جدول رابط اطلاعات اولیه</span>");
+                var TableInterfaceValueId = $(this).attr('data-Id');
+                $.get('/TableInterfaceValue/Edit', "ID=" + TableInterfaceValueId, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete', function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم حذف مقادیر جدول رابط اطلاعات اولیه</span>");
+                var EmployemeId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: EmployemeId, viewname: ViewName }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="divLoading"></div>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">اطلاعات اولیه</li>
+            <li class="active">مقادیر جدول رابط</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-10" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+                &nbsp; &nbsp; &nbsp;
+                <a href="/TableInterface/Index" class="btn btn-danger btn-white btn-round">
+                    <i class="ace-icon fa fa-undo bigger-125"></i>
+                    برگشت
+                </a>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12"><div id="theGrid">
+                        @Html.Partial("_GetListTableInterfaceValue", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

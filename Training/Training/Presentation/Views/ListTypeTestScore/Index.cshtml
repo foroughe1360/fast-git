@@ -1,0 +1,296 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.ListTypeTestScoreEntity>
+@using Bussiness
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        var DesignTrainingCourseId = '@ViewBag.DesignTrainingCourseId';
+        //970319
+        var DesignTrainingCourseDateId = '@ViewBag.DesignTrainingCourseDateId';
+
+        function SaveData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.DesignTrainingCourseId = DesignTrainingCourseId;
+            myObject.DesignTrainingCourseDateId = DesignTrainingCourseDateId;
+            myObject.VarietyOfTestId = $("#VarietyOfTestId").val();
+            myObject.ExamDatesStr = $("#ExamDatesStr").val();
+            myObject.PurposeTest = $("#PurposeTest").val();
+
+            var url = "/ListTypeTestScore/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListListTypeTestScore();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.ListTypeTestScoreId = $("#ListTypeTestScoreId").val();
+            myObject.DesignTrainingCourseId = DesignTrainingCourseId;
+            myObject.VarietyOfTestId = $("#VarietyOfTestId").val();
+            myObject.ExamDatesStr = $("#ExamDatesStr").val();
+            myObject.PurposeTest = $("#PurposeTest").val();
+
+            var url = "/ListTypeTestScore/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListListTypeTestScore();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataListTypeTestScore() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.ID = $("#TableId").val();
+
+            var url = "/ListTypeTestScore/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListListTypeTestScore();
+            });
+
+        }
+        function _GetListListTypeTestScore() {
+            $.ajax({
+                url: "/ListTypeTestScore/_GetListListTypeTestScore",
+                //970319//data: { designtrainingcourseid: DesignTrainingCourseId},
+                data: { designtrainingcourseid: DesignTrainingCourseId, designtrainingcoursedateid: DesignTrainingCourseDateId },
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGrid').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#VarietyOfTestId').val() == '') {
+                $('#VarietyOfTestId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#VarietyOfTestId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#ExamDatesStr').val() == '') {
+                $('#ExamDatesStr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#ExamDatesStr').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#PurposeTest').val() == '') {
+                $('#PurposeTest').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#PurposeTest').css('border-color', '#d5d5d5');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+
+        $(document).ready(function () {
+
+            $(document).on('click', '#btnAddNew', function () {
+                $("div#divLoading").addClass('show');
+                $.get('/ListTypeTestScore/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت استاد</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(document).on('click', '.BtnEdit', function () {
+                $("div#divLoading").addClass('show');
+                var ListTypeTestScoreld = $(this).attr('data-Id');
+                $.get('/ListTypeTestScore/Edit', "ID=" + ListTypeTestScoreld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ویرایش استاد</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete', function () {
+                $("div#divLoading").addClass('show');
+                var ListTypeTestScoreld = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: ListTypeTestScoreld, viewname: ViewName }, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم حذف استاد</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">آزمون های برگزار شده</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-10" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+                &nbsp; &nbsp; &nbsp;
+                <a href="/ListTrainingCourse/Index/@ViewBag.DesignTrainingCourseDateId" class="btn btn-danger btn-white btn-round">
+                    <i class="ace-icon fa fa-undo bigger-125"></i>
+                    برگشت
+                </a>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListListTypeTestScore", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

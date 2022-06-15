@@ -1,0 +1,275 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.HoursCertificationEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+
+        function SaveData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.TimePeriod = $("#TimePeriod").val();
+            myObject.HoursCertificationDateStr = $("#HoursCertificationDateStr").val();
+
+            var url = "/HoursCertification/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListHoursCertification();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.HoursCertificationId = $("#HoursCertificationId").val();
+            myObject.TimePeriod = $("#TimePeriod").val();
+            myObject.HoursCertificationDateStr = $("#HoursCertificationDateStr").val();
+
+            var url = "/HoursCertification/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListHoursCertification();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataHoursCertification() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/HoursCertification/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListHoursCertification();
+            });
+
+        }
+        function _GetListHoursCertification() {
+            $.ajax({
+                url: "/HoursCertification/_GetListHoursCertification",
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGrid').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#TimePeriod').val() == '') {
+                $('#TimePeriod').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#TimePeriod').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#HoursCertificationDateStr').val() == '') {
+                $('#HoursCertificationDateStr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#HoursCertificationDateStr').css('border-color', '#d5d5d5');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        $(document).ready(function () {
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on('click', '#btnAddNew',function () {
+                $("div#divLoading").addClass('show');
+                $.get('/HoursCertification/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت ساعت صدور گواهینامه</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+            });
+
+            $(document).on('click', '.BtnEdit',function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم ویرایش ساعت صدور گواهینامه</span>");
+                var HoursCertificationId = $(this).attr('data-Id');
+                $.get('/HoursCertification/Edit', "ID=" + HoursCertificationId, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete',function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم حذف ساعت صدور گواهینامه</span>");
+                var HoursCertificationId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: HoursCertificationId, viewname: ViewName }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+
+            });
+
+        });
+
+    </script>
+
+</head>
+
+<body>
+    <div id="divLoading"></div>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">اطلاعات اولیه</li>
+            <li class="active">صدور گواهینامه</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-11 col-md-9" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListHoursCertification", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,83 @@
+﻿
+@model InterfaceEntity.TrainingCourseEntity
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نام دوره آموزشی : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.CourseName, new { @id = "CourseName", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام دوره آموزشی" })
+                                @Html.ValidationMessageFor(model => model.CourseName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نوع دوره آموزشی : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("CourseTypeId", new MultiSelectList(ViewBag.TableInterfaceValueIdCourseType, "Value", "Text"),"-- نوع دوره را انتخاب نمائید --", new { @id = "CourseTypeId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.CourseTypeId)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <div class="col-md-offset-3">
+                                <button id="btnSave" onclick="SaveData()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<InterfaceEntity.CourseRegistrationEntity>
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th>نام دانشجو </th>
+            <th>وضعیت دانشجو</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td class="center">
+                    <label class="position-relative">
+                        @i
+                    </label>
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployemesName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployemeStateName)
+                </td>
+                <td>
+                    <div class="hidden-sm hidden-xs btn-group">
+                        <button data-original-title="ویرایش" data-placement="top" data-toggle="tooltip" data-CourseRegistrationId="@item.CourseRegistrationId" data-DesignTrainingCourseId="@item.DesignTrainingCourseId" data-EmployemeId="@item.EmployemeId" data-EmployemeStateID="@item.EmployemeStateID" class="btnEditCourseRegistration btn btn-xs btn-warning tooltip1">
+                            <i class="ace-icon fa fa-pencil bigger-140"></i>
+                        </button>
+
+                        <button data-original-title="حذف" data-placement="top" data-toggle="tooltip" data-CourseRegistrationId="@item.CourseRegistrationId" class="btnDeleteCourseRegistration btn btn-xs btn-danger tooltip1">
+                            <i class="ace-icon fa fa-trash-o bigger-140"></i>
+                        </button>
+                    </div>
+
+                    <div class="hidden-md hidden-lg">
+                        <div class="inline position-relative">
+                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                <li>
+                                    <a data-Id="@item.CourseRegistrationId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                        <span class="green">
+                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a data-Id="@item.CourseRegistrationId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                        <span class="red">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            i++;
+        }
+    }
+</table>

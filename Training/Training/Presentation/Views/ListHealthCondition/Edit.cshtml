@@ -1,0 +1,110 @@
+﻿@model InterfaceEntity.ListHealthConditionEntity
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/Style.css" rel="stylesheet" />
+    <script src="~/Content/Date/js/jquery.min.js"></script>
+    <script src="~/ControllerJS/UserController.js"></script>
+    <title></title>
+</head>
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="message">اطلاعات با موفقیت ثبت گردید!</a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+
+                    <div id="SuccesMessage" class="col-sm-12 col-xs-12 alertmessage alertmessageSuccess">
+                        <p>
+                            <strong>
+                                <i class="ace-icon fa fa-check"></i>
+                                اطلاعات با موفقیت ثبت گردید!
+                            </strong>
+                        </p>
+                    </div>
+
+                    <div id="FailMessage" class="col-sm-12 col-xs-12 alertmessage alertmessageFail">
+                        <p>
+                            <i class="ace-icon fa fa-times"></i>
+                            <strong id="FailTxt">
+                            </strong>
+                        </p>
+                    </div>
+
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(model => model.ListHealthConditionId, new { @id = "UserId" })
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شناسایی پرسشنامه شناسنامه مشاغل  : </label>
+                            @*@Html.LabelFor(model => model.Name, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.InventoryjobsId, new { @id = "InventoryjobsId", @class = "col-xs-10 col-sm-5 fs", @placeholder = "کد شناسایی پرسشنامه شناسنامه مشاغل " })
+                                @Html.ValidationMessageFor(model => model.InventoryjobsId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شناسایی عوامل و شرایط ایمنی و بهداشت شغل : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.HealthConditionsId, new { @id = "HealthConditionsId", @class = "col-xs-10 col-sm-5 fs", @placeholder = "کد شناسایی عوامل و شرایط ایمنی و بهداشت شغل" })
+                                @Html.ValidationMessageFor(model => model.HealthConditionsId)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <script type="text/javascript">
+                                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                            </script>
+
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="SaveUser" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+</body>
+</html>
+
+
+

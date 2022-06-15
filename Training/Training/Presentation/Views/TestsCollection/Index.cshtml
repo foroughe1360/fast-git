@@ -1,0 +1,242 @@
+﻿
+@model IEnumerable<InterfaceEntity.TestsCollectionEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+
+        function SaveData() {
+
+            $("#ajaxloader").css("display", "inline");
+
+            var myObject = new Object();
+            myObject.CollectionId = $("#CollectionId").val();
+            myObject.TestsCollectionName = $("#TestsCollectionName").val();
+            myObject.State = $("#State").val();
+
+            var url = "/TestsCollection/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListTestsCollection();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+
+        function EditData() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.TestsCollectionId = $("#TestsCollectionId").val();
+            myObject.CollectionId = $("#CollectionId").val();
+            myObject.TestsCollectionName = $("#TestsCollectionName").val();
+            myObject.State = $("#State").val();
+
+            var url = "/TestsCollection/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListTestsCollection();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+
+        function DeleteDataTestsCollection() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/TestsCollection/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListTestsCollection();
+            });
+
+        }
+        
+        function _GetListTestsCollection() {
+            $.ajax({
+                url: "/TestsCollection/_GetListTestsCollection",
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGrid').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on('click', '#btnAddNew',function () {
+                $("div#divLoading").addClass('show');
+                $.get('/TestsCollection/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت آزمایش های گروه ها یا آزمایشگاه ها</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(document).on('click', '.BtnEdit',function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم ویرایش آزمایش های گروه ها یا آزمایشگاه ها</span>");
+                var TestsCollectionld = $(this).attr('data-Id');
+                $.get('/TestsCollection/Edit', "ID=" + TestsCollectionld, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete',function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم حذف آزمایش های گروه ها یا آزمایشگاه ها</span>");
+                var TestsCollectionld = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: TestsCollectionld, viewname: ViewName }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">اطلاعات اولیه</li>
+            <li class="active">آزمایش های گروه ها یا آزمایشگاه ها</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-11 col-md-9" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListTestsCollection", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

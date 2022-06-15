@@ -1,0 +1,1365 @@
+﻿@using Presentation.Utility
+@{
+    CustomAuthorizeAttribute _CustomAuthorizeAttribute = new CustomAuthorizeAttribute();
+    List<string> sd = _CustomAuthorizeAttribute.GetAccessMenu();
+    string _UserName = _CustomAuthorizeAttribute.GetUserName();
+    string _PersiaDate = _CustomAuthorizeAttribute.GetPersiaDate("N");
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>RMRC</title>
+
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+
+    <link href="~/AceTemplate/assets/font/Farsi.css" rel="stylesheet" />
+    <!-- bootstrap & fontawesome -->
+    @*<link rel="stylesheet" href="../../AceTemplate/assets/css/bootstrap.min.css" />*@
+    <link href="~/Content/CSS/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/CSS/bootstrap-select.min.css" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="../../AceTemplate/assets/css/font-awesome.min.css" />
+
+    <!-- page specific plugin styles -->
+    <!-- text fonts -->
+    <link rel="stylesheet" href="../../AceTemplate/assets/css/ace-fonts.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../../AceTemplate/assets/css/ace.min.css" id="main-ace-style" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="../../AceTemplate/assets/css/ace-part2.min.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="../../AceTemplate/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="../../AceTemplate/assets/css/ace-rtl.min.css" />
+
+    <!--[if lte IE 9]>
+      <link rel="stylesheet" href="../../AceTemplate/assets/css/ace-ie.min.css" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="../../AceTemplate/assets/js/ace-extra.min.js"></script>
+    @*<script src="~/Content/Scripts/jquery-1.8.2.min.js"></script>*@
+    <script src="~/Content/Scripts/jquery-1.7.2.min.js"></script>
+
+    @*<script src="~/scripts/jquery-1.10.2.min.js"></script>*@
+    @*<script src="~/Content/Scripts/jquery-1.7.1.min.js"></script>*@
+
+    <link href="~/Content/Date/NiraJSCalender/jspc-peach.css" rel="stylesheet" />
+    <script src="~/Content/Date/NiraJSCalender/js-persian-cal.min.js"></script>
+
+    <link href="~/Content/CSS/select2.css" rel="stylesheet" />
+    <script src="~/Content/Scripts/select2.js"></script>
+
+    <link href="~/Content/CSS/Style.css" rel="stylesheet" />
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+    <script src="../../AceTemplate/assets/js/html5shiv.min.js"></script>
+    <script src="../../AceTemplate/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    <script>
+        $(document).ready(function () {
+            var url = window.location.pathname + window.location.search;
+            var substr = url.split('/');
+            var urlaspx = substr[1];
+            if (urlaspx == "")
+                urlaspx = "Home";
+            $('ul.nav li.active').removeClass('active');
+            $('ul.nav li a').each(function () {
+                var href = this.id;
+                if (href == urlaspx) {
+                    $(this).parents().addClass('active');
+                }
+            });
+        });
+    </script>
+
+
+    <link href="~/Content/Date/Bootstrap-Persian-DateTimePicker/jquery.Bootstrap-PersianDateTimePicker.css" rel="stylesheet" />
+    <script src="~/Content/Date/Bootstrap-Persian-DateTimePicker/calendar.js"></script>
+    <script src="~/Content/Date/Bootstrap-Persian-DateTimePicker/jquery.Bootstrap-PersianDateTimePicker.js"></script>
+</head>
+
+<body class="no-skin rtl">
+    <!-- #section:basics/navbar.layout -->
+    <div id="navbar" class="navbar navbar-default">
+        <script type="text/javascript">
+            try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="navbar-container" id="navbar-container">
+            <!-- #section:basics/sidebar.mobile.toggle -->
+            <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler">
+                <span class="sr-only">Toggle sidebar</span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- /section:basics/sidebar.mobile.toggle -->
+            <div class="navbar-header pull-right">
+                <!-- #section:basics/navbar.layout.brand -->
+                <a href="#" class="navbar-brand">
+                    <small>
+                        <img src="~/AceTemplate/assets/img/arm.jpg" style="margin-bottom:-10px;margin-top:-5px" />
+                        @*<i class="fa fa-leaf"></i>
+                            RMRC*@
+                    </small>
+                </a>
+
+                <!-- /section:basics/navbar.layout.brand -->
+                <!-- #section:basics/navbar.toggle -->
+                <!-- /section:basics/navbar.toggle -->
+            </div>
+
+            <!-- #section:basics/navbar.dropdown -->
+            <div class="navbar-buttons navbar-header pull-left" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="green">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="ace-icon fa fa-calendar icon-animated-vertical"></i>
+                            <span class="badge badge-success">@_PersiaDate</span>
+                        </a>
+                    </li>
+
+                    <li class="grey">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="ace-icon fa fa-tasks"></i>
+                            <span class="badge badge-grey">4</span>
+                        </a>
+
+                        <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+                            <li class="dropdown-header">
+                                <i class="ace-icon fa fa-check"></i>
+                                4 Tasks to complete
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <div class="clearfix">
+                                        <span class="pull-left">Software Update</span>
+                                        <span class="pull-right">65%</span>
+                                    </div>
+
+                                    <div class="progress progress-mini">
+                                        <div style="width:65%" class="progress-bar"></div>
+                                    </div>
+                                </a>
+                            </li> 
+
+                            <li>
+                                <a href="#">
+                                    <div class="clearfix">
+                                        <span class="pull-left">Hardware Upgrade</span>
+                                        <span class="pull-right">35%</span>
+                                    </div>
+
+                                    <div class="progress progress-mini">
+                                        <div style="width:35%" class="progress-bar progress-bar-danger"></div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <div class="clearfix">
+                                        <span class="pull-left">Unit Testing</span>
+                                        <span class="pull-right">15%</span>
+                                    </div>
+
+                                    <div class="progress progress-mini">
+                                        <div style="width:15%" class="progress-bar progress-bar-warning"></div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <div class="clearfix">
+                                        <span class="pull-left">Bug Fixes</span>
+                                        <span class="pull-right">90%</span>
+                                    </div>
+
+                                    <div class="progress progress-mini progress-striped active">
+                                        <div style="width:90%" class="progress-bar progress-bar-success"></div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="dropdown-footer">
+                                <a href="#">
+                                    See tasks with details
+                                    <i class="ace-icon fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="purple">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="ace-icon fa fa-bell icon-animated-bell"></i>
+                            <span class="badge badge-important">8</span>
+                        </a>
+
+                        <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+                            <li class="dropdown-header">
+                                <i class="ace-icon fa fa-exclamation-triangle"></i>
+                                8 Notifications
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <div class="clearfix">
+                                        <span class="pull-left">
+                                            <i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
+                                            New Comments
+                                        </span>
+                                        <span class="pull-right badge badge-info">+12</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="btn btn-xs btn-primary fa fa-user"></i>
+                                    Bob just signed up as an editor ...
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <div class="clearfix">
+                                        <span class="pull-left">
+                                            <i class="btn btn-xs no-hover btn-success fa fa-shopping-cart"></i>
+                                            New Orders
+                                        </span>
+                                        <span class="pull-right badge badge-success">+8</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <div class="clearfix">
+                                        <span class="pull-left">
+                                            <i class="btn btn-xs no-hover btn-info fa fa-twitter"></i>
+                                            Followers
+                                        </span>
+                                        <span class="pull-right badge badge-info">+11</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="dropdown-footer">
+                                <a href="#">
+                                    See all notifications
+                                    <i class="ace-icon fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="green">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+                            <span class="badge badge-success">5</span>
+                        </a>
+
+                        <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+                            <li class="dropdown-header">
+                                <i class="ace-icon fa fa-envelope-o"></i>
+                                5 Messages
+                            </li>
+
+                            <li class="dropdown-content">
+                                <ul class="dropdown-menu dropdown-navbar">
+                                    <li>
+                                        <a href="#">
+                                            <img src="../../AceTemplate/assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+                                            <span class="msg-body">
+                                                <span class="msg-title">
+                                                    <span class="blue">Alex:</span>
+                                                    Ciao sociis natoque penatibus et auctor ...
+                                                </span>
+
+                                                <span class="msg-time">
+                                                    <i class="ace-icon fa fa-clock-o"></i>
+                                                    <span>a moment ago</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            <img src="../../AceTemplate/assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
+                                            <span class="msg-body">
+                                                <span class="msg-title">
+                                                    <span class="blue">Susan:</span>
+                                                    Vestibulum id ligula porta felis euismod ...
+                                                </span>
+
+                                                <span class="msg-time">
+                                                    <i class="ace-icon fa fa-clock-o"></i>
+                                                    <span>20 minutes ago</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            <img src="../../AceTemplate/assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
+                                            <span class="msg-body">
+                                                <span class="msg-title">
+                                                    <span class="blue">Bob:</span>
+                                                    Nullam quis risus eget urna mollis ornare ...
+                                                </span>
+
+                                                <span class="msg-time">
+                                                    <i class="ace-icon fa fa-clock-o"></i>
+                                                    <span>3:15 pm</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            <img src="../../AceTemplate/assets/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
+                                            <span class="msg-body">
+                                                <span class="msg-title">
+                                                    <span class="blue">Kate:</span>
+                                                    Ciao sociis natoque eget urna mollis ornare ...
+                                                </span>
+
+                                                <span class="msg-time">
+                                                    <i class="ace-icon fa fa-clock-o"></i>
+                                                    <span>1:33 pm</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            <img src="../../AceTemplate/assets/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
+                                            <span class="msg-body">
+                                                <span class="msg-title">
+                                                    <span class="blue">Fred:</span>
+                                                    Vestibulum id penatibus et auctor  ...
+                                                </span>
+
+                                                <span class="msg-time">
+                                                    <i class="ace-icon fa fa-clock-o"></i>
+                                                    <span>10:09 am</span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown-footer">
+                                <a href="inbox.html">
+                                    See all messages
+                                    <i class="ace-icon fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- #section:basics/navbar.user_menu -->
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <img class="nav-user-photo" src="../../AceTemplate/assets/avatars/avatar2.png" alt="Jason's Photo" />
+                            <span class="user-info">
+                                <small>خوش آمدید,</small>
+                                @_UserName
+                            </span>
+
+                            <i class="ace-icon fa fa-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu dropdown-menu-left dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="profile.html">
+                                    <i class="ace-icon fa fa-user"></i>
+                                    تغییر رمز
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href="/Home/ExitProgram">
+                                    <i class="ace-icon fa fa-power-off"></i>
+                                    خروج
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- /section:basics/navbar.user_menu -->
+                </ul>
+            </div>
+
+            <!-- /section:basics/navbar.dropdown -->
+        </div><!-- /.navbar-container -->
+    </div>
+    <!-- /section:basics/navbar.layout -->
+
+    <div class="main-container" id="main-container">
+
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+
+        <!-- #section:basics/sidebar -->
+        <div id="sidebar" class="sidebar responsive">
+            <script type="text/javascript">
+                try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+            </script>
+
+            <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                    <button class="btn btn-success">
+                        <i class="ace-icon fa fa-signal"></i>
+                    </button>
+
+                    <button class="btn btn-info">
+                        <i class="ace-icon fa fa-pencil"></i>
+                    </button>
+
+                    <!-- #section:basics/sidebar.layout.shortcuts -->
+                    <button class="btn btn-warning">
+                        <i class="ace-icon fa fa-users"></i>
+                    </button>
+
+                    <button class="btn btn-danger">
+                        <i class="ace-icon fa fa-cogs"></i>
+                    </button>
+
+                    <!-- /section:basics/sidebar.layout.shortcuts -->
+                </div>
+
+                <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                    <span class="btn btn-success"></span>
+
+                    <span class="btn btn-info"></span>
+
+                    <span class="btn btn-warning"></span>
+
+                    <span class="btn btn-danger"></span>
+                </div>
+            </div><!-- /.sidebar-shortcuts -->
+
+            <ul class="nav nav-list">
+
+                <li class="active">
+                    <a href="/Home/Index" id="Home">
+                        <i class="menu-icon fa fa-tachometer"></i>
+                        <span class="menu-text"> داشبورد </span>
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                @if (sd.Any(x => x == "5" || x == "6" || x == "7" || x == "8" || x == "11" || x == "12" || x == "13" || x == "14" || x == "15" || x == "16" || x == "17" || x == "18" || x == "19" || x == "20" || x == "44"))
+                {
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-desktop"></i>
+                            <span class="menu-text"> اطلاعات اولیه </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            @if (sd.Any(x => x == "5"))
+                            {
+                                <li class="">
+                                    <a href="/TableInterface/Index" id="TableInterface">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        جدول رابط اطلاعات اولیه
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "6"))
+                            {
+                                <li class="">
+                                    <a href="/TrainingCourse/Index" id="TrainingCourse">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        دوره های آموزشی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "7"))
+                            {
+                                <li class="">
+                                    <a href="/Tariff/Index" id="Tariff">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        تعرفه دوره های آموزشی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "8"))
+                            {
+                                <li class="">
+                                    <a href="/Teacher/Index" id="Teacher">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        استاد
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @*@if (sd.Any(x => x == "9"))
+                    {
+                    <li class="">
+                        <a href="/TeacherLevelDate/Index" id="TeacherLevelDate">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            فهرست مدرسین ارزیابی شده
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    }
+                    @if (sd.Any(x => x == "10"))
+                    {
+                    <li class="">
+                        <a href="/Employeme/Index" id="Employeme">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            برگه شناسنامه آموزشی
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    }*@
+                            @if (sd.Any(x => x == "11"))
+                            {
+                                <li class="">
+                                    <a href="/TypeOfEvaluation/Index" id="TypeOfEvaluation">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        انواع معیار ارزیابی (برون سازمانی)
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "12"))
+                            {
+                                <li class="">
+                                    <a href="/MasterRateIt/Index" id="MasterRateIt">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        تعریف ارزشیابی امتیازها
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "13"))
+                            {
+                                <li class="">
+                                    <a href="/RatingEvaluation/Index" id="RatingEvaluation">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        امتیاز ارزشیابی دوره
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "14"))
+                            {
+                                <li class="">
+                                    <a href="/Department/Index" id="Department">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        بخش
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "15"))
+                            {
+                                <li class="">
+                                    <a href="/HoursCertification/Index" id="HoursCertification">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        ساعت صدور گواهینامه
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "16"))
+                            {
+                                <li class="">
+                                    <a href="/NumberSucceed/Index" id="NumberSucceed">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        نمره قبولی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "17"))
+                            {
+                                <li class="">
+                                    <a href="/AbsenceCount/Index" id="AbsenceCount">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        تعیین تعداد غیبت
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "18"))
+                            {
+                                <li class="">
+                                    <a href="/ListResponsibilitiePower/Index" id="ListResponsibilitiePower">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        مسئولیت ها  و اختیارات شغل
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "19"))
+                            {
+                                <li class="">
+                                    <a href="/OJTLevel/Index" id="OJTLevel">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        سطوح مختلف مهارت
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "20"))
+                            {
+                                <li class="">
+                                    <a href="/PostGroup/Index" id="PostGroup">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        سمت گروهها
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "20"))
+                            {
+                                <li class="">
+                                    <a href="/CodingTrainingPage/Index" id="CodingTrainingPage">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        کدینگ برگه های آموزش
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "20"))
+                            {
+                                <li class="">
+                                    <a href="/Supervisor/Index" id="Supervisor">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        سرپرست
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "44"))
+                            {
+                                <li class="">
+                                    <a href="/HardwareEquipment/Index" id="HardwareEquipment">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        تجهیزات سخت افزاری
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (sd.Any(x => x == "9" || x == "10" || x == "21" || x == "22" || x == "23" || x == "25" || x == "26" || x == "27" || x == "28" || x == "29" || x == "36"))
+                {
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-list"></i>
+                            <span class="menu-text"> آموزش </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            @if (sd.Any(x => x == "9"))
+                            {
+                                <li class="">
+                                    <a href="/TeacherLevelDate/Index" id="TeacherLevelDate">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        فهرست مدرسین ارزیابی شده
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "10"))
+                            {
+                                <li class="">
+                                    <a href="/Employeme/Index" id="Employeme">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        برگه شناسنامه آموزشی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "21"))
+                            {
+                                <li class="">
+                                    <a href="/OfferTrainingForJobDate/Index" id="OfferTrainingForJobDate">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        فهرست آموزشهای پیشنهاد شده برای مشاغل
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "22"))
+                            {
+                                <li class="">
+                                    <a href="/TrainingCalendarDate/Index" id="TrainingCalendarDate">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        فهرست تقویم آموزشی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "23"))
+                            {
+                                <li class="">
+                                    <a href="/DesignTrainingCourseDate/Index" id="DesignTrainingCourseDate">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        فهرست طرح دوره آموزشی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @*@if (sd.Any(x => x == "24"))
+                    {
+                    <li class="">
+                        <a href="/ListTrainingCourse/Index" id="ListTrainingCourse">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            لیست دوره های آموزشی
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                    }*@
+                            @if (sd.Any(x => x == "25"))
+                            {
+                                <li class="">
+                                    <a href="/FinancialCommitment/Index" id="FinancialCommitment">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        برگه تضمین و تعهد مالی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "26"))
+                            {
+                                <li class="">
+                                    <a href="/Inventoryjob/Index" id="Inventoryjob">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        پرسشنامه شناسنامه مشاغل
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "27"))
+                            {
+                                <li class="">
+                                    <a href="/AssessmentOfTrainingService/Index" id="AssessmentOfTrainingService">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        ارزیابی تامین کنندگان خدمات آموزشی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "28"))
+                            {
+                                <li class="">
+                                    <a href="/ListOfCorporateJobDate/Index" id="ListOfCorporateJobDate">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        فهرست مشاغل شرکت
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "29"))
+                            {
+                                <li class="">
+                                    <a href="/PlacementTabJobTrainingDate/Index" id="PlacementTabJobTrainingDate">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        فهرست تعیین سطح آموزش حین کار
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "29"))
+                            {
+                                <li class="">
+                                    <a href="/HistoryTrainingUploadPage/Index" id="HistoryTrainingUploadPage">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        بارگذاری فایلهای برگه های آموزشی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+
+
+                            @if (sd.Any(x => x == "36"))
+                            {
+                                <li class="">
+                                    <a href="/OfferTrainingForEmployeeDate/Index" id="OfferTrainingForEmployeeDate">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        فهرست آموزشهای پیشنهاد شده برحسب سال برای کارکنان
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+
+                        </ul>
+                    </li>
+                }
+
+                @if (sd.Any(x => x == "30" || x == "31" || x == "32"))
+                {
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-bar-chart-o"></i>
+                            <span class="menu-text"> نظرسنجی و ارزیابی دوره </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            @if (sd.Any(x => x == "30"))
+                            {
+                                <li class="">
+                                    <a href="form-elements.html">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        پرسشنامه ارزشیابی دوره های آموزشی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "31"))
+                            {
+                                <li class="">
+                                    <a href="form-elements.html">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        برگه ارزشیابی کلی دوره های آموزشی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "32"))
+                            {
+                                <li class="">
+                                    <a href="form-wizard.html">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        پرسشنامه اثر بخشی آموزشهای انجام شده
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+
+                @if (sd.Any(x => x == "39" || x == "40" || x == "41"))
+                {
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-bar-chart-o"></i>
+                            <span class="menu-text"> گزارش گیری واحدآموزش </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            @if (sd.Any(x => x == "39"))
+                            {
+                                <li class="">
+                                    <a href="/ListTrainingCoursesWithAttendances/Index" id="ListTrainingCoursesWithAttendances">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        دوره های طی شده کارمندان به همراه حضور و غیاب
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "40"))
+                            {
+                                <li class="">
+                                    <a href="/HistoryTrainingUploadPage/Index" id="HistoryTrainingUploadPage">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        عنوان مدرک و دوره های کارمندان
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "41"))
+                            {
+                                <li class="">
+                                    <a href="/ReportOfEmployeme/Index" id="ReportOfEmployeme">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        گزارش برگه شناسنامه آموزشی
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+
+                        </ul>
+                    </li>
+                }
+
+                @if (sd.Any(x => x == "33" || x == "34" || x == "35" || x == "37"))
+                {
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa 	fa-cog"></i>
+                            <span class="menu-text"> تنظیمات سیستم </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            @if (sd.Any(x => x == "33"))
+                            {
+                                <li class="">
+                                    <a href="/User/Index" id="User">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        کاربران
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "34"))
+                            {
+                                <li class="">
+                                    <a href="/Menu/Index" id="Menu">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        منو
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "35"))
+                            {
+                                <li class="">
+                                    <a href="/SignatureResponsibility/Index" id="SignatureResponsibility">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        مسئولین امضاء
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                            @if (sd.Any(x => x == "37"))
+                            {
+                                <li class="">
+                                    <a href="/SideSignatory/Index" id="SideSignatory">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        سمت امضاءکنندگان
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+                @if (sd.Any(x => x == "45" || x == "46"))
+                {
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-bar-chart-o"></i>
+                            <span class="menu-text"> فناوری اطلاعات </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            @if (sd.Any(x => x == "45"))
+                            {
+                                <li class="">
+                                    <a href="/HardwareInformation/Index" id="HardwareInformation">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        اطلاعات تجهیرات سخت افزاری
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+
+
+
+            </ul><!-- /.nav-list -->
+            <!-- #section:basics/sidebar.layout.minimize -->
+            <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+                <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+            </div>
+
+            <!-- /section:basics/sidebar.layout.minimize -->
+            <script type="text/javascript">
+                try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+            </script>
+        </div>
+
+        <!-- /section:basics/sidebar -->
+        <div class="main-content">
+            <!-- این متد تمامی قسمت های View را در layout قرار میدهد و به کاربر نمایش میدهد.-->
+            @RenderBody()
+        </div><!-- /.main-content -->
+
+        <div class="footer">
+            <div class="footer-inner">
+                <!-- #section:basics/footer -->
+                <div class="footer-content">
+                    <span class="bigger-120">
+                        <span class="blue bolder"></span>
+                        نرم افزار آموزش مرکز پژوهش متالورژی رازی &copy; 1395
+                    </span>
+                </div>
+
+                <!-- /section:basics/footer -->
+            </div>
+        </div>
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+        </a>
+    </div><!-- /.main-container -->
+    <!-- basic scripts -->
+    <!--[if !IE]> -->
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='../../AceTemplate/assets/js/jquery.min.js'>" + "<" + "/script>");
+    </script>
+
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script type="text/javascript">
+     window.jQuery || document.write("<script src='../../AceTemplate/assets/js/jquery1x.min.js'>"+"<"+"/script>");
+    </script>
+    <![endif]-->
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='../../AceTemplate/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="../../AceTemplate/assets/js/bootstrap.min.js"></script>
+
+
+    <!-- page specific plugin scripts -->
+    <!--[if lte IE 8]>
+      <script src="../../AceTemplate/assets/js/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="../../AceTemplate/assets/js/jquery-ui.custom.min.js"></script>
+    <script src="../../AceTemplate/assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="../../AceTemplate/assets/js/jquery.easypiechart.min.js"></script>
+    <script src="../../AceTemplate/assets/js/jquery.sparkline.min.js"></script>
+    <script src="../../AceTemplate/assets/js/flot/jquery.flot.min.js"></script>
+    <script src="../../AceTemplate/assets/js/flot/jquery.flot.pie.min.js"></script>
+    <script src="../../AceTemplate/assets/js/flot/jquery.flot.resize.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="../../AceTemplate/assets/js/ace-elements.min.js"></script>
+    <script src="../../AceTemplate/assets/js/ace.min.js"></script>
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('.easy-pie-chart.percentage').each(function () {
+                var $box = $(this).closest('.infobox');
+                var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
+                var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
+                var size = parseInt($(this).data('size')) || 50;
+                $(this).easyPieChart({
+                    barColor: barColor,
+                    trackColor: trackColor,
+                    scaleColor: false,
+                    lineCap: 'butt',
+                    lineWidth: parseInt(size / 10),
+                    animate: /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase()) ? false : 1000,
+                    size: size
+                });
+            })
+
+            $('.sparkline').each(function () {
+                var $box = $(this).closest('.infobox');
+                var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
+                $(this).sparkline('html',
+                                 {
+                                     tagValuesAttribute: 'data-values',
+                                     type: 'bar',
+                                     barColor: barColor,
+                                     chartRangeMin: $(this).data('min') || 0
+                                 });
+            });
+
+
+            //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
+            //but sometimes it brings up errors with normal resize event handlers
+            $.resize.throttleWindow = false;
+
+            var placeholder = $('#piechart-placeholder').css({ 'width': '90%', 'min-height': '150px' });
+            var data = [
+              { label: "social networks", data: 38.7, color: "#68BC31" },
+              { label: "search engines", data: 24.5, color: "#2091CF" },
+              { label: "ad campaigns", data: 8.2, color: "#AF4E96" },
+              { label: "direct traffic", data: 18.6, color: "#DA5430" },
+              { label: "other", data: 10, color: "#FEE074" }
+            ]
+            function drawPieChart(placeholder, data, position) {
+                $.plot(placeholder, data, {
+                    series: {
+                        pie: {
+                            show: true,
+                            tilt: 0.8,
+                            highlight: {
+                                opacity: 0.25
+                            },
+                            stroke: {
+                                color: '#fff',
+                                width: 2
+                            },
+                            startAngle: 2
+                        }
+                    },
+                    legend: {
+                        show: true,
+                        position: position || "ne",
+                        labelBoxBorderColor: null,
+                        margin: [-30, 15]
+                    }
+                  ,
+                    grid: {
+                        hoverable: true,
+                        clickable: true
+                    }
+                })
+            }
+            drawPieChart(placeholder, data);
+
+            /**
+            we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
+            so that's not needed actually.
+            */
+            placeholder.data('chart', data);
+            placeholder.data('draw', drawPieChart);
+
+
+            //pie chart tooltip example
+            var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
+            var previousPoint = null;
+
+            placeholder.on('plothover', function (event, pos, item) {
+                if (item) {
+                    if (previousPoint != item.seriesIndex) {
+                        previousPoint = item.seriesIndex;
+                        var tip = item.series['label'] + " : " + item.series['percent'] + '%';
+                        $tooltip.show().children(0).text(tip);
+                    }
+                    $tooltip.css({ top: pos.pageY + 10, left: pos.pageX + 10 });
+                } else {
+                    $tooltip.hide();
+                    previousPoint = null;
+                }
+
+            });
+
+
+
+
+
+
+            var d1 = [];
+            for (var i = 0; i < Math.PI * 2; i += 0.5) {
+                d1.push([i, Math.sin(i)]);
+            }
+
+            var d2 = [];
+            for (var i = 0; i < Math.PI * 2; i += 0.5) {
+                d2.push([i, Math.cos(i)]);
+            }
+
+            var d3 = [];
+            for (var i = 0; i < Math.PI * 2; i += 0.2) {
+                d3.push([i, Math.tan(i)]);
+            }
+
+
+            var sales_charts = $('#sales-charts').css({ 'width': '100%', 'height': '220px' });
+            $.plot("#sales-charts", [
+                { label: "Domains", data: d1 },
+                { label: "Hosting", data: d2 },
+                { label: "Services", data: d3 }
+            ], {
+                hoverable: true,
+                shadowSize: 0,
+                series: {
+                    lines: { show: true },
+                    points: { show: true }
+                },
+                xaxis: {
+                    tickLength: 0
+                },
+                yaxis: {
+                    ticks: 10,
+                    min: -2,
+                    max: 2,
+                    tickDecimals: 3
+                },
+                grid: {
+                    backgroundColor: { colors: ["#fff", "#fff"] },
+                    borderWidth: 1,
+                    borderColor: '#555'
+                }
+            });
+
+
+            $('#recent-box [data-rel="tooltip"]').tooltip({ placement: tooltip_placement });
+            function tooltip_placement(context, source) {
+                var $source = $(source);
+                var $parent = $source.closest('.tab-content')
+                var off1 = $parent.offset();
+                var w1 = $parent.width();
+
+                var off2 = $source.offset();
+                //var w2 = $source.width();
+
+                if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+                return 'left';
+            }
+
+
+            $('.dialogs,.comments').ace_scroll({
+                size: 300
+            });
+
+
+            //Android's default browser somehow is confused when tapping on label which will lead to dragging the task
+            //so disable dragging when clicking on label
+            var agent = navigator.userAgent.toLowerCase();
+            if ("ontouchstart" in document && /applewebkit/.test(agent) && /android/.test(agent))
+                $('#tasks').on('touchstart', function (e) {
+                    var li = $(e.target).closest('#tasks li');
+                    if (li.length == 0) return;
+                    var label = li.find('label.inline').get(0);
+                    if (label == e.target || $.contains(label, e.target)) e.stopImmediatePropagation();
+                });
+
+            $('#tasks').sortable({
+                opacity: 0.8,
+                revert: true,
+                forceHelperSize: true,
+                placeholder: 'draggable-placeholder',
+                forcePlaceholderSize: true,
+                tolerance: 'pointer',
+                stop: function (event, ui) {
+                    //just for Chrome!!!! so that dropdowns on items don't appear below other items after being moved
+                    $(ui.item).css('z-index', 'auto');
+                }
+            }
+            );
+            $('#tasks').disableSelection();
+            $('#tasks input:checkbox').removeAttr('checked').on('click', function () {
+                if (this.checked) $(this).closest('li').addClass('selected');
+                else $(this).closest('li').removeClass('selected');
+            });
+
+
+            //show the dropdowns on top or bottom depending on window height and menu position
+            $('#task-tab .dropdown-hover').on('mouseenter', function (e) {
+                var offset = $(this).offset();
+
+                var $w = $(window)
+                if (offset.top > $w.scrollTop() + $w.innerHeight() - 100)
+                    $(this).addClass('dropup');
+                else $(this).removeClass('dropup');
+            });
+
+
+        })
+    </script>
+
+    <!-- the following scripts are used in demo only for onpage help and you don't need them -->
+    <link rel="stylesheet" href="../../AceTemplate/assets/css/ace.onpage-help.css" />
+    <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+
+    <script type="text/javascript"> ace.vars['base'] = '..'; </script>
+    <script src="../../AceTemplate/assets/js/ace/elements.onpage-help.js"></script>
+    <script src="../../AceTemplate/assets/js/ace/ace.onpage-help.js"></script>
+    <script src="../docs/assets/js/rainbow.js"></script>
+    <script src="../docs/assets/js/language/generic.js"></script>
+    <script src="../docs/assets/js/language/html.js"></script>
+    <script src="../docs/assets/js/language/css.js"></script>
+    <script src="../docs/assets/js/language/javascript.js"></script>
+
+    <!-- Visual Studio Browser Link -->
+    <script type="application/json" id="__browserLink_initializationData">
+        {"appName":"Firefox","requestId":"cec6af10b6ee406c888f02a8216a64ee"}
+    </script>
+    <script type="text/javascript" src="http://localhost:2942/eacf44d35bb7497ba5a39bf2b701a5e1/browserLink" async="async"></script>
+    <!-- End Browser Link -->
+
+</body>
+
+</html>

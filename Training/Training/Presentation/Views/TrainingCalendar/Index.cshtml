@@ -1,0 +1,414 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.TrainingCalendarEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        var _TrainingCalendarDateId = '@ViewBag.TrainingCalendarDateId';
+        var ReportNameId = '@ViewBag.ReportNameId';
+
+        function SaveData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.TrainingCalendarDateId = _TrainingCalendarDateId;
+            myObject.CourseName = $("#CourseName").val();
+            myObject.TeacherId = $("#TeacherId").val();
+            myObject.Participantlevel = $("#Participantlevel").val();
+            myObject.Description = $("#Description").val();
+            myObject.TrainingCalendarDatestr = $("#TrainingCalendarDatestr").val();
+            myObject.TrainingCalendarDay = $("#TrainingCalendarDay").val();
+            myObject.TableTypeTrainingCalendarDateId = $("#TableTypeTrainingCalendarDateId").val();
+
+            var url = "/TrainingCalendar/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true)
+                {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else
+                {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListTrainingCalendar(1);
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+        function EditData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.TrainingCalendarId = $("#TrainingCalendarId").val();
+            myObject.TrainingCalendarDateId = _TrainingCalendarDateId;
+            myObject.CourseName = $("#CourseName").val();
+            myObject.TeacherId = $("#TeacherId").val();
+            myObject.Participantlevel = $("#Participantlevel").val();
+            myObject.Description = $("#Description").val();
+            myObject.TrainingCalendarDatestr = $("#TrainingCalendarDatestr").val();
+            myObject.TrainingCalendarDay = $("#TrainingCalendarDay").val();
+            myObject.TableTypeTrainingCalendarDateId = $("#TableTypeTrainingCalendarDateId").val();
+
+            var url = "/TrainingCalendar/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListTrainingCalendar(1);
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataTrainingCalendar() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/TrainingCalendar/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListTrainingCalendar();
+            });
+        }
+        function _GetListTrainingCalendar(typesearch) {
+
+            debugger;
+            //typesearch { WithoutParameter =1, WithParameter = 2}
+            if (typesearch == 1) {
+                var myObjectSearch = new Object();
+                myObjectSearch.CourseName = $("#CourseNameSearch").val();
+                myObjectSearch.TableTypeTrainingCalendarDateId = $("#TableTypeTrainingCalendarDateIdSearch").val();
+                myObjectSearch.TrainingCalendarDateId = _TrainingCalendarDateId;
+                myObjectSearch.typesearch = 1;
+            }
+            else if (typesearch == 2) {
+                var myObjectSearch = new Object();
+                myObjectSearch.CourseName = $("#CourseNameSearch").val();
+                myObjectSearch.TableTypeTrainingCalendarDateId = $("#TableTypeTrainingCalendarDateIdSearch").val();
+                myObjectSearch.TrainingCalendarDateId = _TrainingCalendarDateId;
+                myObjectSearch.typesearch = 2;
+            }
+
+            var url = "/TrainingCalendar/_GetListTrainingCalendar"; // the url to the controller
+            $.post(url, myObjectSearch, function (data) {
+                $('#theGrid').html(data);
+            });
+
+            //$.ajax({
+            //    url: "/TrainingCalendar/_GetListTrainingCalendar/?Id=" + _TrainingCalendarDateId,
+            //    type: 'GET',
+            //    datatype: 'json',
+            //    success: function (data) {
+            //        $('#theGrid').html(data);
+            //    },
+            //    error: function (jqXHR, textStatus, errorThrown) {
+            //        alert(errorThrown);
+            //    }
+            //});
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#CourseName').val() == '') {
+                $('#CourseName').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#CourseName').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#TeacherId').val() == '') {
+                $('#TeacherId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#TeacherId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#Participantlevel').val() == '') {
+                $('#Participantlevel').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Participantlevel').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#TrainingCalendarDatestr').val() == '') {
+                $('#TrainingCalendarDatestr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#TrainingCalendarDatestr').css('border-color', '#d5d5d5');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        function PrintReport() {
+
+            $("#ajaxloader").css("display", "inline");
+            location.href = "/TrainingCalendar/Print";
+            //location.href = "/Supplier/PrintSupplier?ID=" + fieldofworkid + "&NameSupplier=" + Name;
+        }
+
+        $(document).ready(function () {
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on('click', '#btnAddNew', function () {
+                $("div#divLoading").addClass('show');
+                $.get('/TrainingCalendar/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت تقویم آموزشی</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+            });
+
+            $(document).on('click', '.BtnEdit', function () {
+                $("div#divLoading").addClass('show');
+                var TrainingCalendarId = $(this).attr('data-Id');
+                $.get('/TrainingCalendar/Edit', "ID=" + TrainingCalendarId, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ویرایش تقویم آموزشی</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete', function () {
+                $("div#divLoading").addClass('show');
+                var TrainingCalendarId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: TrainingCalendarId, viewname: ViewName }, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم حذف تقویم آموزشی</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+
+            });
+
+            $(document).on('click', '#btnPrint', function () {
+                PrintReport();
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">برگه تقویم آموزشی</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxTrainingCalendarSearch">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active bigger-150"><a href="#">جستجو</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconTrainingCalendarSearch"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;height:110px" id="WidgetBodyTrainingCalendarSearch">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-6">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">نام : </label>
+                                <div class="col-md-10">
+                                    @Html.TextBox("CourseNameSearch", null, new { @id = "CourseNameSearch", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام" })
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-xs-6">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نوع آموزش: </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("TableTypeTrainingCalendarDateIdSearch", new MultiSelectList(ViewBag.TableInterfaceValueIdTypeTrainingCalendarDateId, "Value", "Text"), "-- نوع آموزش را انتخاب نمائید --", new { @id = "TableTypeTrainingCalendarDateIdSearch", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-xs-12">
+                        <div class="col-md-offset-10">
+                            <button onclick="_GetListTrainingCalendar(2)" class="btn btn-info btn-white btn-round" type="button">
+                                <i class="ace-icon fa fa-search bigger-125"></i>
+                                جستجو
+                            </button>
+                            <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-10" style="margin-bottom: 5px">
+
+                @*<a href="/TrainingCalendar/Print/@ViewBag.TrainingCalendarDateId" data-original-title="پرینت فهرست تقویم آموزشی" data-placement="top" data-toggle="tooltip" data-Id="@ViewBag.TrainingCalendarDateId"
+                   class="btn btn-xs btn-yellow tooltip1" type="button">
+                    <i class="ace-icon fa fa-print bigger-120"></i>
+                    پرینت
+                </a>*@
+
+                <button id="btnPrint" class="btn btn-success btn-white btn-round" type="button" style="float:left">
+                    <i class="ace-icon fa fa-print bigger-125"></i>
+                    پرینت
+                </button>
+
+                &nbsp; &nbsp; &nbsp;
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+
+                &nbsp; &nbsp; &nbsp;
+                <a href="/TrainingCalendarDate/Index" class="btn btn-danger btn-white btn-round" type="button">
+                    <i class="ace-icon fa fa-check bigger-125"></i>
+                    بازگشت
+                </a>
+
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListTrainingCalendar", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

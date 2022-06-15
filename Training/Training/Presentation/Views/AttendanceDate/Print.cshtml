@@ -1,0 +1,117 @@
+﻿
+@using Stimulsoft.Report.Mvc;
+@{Layout = null;}
+@{
+    ViewBag.Title = "Print";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>عنوان</title>
+</head>
+<body style="direction:ltr !important">
+    @*@Html.Stimulsoft().StiMvcViewer(new StiMvcViewerOptions()
+        {
+            Theme = StiTheme.Office2013,
+            ActionGetReportSnapshot = "StiReport",
+            ActionViewerEvent = "ViewerEvent",
+            ToolbarBackgroundColor = System.Drawing.Color.Silver,
+
+
+        })*@
+
+
+    @Html.Stimulsoft().StiMvcViewer(new StiMvcViewerOptions()
+{
+    /*
+    Server =
+    {
+
+        CacheMode = StiServerCacheMode.StringCache,
+        UseCacheForResources =true,
+        UseRelativeUrls=true,
+
+        //CacheMode=Stimulsoft.Report.Web.StiServerCacheMode.ObjectSession
+    },
+    */
+    Actions =
+    {
+
+        GetReport = "StiReport",
+        ViewerEvent = "ViewerEvent",
+    },
+    Appearance =
+    {
+        InterfaceType = Stimulsoft.Report.Web.StiInterfaceType.Auto,
+        ScrollbarsMode = true,
+        ShowTooltips = false
+    },
+    Exports =
+        {
+        ShowExportToDocument = true,
+
+        ShowExportToPdf = true,
+
+        ShowExportToXps = true,
+
+        ShowExportToPowerPoint = true,
+
+        ShowExportToHtml = true,
+
+        ShowExportToHtml5 = true,
+
+        ShowExportToMht = true,
+
+        ShowExportToText = true,
+
+        ShowExportToRtf = true,
+
+        ShowExportToWord2007 = true,
+
+        ShowExportToOpenDocumentWriter = true,
+
+        ShowExportToExcel = true,
+
+        ShowExportToExcelXml = true,
+
+        ShowExportToExcel2007 = true,
+
+        ShowExportToOpenDocumentCalc = true,
+
+        ShowExportToCsv = true,
+
+        ShowExportToDbf = true,
+
+        ShowExportToXml = true,
+
+        ShowExportToDif = true,
+
+        ShowExportToSylk = true,
+
+        ShowExportToImageBmp = true,
+
+        ShowExportToImageGif = true,
+
+        ShowExportToImageJpeg = true,
+
+        ShowExportToImagePcx = true,
+
+        ShowExportToImagePng = true,
+
+        ShowExportToImageTiff = true,
+
+        ShowExportToImageMetafile = true,
+
+        ShowExportToImageSvg = true,
+
+        ShowExportToImageSvgz = true
+
+}
+
+})
+
+
+
+</body>
+</html>

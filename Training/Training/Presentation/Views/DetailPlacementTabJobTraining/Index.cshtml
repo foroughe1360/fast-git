@@ -1,0 +1,201 @@
+﻿@model IEnumerable<InterfaceEntity.DetailPlacementTabJobTrainingEntity>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <script type="text/javascript">
+        var PlacementTabJobTrainingId = '@ViewBag.PlacementTabJobTrainingId';
+
+        $("#btnAddDetailPlacementTabJobTraining").click(function () {
+            $("#DetailPlacementTabJobTrainingId").val('');
+            $("#PlacementTabJobTrainingId").val('');
+            $("#Title").val('');
+            $("#FinalComment").val('');
+            $("#NumberOfHours").val('');
+            $("#OJTLevelId").val('');
+            $("#MessageOperation").css("display", "none");
+            $('#Title').css('border-color', '#d5d5d5');
+            $('#FinalComment').css('border-color', '#d5d5d5');
+            $('#NumberOfHours').css('border-color', '#d5d5d5');
+            $('#OJTLevelId').css('border-color', '#d5d5d5');
+
+        });
+
+        $("#btnSaveDetailPlacementTabJobTraining").click(function () {
+            if ($("#DetailPlacementTabJobTrainingId").val() == "") {
+                SaveDataDetailPlacementTabJobTraining();
+            }
+            else {
+                EditDataDetailPlacementTabJobTraining();
+            }
+        });
+
+        $(document).on('click', '.btnEditDetailPlacementTabJobTraining', function () {
+            debugger;
+            $("#WidgetBoxDetailPlacementTabJobTraining").removeClass("collapsed");
+            $("#AceIconDetailPlacementTabJobTraining").removeClass("fa-chevron-down");
+            $("#AceIconDetailPlacementTabJobTraining").addClass("fa-chevron-up");
+            $("#WidgetBodyDetailPlacementTabJobTraining").css("display", "block");
+
+            $("#DetailPlacementTabJobTrainingId").val($(this).attr('data-DetailPlacementTabJobTrainingId'));
+            $("#PlacementTabJobTrainingId").val($(this).attr('data-PlacementTabJobTrainingId'));
+            $("#Title").val($(this).attr('data-Title'));
+            $("#FinalComment").val($(this).attr('data-FinalComment'));
+            $("#NumberOfHours").val($(this).attr('data-NumberOfHours'));
+            $("#OJTLevelId").val($(this).attr('data-OJTLevelId'));
+        });
+
+        $(document).on('click', '.btnDeleteDetailPlacementTabJobTraining', function () {
+            var ID = $(this).attr('data-DetailPlacementTabJobTrainingId');
+            DeleteDataDetailPlacementTabJobTraining(ID);
+        });
+
+    </script>
+</head>
+
+<body>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxDetailPlacementTabJobTraining">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">ثبت / ویرایش</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconDetailPlacementTabJobTraining"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="widget-body" style="display: none;" id="WidgetBodyDetailPlacementTabJobTraining">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+                      
+                            <div class="form-group"  hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد عنوان آموزش مورد نظر : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("DetailPlacementTabJobTrainingId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد عنوان آموزش مورد نظر" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد تعیین سطح آموزش حین کار : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("PlacementTabJobTrainingId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد تعیین  آموزش حین کار" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان آموزش حین کار: </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("Title", null, new { @Value = ViewBag.Title, @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "عنوان آموزش حین کار" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تعداد ساعت ها: </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("NumberOfHours", null, new { @Value = ViewBag.NumberOfHours, @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "تعداد ساعت ها" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">شماره سطح: </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("OJTLevelId", new MultiSelectList(ViewBag.OJTLevelId, "Value", "Text"), "-- شماره سطح را انتخاب نمائید --", new { @id = "OJTLevelId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نظر نهایی مدیر/سرپرست: </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("FinalComment", null, new { @Value = ViewBag.FinalComment, @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نظر نهایی مدیر/سرپرست" })
+                                </div>
+                            </div>
+                            <div class="breadcrumbs" id="breadcrumbs">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button id="btnAddDetailPlacementTabJobTraining" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        جدید
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button id="btnSaveDetailPlacementTabJobTraining" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        ذخیره
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                        <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                        بازگشت
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGridDetailPlacementTabJobTraining">
+                        @Html.Partial("_GetListDetailPlacementTabJobTraining", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

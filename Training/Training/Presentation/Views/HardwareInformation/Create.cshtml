@@ -1,0 +1,253 @@
+﻿
+@model InterfaceEntity.HardwareInformationEntity
+@using Bussiness
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        function GetDepartment(_unitscenterid) {
+            $('#SectionId').empty();
+            var procemessage = "<option value=''> لطفا صبر کنید ....</option>";
+            $("#DepartmentId").html(procemessage).show();
+            var url = "/Department/GetDepartmentByunitscenterid/";
+
+            $.ajax({
+                url: url,
+                data: { unitscenterid: _unitscenterid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>-- نام بخش را انتخاب نمائبد --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#DepartmentId").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+        function GetSection(_departmentid) {
+            var procemessage = "<option value=''> لطفا صبر کنید ....</option>";
+            $("#SectionId").html(procemessage).show();
+            var url = "/Section/GetSectionByuDepartmentId/";
+
+            $.ajax({
+                url: url,
+                data: { departmentid: _departmentid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>-- نام قسمت را انتخاب نمائبد --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#SectionId").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+        function GetEmployeme(_postgroupid) {
+            var procemessage = "<option value=''> لطفا صبر کنید ....</option>";
+            $("#EmployemeId").html(procemessage).show();
+            var url = "/Employeme/GetEmployemeByPostGroupId/";
+            debugger;
+
+            $.ajax({
+                url: url,
+                data: { postgroupid: _postgroupid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>-- نام کارمند را انتخاب نمائبد --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#EmployemeId").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+        function GetHardwareEquipmentModel(_hardwareequipmentid) {
+            var procemessage = "<option value=''> لطفا صبر کنید ....</option>";
+            $("#HardwareEquipmentModelId").html(procemessage).show();
+            var url = "/HardwareEquipment/GetHardwareEquipmentModel/";
+            debugger;
+           
+            $.ajax({
+                url: url,
+                data: { hardwareequipmentid: _hardwareequipmentid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>-- مدل و شماره سریال را انتخاب نمائبد --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#HardwareEquipmentModelId").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+        new AMIB.persianCalendar('DeliveryDate');
+
+        $("#PostGroupId").select2();
+        $("#HardwareEquipmentId").select2();
+        $("#HardwareEquipmentModelId").select2();
+
+    </script>
+</head>
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+
+                        <div class="form-group">
+                            <label id="lblUnitSCenterId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام واحد : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("UnitSCenterId", new MultiSelectList(ViewBag.TableInterfaceValueIdUnitSCenter, "Value", "Text"), "-- نام واحد را انتخاب نمائید --", new { @id = "UnitSCenterId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @onchange = "javascript:GetDepartment(this.value);" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblDepartmentId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام بخش : </label>
+                            <div class="col-md-9">
+                                <select id="DepartmentId" name="DepartmentId" class="col-xs-10 col-sm-5 col-md-10 fs" onchange="javascript: GetSection(this.value);"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblSectionId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام قسمت: </label>
+                            <div class="col-md-9">
+                                <select id="SectionId" name="SectionId" class="col-xs-10 col-sm-5 col-md-10 fs"></select>
+                                @Html.ValidationMessageFor(model => model.SectionId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblPostGroupId" class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان شغل: </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("PostGroupId", new MultiSelectList(ViewBag.PostGroupId, "Value", "Text"), "-- عنوان شغل را انتخاب نمائید --", new { @id = "PostGroupId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @onchange = "javascript:GetEmployeme(this.value);" })
+                                @Html.ValidationMessageFor(model => model.PostGroupId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblEmployemeId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام کارمند: </label>
+                            <div class="col-md-9">
+                                <select id="EmployemeId" name="EmployemeId" class="col-xs-10 col-sm-5 col-md-10 fs"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">شماره ID : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NetworkID, new { @id = "NetworkID", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "شماره ID " })
+                                @Html.ValidationMessageFor(model => model.NetworkID)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">شماره IP : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NetworkIP, new { @id = "NetworkIP", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "شماره IP " })
+                                @Html.ValidationMessageFor(model => model.NetworkIP)
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نام تجهیز : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("HardwareEquipmentId", new MultiSelectList(ViewBag.TableInterfaceValueIdHardwareEquipmentId, "Value", "Text"), "-- نوع تجهیز را انتخاب نمائید --", new { @id = "HardwareEquipmentId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @onchange = "javascript:GetHardwareEquipmentModel(this.value);" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label id="lblHardwareEquipmentModelId" class="col-sm-3 control-label no-padding-right" for="form-field-1">مدل و سریال تجهیز  </label>
+                            <div class="col-md-9">
+                                <select id="HardwareEquipmentModelId" name="HardwareEquipmentModelId" class="col-xs-10 col-sm-5 col-md-10 fs"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblDeliveryDate" class="col-sm-3 control-label no-padding-right" for="form-field-1">تاریخ تحویل : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.DeliveryDate, new { @id = "DeliveryDate", @class = "col-xs-10 col-sm-5 col-md-10 fs pdate align-right ", @placeholder = "تاریخ تحویل" })
+                                @Html.ValidationMessageFor(model => model.DeliveryDate)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblDescriptions" class="col-sm-3 control-label no-padding-right" for="form-field-1">  توضیحات: </label>
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(model => model.Descriptions, 5, 55, new { @id = "Descriptions", @class = "col-xs-10 col-sm-5 col-md-10  fs", @placeholder = " توضیحات" })
+                                @Html.ValidationMessageFor(model => model.Descriptions)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <div class="col-md-offset-3">
+                                <button id="btnSave" onclick="SaveData()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+</body>
+
+</html>
+
+
+

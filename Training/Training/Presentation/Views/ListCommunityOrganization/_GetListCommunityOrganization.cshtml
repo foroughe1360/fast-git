@@ -1,0 +1,47 @@
+﻿@model IEnumerable<InterfaceEntity.ListCommunityOrganizationEntity>
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th>عوامل و شرایط ایمنی و بهداشت شغل</th>
+            <th class="center"><label class="position-relative"><input class="ace" type="checkbox" id="selectall"><span class="lbl"></span></label></th>
+        </tr>
+    </thead>
+    @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td class="center">
+                    <label class="position-relative">
+                        @i
+                    </label>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ListCommunityOrganizationName)
+                </td>
+                <td class="center">
+                    <div class="hidden-sm hidden-xs btn-group">
+
+                        @if (item.ListCommunityOrganizationState == true)
+                        {
+                            <input type="checkbox" checked="checked" data-ListCommunityOrganizationId="@item.ListCommunityOrganizationId" data-InventoryjobsId="@item.InventoryjobsId" data-CommunityOrganizationsId="@item.CommunityOrganizationsId" id="chkSelect" name="myoption[]" class="ace case" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" data-ListCommunityOrganizationId="@item.ListCommunityOrganizationId" data-InventoryjobsId="@item.InventoryjobsId" data-CommunityOrganizationsId="@item.CommunityOrganizationsId" id="chkSelect" name="myoption[]" class="ace case" />
+                        }
+                        <span class="lbl"></span>
+
+                    </div>
+                </td>
+            </tr>
+            i++;
+        }
+    }
+</table>
+

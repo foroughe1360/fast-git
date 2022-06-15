@@ -1,0 +1,462 @@
+﻿
+@model IEnumerable<InterfaceEntity.FinancialCommitmentEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="text/javascript">
+        var TrainingCourseId = '@ViewBag.TrainingCourseId';
+
+        //Operation FinancialCommitment-------------------------
+        function SaveDataFinancialCommitment() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.TrainingCourseId = $("#TrainingCourseId").val();
+            //myObject.TrainingCourseId = TrainingCourseId;
+
+            myObject.TrainingVenueId = $("#TrainingVenueId").val();
+            myObject.AmountPierced = $("#AmountPierced").val();
+            myObject.TimeEmployment = $("#TimeEmployment").val();
+            myObject.FromDateStr = $("#FromDateStr").val();
+            myObject.ToDateStr = $("#ToDateStr").val();
+
+            var url = "/FinancialCommitment/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                //_GetListFinancialCommitment();
+                _GetListFinancialCommitment(1);
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditDataFinancialCommitment() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.FinancialCommitmentId = $("#FinancialCommitmentId").val();
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.TrainingCourseId = $("#TrainingCourseId").val();
+            myObject.TrainingVenueId = $("#TrainingVenueId").val();
+            myObject.AmountPierced = $("#AmountPierced").val();
+            myObject.TimeEmployment = $("#TimeEmployment").val();
+            myObject.FromDateStr = $("#FromDateStr").val();
+            myObject.ToDateStr = $("#ToDateStr").val();
+
+            var url = "/FinancialCommitment/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                //_GetListFinancialCommitment();
+                _GetListFinancialCommitment(1);
+
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataFinancialCommitment() {
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/FinancialCommitment/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                //_GetListFinancialCommitment();
+                _GetListFinancialCommitment(1);
+
+            });
+
+        }
+        function _GetListFinancialCommitment(typesearch) {
+            //typesearch { WithoutParameter =1, WithParameter = 2}
+            if (typesearch == 1) {
+                var myObjectSearch = new Object();
+                myObjectSearch.EmployemesName = $("#EmployemesNameSearch").val();
+                myObjectSearch.CheckFinancialCommitment = $("#StateSearch").val();
+                myObjectSearch.UserState = $("#UserStateSearch").val();
+                myObjectSearch.typesearch = 1;
+            }
+            else if (typesearch == 2) {
+                debugger;
+                var myObjectSearch = new Object();
+                myObjectSearch.EmployemesName = $("#EmployemesNameSearch").val();
+                myObjectSearch.CheckFinancialCommitment = $("#StateSearch").val();
+                myObjectSearch.UserState = $("#UserStateSearch").val();
+                myObjectSearch.typesearch = 2;
+            }
+
+            var url = "/FinancialCommitment/_GetListFinancialCommitment"; // the url to the controller
+            $.post(url, myObjectSearch, function (data) {
+                $('#theGrid').html(data);
+            });
+        }
+
+        
+
+        //function _GetListDesignTrainingCourse() {
+        //    $.ajax({
+        //        url: "/FinancialCommitment/_GetListFinancialCommitment",
+        //        type: 'GET',
+        //        datatype: 'json',
+        //        data: { ID: TrainingCourseId },
+        //        success: function (data) {
+        //            $('#theGrid').html(data);
+        //        },
+        //        error: function (jqXHR, textStatus, errorThrown) {
+        //            alert(errorThrown);
+        //        }
+        //    });
+        //}
+
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#EmployemeId').val() == '') {
+                $('#lblEmployemeId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblEmployemeId').css('color', 'black');
+            }
+
+            if ($('#TrainingCourseId').val() == '') {
+                $('#lblTrainingCourseId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblTrainingCourseId').css('color', 'black');
+            }
+
+            if ($('#TrainingVenueId').val() == '') {
+                $('#lblTrainingVenueId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblTrainingVenueId').css('color', 'black');
+            }
+
+            if ($('#AmountPierced').val() == '') {
+                $('#lblAmountPierced').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblAmountPierced').css('color', 'black');
+            }
+
+            if ($('#TimeEmployment').val() == '') {
+                $('#lblTimeEmployment').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblTimeEmployment').css('color', 'black');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        //----------------------------------------
+
+        $(document).ready(function () {
+
+           $(document).on('mousemove', '.tooltip1', function () {
+               $('.tooltip1').tooltip();
+           });
+
+            $(document).on('click', '#btnAddNew', function () {
+
+                $("div#divLoading").addClass('show');
+  
+                $.get('/FinancialCommitment/Create',  function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>تضمین و تعهد مالی ،(آموزش)</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+            });
+
+
+            $(document).on('click', '.BtnFinancialCommitment', function () {
+                $("div#divLoading").addClass('show');
+
+                var TrainingCourseId = TrainingCourseId;
+                var DesignTrainingCourseId = $(this).attr('data-DesignTrainingCourseId');
+           
+                alert("BtnFinancialCommitment");
+
+                $.get('/FinancialCommitment/Index', { ID: TrainingCourseId, designtrainingcourseid: DesignTrainingCourseId}, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<spanتنظیم تاریخ  &nbsp;&nbsp; </span>");// + 'تنظیم تاریخ -' + ' ' + EmployemeName);// + EmployemeName);
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+           $(document).on('click', '.BtnEdit',function () {
+                $("div#divLoading").addClass('show');
+                var FinancialCommitmentld = $(this).attr('data-Id');
+                $.get('/FinancialCommitment/Edit', "ID=" + FinancialCommitmentld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>تضمین و تعهد مالی ،(آموزش)</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+           $(document).on('click', '.BtnDelete',function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>تضمین و تعهد مالی ،( آموزش)</span>");
+                var FinancialCommitmentId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', {id:FinancialCommitmentId,viewname:ViewName}, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        @*<script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>*@
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">تضمین و تعهد مالی </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+
+    <div class="widget-box collapsed" id="WidgetBoxEmployemeSearch">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active bigger-150"><a href="#">جستجو</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEmployemeSearch"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="widget-body" style="display: none;height:150px" id="WidgetBodyEmployemeSearch">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+
+                    <div class="col-xs-4">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">نام کارمند : </label>
+                                <div class="col-md-10">
+                                    @Html.TextBox("EmployemesNameSearch", null, new { @id = "EmployemesNameSearch", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام" })
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">وضعیت اعتبار سفته : </label>
+                                <div class="col-md-10">
+                                    <select id="StateSearch" class="col-xs-10 col-sm-5 col-md-10 fs">
+                                        <option value="-1">-- وضعیت اعتبار سفته --</option>
+                                        <option value="0">--</option>
+                                        <option value="1">بدهکار</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                             <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">وضعیت شغلی : </label>
+                                <div class="col-md-10">
+                                    <select id="UserStateSearch" class="col-xs-10 col-sm-5 col-md-10 fs">
+                                        <option value="-1">-- وضعیت شغلی را انتخاب نمائبد --</option>
+                                        <option value="1">فعال</option>
+                                        <option value="0">غیر فعال</option>
+                                    </select>
+                                    @*@Html.DropDownList("DepartmentSearch", new MultiSelectList(ViewBag.DepartmentId, "Value", "Text"), "-- نام بخش را انتخاب نمائبد --", new { @id = "DepartmentSearch", @class = "col-xs-10 col-sm-5 col-md-10 fs" })*@
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-xs-12">
+                        <div class="col-md-offset-10">
+                            <button onclick="_GetListFinancialCommitment(2)" class="btn btn-info btn-white btn-round" type="button">
+                                <i class="ace-icon fa fa-search bigger-125"></i>
+                                جستجو
+                            </button>
+                            <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-10" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+                &nbsp; &nbsp; &nbsp;
+                <a href="/DesignTrainingCourse/Index/@ViewBag.TrainingCourseId" class="btn btn-danger btn-white btn-round">
+                    <i class="ace-icon fa fa-undo bigger-125"></i>
+                    برگشت
+                </a>
+            </div>
+
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListFinancialCommitment", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

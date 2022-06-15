@@ -1,0 +1,315 @@
+﻿
+@model IEnumerable<InterfaceEntity.ListOfCorporateJobEntity>
+@using Bussiness
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+
+        var _ListOfCorporateJobDateId = '@ViewBag.ListOfCorporateJobDateId';
+
+        function SaveData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.ListOfCorporateJobDateId = _ListOfCorporateJobDateId;
+            myObject.CollectionId = $("#CollectionId").val();
+            myObject.PostTypeId = $("#PostTypeId").val();
+            myObject.NumberOfPeopleEmployed = $("#NumberOfPeopleEmployed").val();
+            myObject.Description = $("#Description").val();
+            myObject.Year = $("#Year").val();
+            
+            var url = "/ListOfCorporateJob/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListListOfCorporateJob();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.ListOfCorporateJobId = $("#ListOfCorporateJobId").val();
+            myObject.ListOfCorporateJobDateId = _ListOfCorporateJobDateId;
+            myObject.CollectionId = $("#CollectionId").val();
+            myObject.PostTypeId = $("#PostTypeId").val();
+            myObject.NumberOfPeopleEmployed = $("#NumberOfPeopleEmployed").val();
+            myObject.Description = $("#Description").val();
+            myObject.Year = $("#Year").val();
+            alert($("#Year").val());
+
+            var url = "/ListOfCorporateJob/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListListOfCorporateJob();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataListOfCorporateJob() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.ID = $("#TableId").val();
+
+            var url = "/ListOfCorporateJob/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListListOfCorporateJob();
+            });
+
+        }
+        function _GetListListOfCorporateJob() {
+            $.ajax({
+                url: "/ListOfCorporateJob/_GetListListOfCorporateJob/?Id=" + _ListOfCorporateJobDateId,
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGrid').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#CollectionId').val() == '') {
+                $('#lblCollectionId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblCollectionId').css('color', 'black');
+            }
+
+            if ($('#PostTypeId').val() == '') {
+                $('#lblPostTypeId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblPostTypeId').css('color', 'black');
+            }
+
+            if ($('#NumberOfPeopleEmployed').val() == '') {
+                $('#lblNumberOfPeopleEmployed').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblNumberOfPeopleEmployed').css('color', 'black');
+            }
+
+            if ($('#Description').val() == '') {
+                $('#lblDescription').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblDescription').css('color', 'black');
+            }
+
+            if ($('#Year').val() == '') {
+                $('#lblYear').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblYear').css('color', 'black');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        $(document).ready(function () {
+
+            $(document).on('click', '#btnAddNew',function () {
+                $("div#divLoading").addClass('show');
+                $.get('/ListOfCorporateJob/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت مشاغل شرکت</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(document).on('click', '.BtnEdit',function () {
+                $("div#divLoading").addClass('show');
+                var ListOfCorporateJobld = $(this).attr('data-Id');
+                $.get('/ListOfCorporateJob/Edit', "ID=" + ListOfCorporateJobld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ویرایش مشاغل شرکت</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete', function () {
+                $("div#divLoading").addClass('show');
+                var ListOfCorporateJobld = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: ListOfCorporateJobld, viewname: ViewName }, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم حذف مشاغل شرکت</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+
+            });
+
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">برگه فهرست مشاغل شرکت</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-10" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+                &nbsp; &nbsp; &nbsp;
+                <a href="/ListOfCorporateJobDate/Index" class="btn btn-danger btn-white btn-round" type="button">
+                    <i class="ace-icon fa fa-check bigger-125"></i>
+                    بازگشت
+                </a>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListListOfCorporateJob", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,438 @@
+﻿@model IEnumerable<InterfaceEntity.AccessMenuUserEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/vakata-jstree-bb0473a/dist/themes/default/style.min.css" rel="stylesheet" />
+    <!-- 4 include the jQuery library -->
+    <script src="~/vakata-jstree-bb0473a/dist/libs/jquery.min.js"></script>
+    <!-- 5 include the minified jstree source -->
+    <script src="~/vakata-jstree-bb0473a/dist/jstree.min.js"></script>
+
+    <script type="text/javascript">
+        var _DataTree;
+        var array = [];
+        var result = '';
+
+        var _UserID = '@ViewBag.UserIDTree';
+
+        $(function () {
+            debugger;
+
+            $.ajax({
+                type: "POST",
+                url: "/AccessMenuUser/_GetAllAccessMenuUserTree/?ID=" + _UserID,
+                dataType: "json",
+                success: function (da) {
+                    _DataTree = da;
+                    debugger;
+                    $.each(_DataTree, function (i, item) {
+                        var ObjectTree = new Object();
+                        var ObjectState = new Object();
+                        ObjectTree.id = String(item.AccessMenuUserId);
+                        if (item.Parent == 0)
+                            ObjectTree.parent = "#";
+                        else
+                            ObjectTree.parent = String(item.Parent);
+                        ObjectTree.text = item.MenuName;
+                        ObjectState.opened = item.Opened;
+                        ObjectState.selected = item.Selected;
+                        ObjectTree.state = ObjectState;
+                        array.push(ObjectTree);
+                    });
+                    debugger;
+                    $("#jstree").jstree({
+                        "checkbox": {
+                            "keep_selected_style": false
+                        },
+                        "plugins": ["checkbox"],
+                        'core': {
+                            'data': array
+                        }
+                    });
+
+
+                    $('#jstree').on("changed.jstree", function (e, data) {
+                        console.log(data.selected);
+                    });
+
+
+                },
+                error: function () {
+
+                },
+
+            });
+
+
+            //$('#jstree').on("changed.jstree", function (e, data) {
+            //    console.log(data.selected);
+            //});
+
+
+            //6 create an instance when the DOM is ready
+            //$('#jstree').jstree();
+            //debugger;
+            //$("#jstree").jstree({
+            //    "checkbox": {
+            //        "keep_selected_style": false
+            //    },
+            //    "plugins": ["checkbox"],
+            //    'core': {
+            //        'data': [
+            //           { "id": "ajson1", "parent": "#", "text": "اطلاعات اولیه", 'state': { 'opened': false, 'selected': false } },
+            //           { "id": "ajson2", "parent": "#", "text": "آموزش", 'state': { 'opened': false, 'selected': false } },
+            //           { "id": "ajson3", "parent": "#", "text": "نظرسنجی و ارزیابی دوره", 'state': { 'opened': false, 'selected': false } },
+            //           { "id": "ajson4", "parent": "#", "text": "تنظیمات سیستم", 'state': { 'opened': false, 'selected': false } },
+            //           { "id": "ajson5", "parent": "ajson1", "text": "جدول رابط اطلاعات اولیه", 'state': { 'opened': false, 'selected': true } },
+            //           { "id": "ajson6", "parent": "ajson1", "text": "دوره های آموزشی", 'state': { 'opened': false, 'selected': false } },
+            //           { "id": "ajson7", "parent": "ajson2", "text": "فهرست آموزشهای پیشنهاد شده برای مشاغل", 'state': { 'opened': false, 'selected': false } },
+            //           { "id": "ajson8", "parent": "ajson2", "text": "فهرست تقویم آموزشی", 'state': { 'opened': false, 'selected': true } },
+            //        ]
+            //    }
+            //});
+            //// 7 bind to events triggered on the tree
+            //$('#jstree').on("changed.jstree", function (e, data) {
+            //    console.log(data.selected);
+            //});
+        });
+
+        function SaveData() {
+
+            debugger;
+            var array = [];
+            $("[id*=jstree] li").each(function () {
+                var myObject = new Object();
+                var selected = $(this).attr('aria-selected');
+                
+                myObject.UserId = _UserID;
+                myObject.MenuId = $(this).attr('id');
+                if (selected=="true") 
+                    myObject.Status = true;
+                else 
+                    myObject.Status = false;
+                array.push(myObject);
+            });
+            $("#ajaxloader").css("display", "inline");
+            $.ajax({
+                url: "/AccessMenuUser/Create",
+                data: JSON.stringify(array),
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (result) {
+                    if (result == true) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                        $("#MessageOperation").css("display", "block");
+                        _GetListTableInterface();
+                    }
+                    else {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+            });
+
+            window.setTimeout(function () {
+                $("#MessageOperation").css("display", "none");
+            }, 5000);
+
+            //$("#ajaxloader").css("display", "inline");
+            //var myObject = new Object();
+            //myObject.UserId = $("#UserId").val();
+            //myObject.MenuId = $("#MenuId").val();
+            //myObject.AccessTypeId = $("#AccessTypeId").val();
+            //myObject.Status = $("#Status").val();
+
+            //var url = "/AccessMenuUser/Create"; // the url to the controller
+            //$.post(url, myObject, function (data) {
+            //    if (data == true) {
+            //        $("#ajaxloader").css("display", "none");
+            //        $("#messageOp").empty();
+            //        $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+            //        $("#MessageOperation").css("display", "block");
+            //    }
+            //    else {
+            //        $("#ajaxloader").css("display", "none");
+            //        $("#messageOp").empty();
+            //        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+            //        $("#MessageOperation").css("display", "block");
+            //    }
+
+            //    _GetListAccessMenuUser();
+            //    window.setTimeout(function () {
+            //        $("#MessageOperation").css("display", "none");
+            //    }, 5000);
+            //});
+
+        }
+
+        function EditData() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.AccessMenuUserId = $("#AccessMenuUserId").val();
+            myObject.UserId = $("#UserId").val();
+            myObject.MenuId = $("#MenuId").val();
+            myObject.AccessTypeId = $("#AccessTypeId").val();
+            myObject.Status = $("#Status").val();
+
+            var url = "/AccessMenuUser/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListAccessMenuUser();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+
+        function DeleteDataAccessMenuUser() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/AccessMenuUser/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListAccessMenuUser();
+            });
+
+        }
+
+        function _GetListAccessMenuUser() {
+            $.ajax({
+                url: "/AccessMenuUser/_GetListAccessMenuUser",
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGrid').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            //$('#UserId').select2();
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on('click', '#btnAddNew', function () {
+                $("div#divLoading").addClass('show');
+                $.get('/AccessMenuUser/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت دسترسی کاربر به منو</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(document).on('click', '.BtnEdit', function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم ویرایش دسترسی کاربر به منو</span>");
+                var Userld = $(this).attr('data-Id');
+                $.get('/AccessMenuUser/Edit', "ID=" + Userld, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete', function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم حذف دسترسی کاربر به منو</span>");
+                var Userld = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: Userld, viewname: ViewName }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+
+            });
+        });
+
+    </script>
+</head>
+
+<body style="height:1200px">
+    <div id="divLoading"></div>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">تنظیمات سیستم</li>
+            <li class="active">دسترسی کاربران به منو</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+    <br />
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+
+    <div class="col-sm-6">
+        <div class="widget-box widget-color-green">
+            <div class="widget-header">
+                <p class="widget-title lighter smaller">دسترسی کاربران</p>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main padding-8">
+                    <div class="col-md-offset-4">
+                        <img style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                        &nbsp; &nbsp; &nbsp;
+                        <button id="btnSaveEmployeeTrainingPassed" onclick="SaveData()" class="btn btn-success btn-white btn-round" type="button" style="margin-top:-0px">
+                            <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                            ذخیره
+                        </button>
+                        &nbsp; &nbsp; &nbsp;
+                        <a href="/User/Index" class="btn btn-danger btn-white btn-round" type="button">
+                            <i class="ace-icon fa fa-check bigger-125"></i>
+                            بازگشت
+                        </a>
+                        
+                    </div>
+                    <hr />
+                    <!-- 3 setup a container element -->
+                    <div id="jstree"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+        <div class="widget-box widget-color-blue2">
+            <div class="widget-header">
+                <p class="widget-title lighter smaller">لیست دسترسی کاربران</p>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main padding-8">
+                    <div class="page-content">
+                        <!-- /section:settings.box -->
+                        <div class="page-content-area">
+                            @*<br />
+                            <div class="col-md-offset-10" style="margin-bottom: 5px">
+                                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                                    <i class="ace-icon fa fa-check bigger-125"></i>
+                                    جدید
+                                </button>
+                            </div>*@
+
+                            <!-- PAGE CONTENT BEGINS -->
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div id="theGrid">
+                                        @Html.Partial("_GetListAccessMenuUser", Model)
+                                    </div>
+                                </div>
+                                <!-- /.span -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.page-content-area -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

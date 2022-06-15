@@ -1,0 +1,200 @@
+﻿
+@model InterfaceEntity.EmployeeEvaluationEntity
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/Style.css" rel="stylesheet" />
+    <script src="~/Content/Date/js/jquery.min.js"></script>
+    <script src="~/ControllerJS/EmployeeEvaluationController.js"></script>
+    <title></title>
+</head>
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="message">اطلاعات با موفقیت ثبت گردید!</a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شناسایی لیست ارزیابی برای ارتقاء کارشناسان مرکز : </label>
+                            @*@Html.LabelFor(model => model.Name, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.ListEmployeeEvaluationId, new { @id = "ListEmployeeEvaluationId", @class = "col-xs-10 col-sm-5 fs", @placeholder = "کد شناسایی لیست ارزیابی برای ارتقاء کارشناسان مرکز" })
+                                @Html.ValidationMessageFor(model => model.ListEmployeeEvaluationId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">دانش نظری : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.TheoreticalKnowledge, new { @id = "TheoreticalKnowledge", @class = "col-xs-10 col-sm-5 fs", @placeholder = "دانش نظری" })
+                                @Html.ValidationMessageFor(model => model.TheoreticalKnowledge)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">جزئیات نمرات دانش نظری : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.TheoreticalKnowledgeDetail, new { @id = "TheoreticalKnowledgeDetail", @class = "col-xs-10 col-sm-5 fs", @placeholder = "جزئیات نمرات دانش نظری" })
+                                @Html.ValidationMessageFor(model => model.TheoreticalKnowledgeDetail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تجربه : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Experience, new { @id = "Experience", @class = "col-xs-10 col-sm-5 fs", @placeholder = "تجربه" })
+                                @Html.ValidationMessageFor(model => model.Experience)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">جزئیات نمرات تجربه : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.ExperienceDetail, new { @id = "ExperienceDetail", @class = "col-xs-10 col-sm-5 fs", @placeholder = "جزئیات نمرات تجربه" })
+                                @Html.ValidationMessageFor(model => model.ExperienceDetail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">مهارت : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Skill, new { @id = "Skill", @class = "col-xs-10 col-sm-5 fs", @placeholder = "مهارت" })
+                                @Html.ValidationMessageFor(model => model.Skill)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">جزئیات نمرات مهارت : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.SkillDetail, new { @id = "SkillDetail", @class = "col-xs-10 col-sm-5 fs", @placeholder = "جزئیات نمرات مهارت" })
+                                @Html.ValidationMessageFor(model => model.SkillDetail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">عملکرد کاری : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.WorkPerformance, new { @id = "WorkPerformance", @class = "col-xs-10 col-sm-5 fs", @placeholder = "عملکرد کاری" })
+                                @Html.ValidationMessageFor(model => model.WorkPerformance)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">جزئیات نمرات عملکرد : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.WorkPerformanceDetail, new { @id = "WorkPerformanceDetail", @class = "col-xs-10 col-sm-5 fs", @placeholder = "جزئیات نمرات عملکرد" })
+                                @Html.ValidationMessageFor(model => model.WorkPerformanceDetail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">مسئولیت پذیری : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Accountability, new { @id = "Accountability", @class = "col-xs-10 col-sm-5 fs", @placeholder = "مسئولیت پذیری" })
+                                @Html.ValidationMessageFor(model => model.Accountability)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">جزئیات نمرات مسئولیت پذیری : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.AccountabilityDetail, new { @id = "AccountabilityDetail", @class = "col-xs-10 col-sm-5 fs", @placeholder = "جزئیات نمرات مسئولیت پذیری" })
+                                @Html.ValidationMessageFor(model => model.AccountabilityDetail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">رفتارهای فردی : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.IndividualBehavior, new { @id = "IndividualBehavior", @class = "col-xs-10 col-sm-5 fs", @placeholder = "رفتارهای فردی" })
+                                @Html.ValidationMessageFor(model => model.IndividualBehavior)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">جزئیات نمرات رفتارهای فردی : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.IndividualBehaviorDetail, new { @id = "IndividualBehaviorDetail", @class = "col-xs-10 col-sm-5 fs", @placeholder = "جزئیات نمرات رفتارهای فردی" })
+                                @Html.ValidationMessageFor(model => model.IndividualBehaviorDetail)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تائید ارتقاء  : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.UpgradeConfirmation, new { @id = "UpgradeConfirmation", @class = "col-xs-10 col-sm-5 fs", @placeholder = "تائید ارتقاء " })
+                                @Html.ValidationMessageFor(model => model.UpgradeConfirmation)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <script type="text/javascript">
+                                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                            </script>
+
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="SaveUser" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+</body>
+</html>
+
+

@@ -1,0 +1,166 @@
+﻿
+@model InterfaceEntity.TeacherLevelEntity
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+        $("#TeacherId").select2();
+        $("#TrainingCourseId").select2();
+
+        function AddCourse()
+        {
+            if ($("#TrainingCourseId").val() != '') {
+                $('#sample-table-Course tbody').append('<tr class="child"><td class="TrainingCourseId"  hidden="hidden">' + $("#TrainingCourseId").val() + '</td><td class="TrainingCourseValue">' + $("#TrainingCourseId option:selected").text() + '</td>' +
+                '<td>' +
+                    '<div class="hidden-sm hidden-xs btn-group">' +
+
+                        '<button data-original-title="حذف" data-placement="top" data-toggle="tooltip" class="deleteRowButton btn btn-xs btn-danger tooltip1">' +
+                            '<i class="ace-icon fa fa-trash-o bigger-120"></i>' +
+                        '</button>' +
+                    '</div>' +
+                '</td></tr>');
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+
+                        <div class="form-group">
+                            <label id="lblteacher" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام استاد : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("TeacherId", new MultiSelectList(ViewBag.TeacherId, "Value", "Text"), "-- نام استاد را انتخاب نمائید --", new { @id = "TeacherId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.TeacherId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblTrainingCourse" class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان دوره : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("TrainingCourse", new MultiSelectList(ViewBag.TrainingCourseId, "Value", "Text"), "-- عنوان دوره را انتخاب نمائید --", new { @id = "TrainingCourseId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @onchange = "javascript:AddCourse();" })
+                                @Html.ValidationMessageFor(model => model.TrainingCourse)
+                            </div>
+                        </div>
+
+                        <table id="sample-table-Course" class="col-md-9 table table-striped table-bordered table-hover" style="margin-top:10px">
+                            <thead>
+                                <tr>
+                                    <th hidden="hidden">کد دوره</th>
+                                    <th>نام دوره</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contacts"></tbody>
+                        </table>
+
+
+
+
+
+                        <div class="form-group">
+                            <label id="lblEffectivenessOfPreviousPeriod" class="col-sm-3 control-label no-padding-right" for="form-field-1">امتباز اثر بخشی و ارزیابی دوره قبل : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.EffectivenessOfPreviousPeriod, new { @id = "EffectivenessOfPreviousPeriod", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "امتباز اثر بخشی و ارزیابی دوره قبل" })
+                                @Html.ValidationMessageFor(model => model.EffectivenessOfPreviousPeriod)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblRhetorical" class="col-sm-3 control-label no-padding-right" for="form-field-1">فن بیان : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Rhetorical, new { @id = "Rhetorical", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "فن بیان" })
+                                @Html.ValidationMessageFor(model => model.Rhetorical)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblEducationId" class="col-sm-3 control-label no-padding-right" for="form-field-1">تحصیلات : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.EducationId, new { @id = "EducationId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "تحصیلات" })
+                                @Html.ValidationMessageFor(model => model.EducationId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblExperience" class="col-sm-3 control-label no-padding-right" for="form-field-1">تجربه تدریس : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Experience, new { @id = "Experience", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "تجربه تدریس" })
+                                @Html.ValidationMessageFor(model => model.Experience)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblCoursePlan" class="col-sm-3 control-label no-padding-right" for="form-field-1">جامعیت طرح دوره : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.CoursePlan, new { @id = "CoursePlan", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "جامعیت طرح دوره" })
+                                @Html.ValidationMessageFor(model => model.CoursePlan)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblHistoryOfCooperation" class="col-sm-3 control-label no-padding-right" for="form-field-1">سابقه همکاری با مرکز : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.HistoryOfCooperation, new { @id = "HistoryOfCooperation", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "سابقه همکاری با مرکز" })
+                                @Html.ValidationMessageFor(model => model.HistoryOfCooperation)
+                            </div>
+                        </div>
+
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <div class="col-md-offset-3">
+                                <button id="btnSave" onclick="SaveData()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,92 @@
+﻿
+@model InterfaceEntity.ListAbilityRequiredJobEntity
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/Style.css" rel="stylesheet" />
+    <script src="~/Content/Date/js/jquery.min.js"></script>
+    <script src="~/ControllerJS/ListAbilityRequiredJobController.js"></script>
+    <title></title>
+</head>
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="message">اطلاعات با موفقیت ثبت گردید!</a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شناسایی پرسشنامه شناسنامه مشاغل : </label>
+                            @*@Html.LabelFor(model => model.Name, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.InventoryjobsId, new { @id = "InventoryjobsId", @class = "col-xs-10 col-sm-5 fs", @placeholder = "کد شناسایی پرسشنامه شناسنامه مشاغل " })
+                                @Html.ValidationMessageFor(model => model.InventoryjobsId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شناسایی فهرست توانایی های ویژه موردنیاز شغل : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.AbilityRequiredJobId, new { @id = "AbilityRequiredJobId", @class = "col-xs-10 col-sm-5 fs", @placeholder = "کد شناسایی فهرست توانایی های ویژه موردنیاز شغل " })
+                                @Html.ValidationMessageFor(model => model.AbilityRequiredJobId)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <script type="text/javascript">
+                                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                            </script>
+
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="SaveUser" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+</body>
+</html>
+
+

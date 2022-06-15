@@ -1,0 +1,788 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.OfferTrainingForEmployemeEntity>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+
+        var _OfferTrainingForEmployeeDateId= '@ViewBag.OfferTrainingForEmployeeDateId';
+        var ReportNameId = '@ViewBag.ReportNameId';
+
+        //Operation OfferTrainingForEmployeme-------------------------
+        function SaveDataOfferTrainingForEmployeme() {
+            var result = ValidationOfferTrainingForEmployeme();
+            if (result == false) return;
+
+            debugger;
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.OfferTrainingForEmployeeDateId = _OfferTrainingForEmployeeDateId;
+            myObject.SectionId = $("#SectionId").val();
+            myObject.PostGroupId = $("#PostGroupId").val();
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.DateNeeds = $("#DateNeeds").val();
+
+            var url = "/OfferTrainingForEmployeme/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListOfferTrainingForEmployeme();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditDataOfferTrainingForEmployeme() {
+            var result = ValidationOfferTrainingForEmployeme();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.OfferTrainingForEmployemeId = $("#OfferTrainingForEmployemeId").val();
+            myObject.OfferTrainingForEmployeeDateId = _OfferTrainingForEmployeeDateId;
+            myObject.SectionId = $("#SectionId").val();
+            myObject.PostGroupId = $("#PostGroupId").val();
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.DateNeeds = $("#DateNeeds").val();
+
+            var url = "/OfferTrainingForEmployeme/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListOfferTrainingForEmployeme();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataOfferTrainingForEmployeme() {
+            var result = ValidationOfferTrainingForEmployeme();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.ID = $("#TableId").val();
+            var url = "/OfferTrainingForEmployeme/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListOfferTrainingForEmployeme();
+            });
+
+        }
+        function _GetListOfferTrainingForEmployeme(typesearch) {
+            //debugger;
+            //$.ajax({
+            //    url: "/OfferTrainingForEmployeme/_GetListOfferTrainingForEmployeme/?Id=" + _OfferTrainingForEmployeeDateId,
+            //    type: 'GET',
+            //    datatype: 'json',
+            //    success: function (data) {
+            //        $('#theGrid').html(data);
+            //    },
+            //    error: function (jqXHR, textStatus, errorThrown) {
+            //        alert(errorThrown);
+            //    }
+            //});
+            debugger;
+            //typesearch { WithoutParameter =1, WithParameter = 2}
+            if (typesearch == 1) {
+                var myObjectSearch = new Object();
+                myObjectSearch.OfferTrainingForEmployeeDateId = _OfferTrainingForEmployeeDateId;
+                myObjectSearch.typesearch = 1;
+            }
+            else if (typesearch == 2) {
+                var myObjectSearch = new Object();
+                myObjectSearch.NeedTraining = $("#NeedTrainingSearch").val();
+                myObjectSearch.OfferTrainingForEmployeeDateId = _OfferTrainingForEmployeeDateId;
+                myObjectSearch.typesearch = 2;
+            }
+
+            var url = "/OfferTrainingForEmployeme/_GetListOfferTrainingForEmployeme"; // the url to the controller
+            $.post(url, myObjectSearch, function (data) {
+
+                $('#theGrid').html(data);
+            });
+        }
+
+        //function _GetListDetailoffertrainingforemployeme(typesearch) {
+        //    debugger;
+
+        //    //typesearch { WithoutParameter =1, WithParameter = 2}
+        //    if (typesearch == 1) {
+        //        var myObjectSearch = new Object();
+        //        myObjectSearch.OfferTrainingForEmployeeDateId = _OfferTrainingForEmployeeDateId;
+        //        myObjectSearch.typesearch = 1;
+        //    }
+        //    else if (typesearch == 2) {
+        //        var myObjectSearch = new Object();
+        //        myObjectSearch.NeedTraining = $("#NeedTrainingSearch").val();
+        //        myObjectSearch.OfferTrainingForEmployeeDateId = _OfferTrainingForEmployeeDateId;
+        //        myObjectSearch.typesearch = 2;
+        //    }
+
+        //    var url = "/OfferTrainingForEmployeme/_GetListDetailoffertrainingforemployeme"; // the url to the controller
+        //    $.post(url, myObjectSearch, function (data) {
+
+        //        $('#theGrid').html(data);
+        //    });
+        //}
+
+        function ValidationOfferTrainingForEmployeme() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#UnitSCenterId').val() == '') {
+                $('#lblUnitSCenterId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblUnitSCenterId').css('color', 'black');
+            }
+
+            if ($('#DepartmentId').val() == '') {
+                $('#lblDepartmentId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblDepartmentId').css('color', 'black');
+            }
+
+            if ($('#SectionId').val() == '') {
+                $('#lblSectionId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblSectionId').css('color', 'black');
+            }
+
+            if ($('#PostGroupId').val() == '') {
+                $('#lblPostGroupId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblPostGroupId').css('color', 'black');
+            }
+
+            if ($('#DateNeeds').val() == '') {
+                $('#lblDateNeeds').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblDateNeeds').css('color', 'black');
+            }
+
+            if ($('#EmployemeId').val() == '') {
+                $('#lblEmployemeId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblEmployemeId').css('color', 'black');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        //--------------------------------------------
+
+        //Operation DetailOfferTrainingForEmployeme-------------------------
+        function SaveDataDetailOfferTrainingForEmployeme() {
+            debugger;
+            var result = ValidationDetailOfferTrainingForEmployeme();
+            if (result == false) return;
+            debugger;
+            $("#ajaxloader").css("display", "inline");
+            var TableTypeOfTrainingOffer = new Object();
+            //In Table TableInterfaceValues Is TableIUnterfaceId=11(Table) And TableValue (جزئیات فهرست آموزشهای پیشنهاد شده برای کارکنان) : TableInterfaceValueId=212
+            TableTypeOfTrainingOffer.TableId = "212";       // جزئیات فهرست آموزشهای پیشنهاد شده برای کارکنان
+            //In Table TableInterfaceValues Is TableIUnterfaceId=13(UsedTable) And TableValue (شکل آموزش پیشنهادی) : TableInterfaceValueId=215
+            TableTypeOfTrainingOffer.UsedTableId = "215";   // شکل آموزش پیشنهادی
+            TableTypeOfTrainingOffer.C = $('#C').is(':checked');
+            TableTypeOfTrainingOffer.Sd = $('#SD').is(':checked');
+            TableTypeOfTrainingOffer.Ojt = $('#OJT').is(':checked');
+
+            var TableTypeOfTrainingSet = new Object();
+            //In Table TableInterfaceValues Is TableIUnterfaceId=11(Table) And TableValue (جزئیات فهرست آموزشهای پیشنهاد شده برای مشاغل) : TableInterfaceValueId=212
+            TableTypeOfTrainingSet.TableId = "212";       // جزئیات فهرست آموزشهای پیشنهاد شده برای کارکنان
+            //In Table TableInterfaceValues Is TableIUnterfaceId=13(UsedTable) And TableValue (شکل تصویب شده) : TableInterfaceValueId=216
+            TableTypeOfTrainingSet.UsedTableId = "216";   // شکل تصویب شده
+            TableTypeOfTrainingSet.C = $('#CSet').is(':checked');
+            TableTypeOfTrainingSet.Sd = $('#SDSet').is(':checked');
+            TableTypeOfTrainingSet.Ojt = $('#OJTSet').is(':checked');
+
+            var DetailOfferTrainingForEmployeme = new Object();
+            DetailOfferTrainingForEmployeme.OfferTrainingForEmployemesId = $("#OfferTrainingForEmployemesId").val();
+            DetailOfferTrainingForEmployeme.NeedTraining = $("#NeedTraining").val();
+            DetailOfferTrainingForEmployeme.PriorityId = $("#PriorityId").val();
+            DetailOfferTrainingForEmployeme.TableTypeOfTrainingSetId = $("#TableTypeOfTrainingSetId").val();
+            DetailOfferTrainingForEmployeme.TableTypeOfTrainingOfferId = $("#TableTypeOfTrainingOfferId").val();
+
+            $.ajax({
+                url: '/DetailOfferTrainingForEmployeme/Create',
+                type: 'post',
+                dataType: 'json',
+                // It is important to set the content type
+                // request header to application/json because
+                // that's how the client will send the request
+                contentType: 'application/json',
+                data: JSON.stringify({ _TableTypeOfTrainingSetEntity: TableTypeOfTrainingSet, _TableTypeOfTrainingOfferEntity: TableTypeOfTrainingOffer, _DetailOfferTrainingForEmployemeEntity: DetailOfferTrainingForEmployeme }),
+                cache: false,
+                success: function (result) {
+                    if (result == true) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                        $("#messageOp").css("color", "green");
+                        $("#MessageOperation").css("display", "block");
+                        _GetListDetailOfferTrainingForEmployeme(1);
+                    }
+                    else {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#messageOp").css("color", "red");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+            });
+            window.setTimeout(function () {
+                $("#MessageOperation").css("display", "none");
+            }, 5000);
+        }
+        function EditDataDetailOfferTrainingForEmployeme() {
+            var result = ValidationDetailOfferTrainingForEmployeme();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var TableTypeOfTrainingOffer = new Object();
+            TableTypeOfTrainingOffer.TableTypeOfTrainingId = $("#TableTypeOfTrainingOfferId").val();
+            //In Table TableInterfaceValues Is TableIUnterfaceId=11(Table) And TableValue (جزئیات فهرست آموزشهای پیشنهاد شده برای مشاغل) : TableInterfaceValueId=212
+            TableTypeOfTrainingOffer.TableId = "212";       // جزئیات فهرست آموزشهای پیشنهاد شده برای مشاغل
+            //In Table TableInterfaceValues Is TableIUnterfaceId=13(UsedTable) And TableValue (شکل آموزش پیشنهادی) : TableInterfaceValueId=215
+            TableTypeOfTrainingOffer.UsedTableId = "215";   // شکل آموزش پیشنهادی
+            TableTypeOfTrainingOffer.C = $('#C').is(':checked');
+            TableTypeOfTrainingOffer.Sd = $('#SD').is(':checked');
+            TableTypeOfTrainingOffer.Ojt = $('#OJT').is(':checked');
+
+            var TableTypeOfTrainingSet = new Object();
+            TableTypeOfTrainingSet.TableTypeOfTrainingId = $("#TableTypeOfTrainingSetId").val();
+            //In Table TableInterfaceValues Is TableIUnterfaceId=11(Table) And TableValue (جزئیات فهرست آموزشهای پیشنهاد شده برای مشاغل) : TableInterfaceValueId=212
+            TableTypeOfTrainingSet.TableId = "212";       // جزئیات فهرست آموزشهای پیشنهاد شده برای مشاغل
+            //In Table TableInterfaceValues Is TableIUnterfaceId=13(UsedTable) And TableValue (شکل تصویب شده) : TableInterfaceValueId=216
+            TableTypeOfTrainingSet.UsedTableId = "216";   // شکل تصویب شده
+            TableTypeOfTrainingSet.C = $('#CSet').is(':checked');
+            TableTypeOfTrainingSet.Sd = $('#SDSet').is(':checked');
+            TableTypeOfTrainingSet.Ojt = $('#OJTSet').is(':checked');
+
+            var DetailOfferTrainingForEmployeme = new Object();
+            DetailOfferTrainingForEmployeme.DetailOfferTrainingForEmployemeId = $("#DetailOfferTrainingForEmployemeId").val();
+            DetailOfferTrainingForEmployeme.OfferTrainingForEmployemesId = $("#OfferTrainingForEmployemesId").val();
+            DetailOfferTrainingForEmployeme.NeedTraining = $("#NeedTraining").val();
+            DetailOfferTrainingForEmployeme.PriorityId = $("#PriorityId").val();
+            DetailOfferTrainingForEmployeme.TableTypeOfTrainingSetId = $("#TableTypeOfTrainingSetId").val();
+            DetailOfferTrainingForEmployeme.TableTypeOfTrainingOfferId = $("#TableTypeOfTrainingOfferId").val();
+            //
+            $.ajax({
+                url: '/DetailOfferTrainingForEmployeme/Edit',
+                type: 'post',
+                dataType: 'json',
+                // It is important to set the content type
+                // request header to application/json because
+                // that's how the client will send the request
+                contentType: 'application/json',
+                data: JSON.stringify({ _TableTypeOfTrainingSetEntity: TableTypeOfTrainingSet, _TableTypeOfTrainingOfferEntity: TableTypeOfTrainingOffer, _DetailOfferTrainingForEmployemeEntity: DetailOfferTrainingForEmployeme }),
+                cache: false,
+                success: function (result) {
+                    if (result == true) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                        $("#messageOp").css("color", "green");
+                        $("#MessageOperation").css("display", "block");
+                        _GetListDetailOfferTrainingForEmployeme(1);
+                    }
+                    else {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#messageOp").css("color", "red");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+            });
+            window.setTimeout(function () {
+                $("#MessageOperation").css("display", "none");
+            }, 5000);
+        }
+        function DeleteDataDetailOfferTrainingForEmployeme(_TableTypeOfTrainingSetID, _TableTypeOfTrainingOfferID, _DetailOfferTrainingForEmployemeID) {
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject._TableTypeOfTrainingSetID = _TableTypeOfTrainingSetID;
+            myObject._TableTypeOfTrainingOfferID = _TableTypeOfTrainingOfferID;
+            myObject._DetailOfferTrainingForEmployemeID = _DetailOfferTrainingForEmployemeID;
+
+            var url = "/DetailOfferTrainingForEmployeme/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                debugger;
+                _GetListDetailOfferTrainingForEmployeme();
+            });
+
+        }
+        function ValidationDetailOfferTrainingForEmployeme() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#NeedTraining').val() == '') {
+                $('#NeedTraining').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#NeedTraining').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#PriorityId').val() == '') {
+                $('#PriorityId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#PriorityId').css('border-color', '#d5d5d5');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        //--------------------------------------------
+
+        //Operation SetDateForReport----------------------
+        function SaveDataSetDateForReport() {
+            //var result = Validation();
+            //if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline"); 
+            var OfferTrainingForEmployemeId = $("#PublicCode").val();
+
+            var myObject = new Object();
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.ReportNameId = $("#ReportNameId").val();
+            myObject.PublicCode = OfferTrainingForEmployemeId;
+            myObject.DateOfProducerstr = $("#DateOfProducerstr").val();
+            myObject.DateOfApproverstr = $("#DateOfApproverstr").val();
+            myObject.DateOfRegistrarstr = $("#DateOfRegistrarstr").val();
+
+            var url = "/SetDateForReport/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListSetDateForReport();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditDataSetDateForReport() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+
+            var myObject = new Object();
+            myObject.SetDateForReportId = $("#SetDateForReportId").val();
+            myObject.ReportNameId = $("#ReportNameId").val();
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.PublicCode = $("#PublicCode").val();
+            myObject.DateOfProducerstr = $("#DateOfProducerstr").val();
+            myObject.DateOfApproverstr = $("#DateOfApproverstr").val();
+            myObject.DateOfRegistrarstr = $("#DateOfRegistrarstr").val();
+
+            var url = "/SetDateForReport/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListSetDateForReport();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function _GetListSetDateForReport() {
+            var OfferTrainingForEmployemeId = $("#PublicCode").val();
+            $.ajax({
+                url: "/SetDateForReport/_GetListSetDateForReport/",
+                type: 'GET',
+                datatype: 'json',
+                data: { PublicCode: OfferTrainingForEmployemeId, ReportNameId: ReportNameId },
+                success: function (data) {
+                    $('#theGridSetDateForReport').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#DateOfProducerstr').val() == '') {
+                $('#DateOfProducerstr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DateOfProducerstr').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#DateOfApproverstr').val() == '') {
+                $('#DateOfApproverstr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DateOfApproverstr').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#DateOfRegistrarstr').val() == '') {
+                $('#DateOfRegistrarstr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DateOfRegistrarstr').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#ReportNameId').val() == '') {
+                $('#ReportNameId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#ReportNameId').css('border-color', '#d5d5d5');
+            }
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        //------------------------------------------------------------
+
+
+        $(document).ready(function () {
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on('click', '#btnAddNew', function () {
+                $("div#divLoading").addClass('show');
+                $.get('/OfferTrainingForEmployeme/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت جدول رابط اطلاعات اولیه</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+            });
+
+            $(document).on('click', '.BtnEdit', function () {
+                $("div#divLoading").addClass('show');
+                var OfferTrainingForEmployemeId = $(this).attr('data-Id');
+                $.get('/OfferTrainingForEmployeme/Edit', "ID=" + OfferTrainingForEmployemeId, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ویرایش فهرست آموزشهای پیشنهاد شده برای مشاغل</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete', function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم حذف فهرست آموزشهای پیشنهاد شده برای مشاغل </span>");
+                var OfferTrainingForEmployemeId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: OfferTrainingForEmployemeId, viewname: ViewName }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDetailOfferTrainingForEmployeme', function () {
+
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>جزئیات فهرست آموزشهای پیشنهاد شده برای کارکنان</span>");
+                debugger;
+
+                var EmployemeName = $(this).attr('data-EmployemeName');
+                var OfferTrainingForEmployemeId = $(this).attr('data-Id');
+                $.get('/DetailOfferTrainingForEmployeme/Index', { OfferTrainingForEmployemesId: OfferTrainingForEmployemeId }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnSetDateReport', function () {
+                $("div#divLoading").addClass('show');
+
+                var OfferTrainingForEmployemeId = $(this).attr('data-Id');
+                var dataEmployemeId = $(this).attr('data-EmployemeId');
+                var EmployemeName = $(this).attr('data-EmployemeName');
+                $.get('/SetDateForReport/Index', { PublicCode: OfferTrainingForEmployemeId, EmployemeId: dataEmployemeId, ReportNameId: ReportNameId}, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<spanتنظیم تاریخ تهیه و تایید &nbsp;&nbsp; </span>"+ 'تنظیم تاریخ -'+' ' + EmployemeName);// + EmployemeName);
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+        });
+
+    </script>
+</head>
+
+
+
+<body>
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">فهرست آموزشهای پیشنهاد شده برای کارکنان</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+
+    <div class="widget-box collapsed" id="WidgetBoxOfferTrainingForEmployeeSearch">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active bigger-150"><a href="#">جستجو</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconOfferTrainingForEmployeeSearch"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;height:120px" id="WidgetBodyOfferTrainingForEmployeeSearch">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">آموزش موردنیاز: </label>
+                                <div class="col-md-10">
+                                    @Html.TextBox("NeedTrainingSearch", null, new { @id = "NeedTrainingSearch", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "آموزش موردنیاز" })
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-xs-12">
+                        <div class="col-md-offset-10">
+                            <button onclick="_GetListOfferTrainingForEmployeme(2)" class="btn btn-info btn-white btn-round" type="button">
+                                <i class="ace-icon fa fa-search bigger-125"></i>
+                                جستجو
+                            </button>
+                            <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-10" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+                &nbsp; &nbsp; &nbsp;
+                <a href="/OfferTrainingForEmployeeDate/Index" class="btn btn-danger btn-white btn-round" type="button">
+                    <i class="ace-icon fa fa-check bigger-125"></i>
+                    بازگشت
+                </a>
+            </div>
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListOfferTrainingForEmployeme", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:900px !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>

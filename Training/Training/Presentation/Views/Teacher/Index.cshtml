@@ -1,0 +1,372 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.TeacherEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+
+        function SaveData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.Name = $("#Name").val();
+            myObject.Family = $("#Family").val();
+            myObject.Mobile = $("#Mobile").val();
+            myObject.EducationId = $("#EducationId").val();
+            myObject.DateOfEmployementStr = $("#DateOfEmployementStr").val();
+            myObject.Email = $("#Email").val();
+
+            var url = "/Teacher/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListTeacher(1);
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.TeacherId = $("#TeacherId").val();
+            myObject.Name = $("#Name").val();
+            myObject.Family = $("#Family").val();
+            myObject.Mobile = $("#Mobile").val();
+            myObject.EducationId = $("#EducationId").val();
+            myObject.DateOfEmployementStr = $("#DateOfEmployementStr").val();
+            myObject.Email = $("#Email").val();
+
+            var url = "/Teacher/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListTeacher(1);
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataTeacher() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.ID = $("#TableId").val();
+
+            var url = "/Teacher/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListTeacher(1);
+            });
+
+        }
+        function _GetListTeacher(typesearch) {
+
+            debugger;
+            //typesearch { WithoutParameter =1, WithParameter = 2}
+            if (typesearch == 1) {
+                var myObjectSearch = new Object();
+                myObjectSearch.Name = $("#NameSearch").val();
+                myObjectSearch.Family = $("#FamilySearch").val();
+                myObjectSearch.typesearch = 1;
+            }
+            else if (typesearch == 2) {
+                var myObjectSearch = new Object();
+                myObjectSearch.Name = $("#NameSearch").val();
+                myObjectSearch.Family = $("#FamilySearch").val();
+                myObjectSearch.typesearch = 2;
+            }
+
+            var url = "/Teacher/_GetListTeacher"; // the url to the controller
+            $.post(url, myObjectSearch, function (data) {
+                $('#theGrid').html(data);
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#Name').val() == '') {
+                $('#Name').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Name').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#Family').val() == '') {
+                $('#Family').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Family').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#EducationId').val() == '') {
+                $('#EducationId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#EducationId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#DateOfEmployementStr').val() == '') {
+                $('#DateOfEmployementStr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DateOfEmployementStr').css('border-color', '#d5d5d5');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+
+        $(document).ready(function () {
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on('click', '#btnAddNew', function () {
+                $("div#divLoading").addClass('show');
+                $.get('/Teacher/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت استاد</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(document).on('click', '.BtnEdit', function () {
+                $("div#divLoading").addClass('show');
+                var Teacharld = $(this).attr('data-Id');
+                $.get('/Teacher/Edit', "ID=" + Teacharld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ویرایش استاد</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete', function () {
+                $("div#divLoading").addClass('show');
+                var EmployemeId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: EmployemeId, viewname: ViewName }, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم حذف استاد</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+
+            });
+
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <div id="divLoading"></div>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">اطلاعات اولیه</li>
+            <li class="active">استاد</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxEmployemeSearch">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active bigger-150"><a href="#">جستجو</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEmployemeSearch"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;height:110px" id="WidgetBodyEmployemeSearch">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-6">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">نام : </label>
+                                <div class="col-md-10">
+                                    @Html.TextBox("NameSearch", null, new { @id = "NameSearch", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام" })
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-xs-6">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">نام خانوادگی : </label>
+                                <div class="col-md-10">
+                                    @Html.TextBox("FamilySearch", null, new { @id = "FamilySearch", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام خانوادگی" })
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-xs-12">
+                        <div class="col-md-offset-10">
+                            <button onclick="_GetListTeacher(2)" class="btn btn-info btn-white btn-round" type="button">
+                                <i class="ace-icon fa fa-search bigger-125"></i>
+                                جستجو
+                            </button>
+                            <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-11 col-md-9" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListTeacher", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+

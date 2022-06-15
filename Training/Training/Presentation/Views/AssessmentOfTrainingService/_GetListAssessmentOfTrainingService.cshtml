@@ -1,0 +1,117 @@
+﻿@model IEnumerable<InterfaceEntity.AssessmentOfTrainingServiceEntity>
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th>نام موسسه</th>
+            <th>مدیرعامل</th>
+            <th>نوع شرکت</th>
+            <th>حیطه فعالیت آموزشی</th>
+            <th>کد اقتصادی</th>
+            <th>نام و نام خانوادگی مدرس</th>
+            <th>میزان تحصیلات</th>
+            <th>نشانی شرکت</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td class="center">
+                    <label class="position-relative">
+                        @i
+                    </label>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InstitutionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManagingDirector)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeOfCompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScopeOfTheActivities)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EconomicCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TeacherName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EducationName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    <div class="hidden-sm hidden-xs btn-group">
+
+                        <button data-original-title="ویرایش" data-placement="top" data-toggle="tooltip" data-Id="@item.AssessmentOfTrainingServiceId" class="BtnEdit btn btn-xs btn-warning tooltip1">
+                            <i class="ace-icon fa fa-pencil bigger-140"></i>
+                        </button>
+                        <button data-original-title="حذف" data-placement="top" data-toggle="tooltip" data-Id="@item.AssessmentOfTrainingServiceId" data-DeleteName="DeleteDataAssessmentOfTrainingService()" class="BtnDelete btn btn-xs btn-danger tooltip1">
+                            <i class="ace-icon fa fa-trash-o bigger-140"></i>
+                        </button>
+                        <button data-original-title="اطلاعات تکمیلی ارزیابی تامین کنندگان خدمات آموزشی" data-placement="top" data-toggle="tooltip" data-Id="@item.AssessmentOfTrainingServiceId" class="btnTablesRelatedAssessmentOfTrainingService btn btn-xs btn-info tooltip1">
+                            <i class="ace-icon fa fa-info bigger-140"></i>
+                        </button>
+                        <button data-original-title="عنوان معیار ارزیابی" data-placement="top" data-toggle="tooltip" data-Id="@item.AssessmentOfTrainingServiceId" class="BtnCriterionAssessmentOfTrainingService btn btn-xs btn-success tooltip1">
+                            <i class="ace-icon fa fa-certificate bigger-140"></i>
+                        </button>
+
+                         <button data-original-title="تنظیم تاریخ" data-placement="top" data-toggle="tooltip"
+                                    data-Id="@item.AssessmentOfTrainingServiceId"
+                                    data-EmployemeId="@item.AssessmentOfTrainingServiceId"
+                                    data-EmployemeName="@item.InstitutionName"
+                                    class="BtnSetDateReport btn btn-xs btn-round tooltip1">
+                                <i class="ace-icon fa fa-list bigger-100"></i>
+                            </button>
+
+                        <a href="/AssessmentOfTrainingService/Print/@item.AssessmentOfTrainingServiceId" data-original-title="پرینت ارزیابی تامین کنندگان خدمات آموزشی" data-placement="top" data-toggle="tooltip" data-Id="@item.AssessmentOfTrainingServiceId" class="BtnDelete btn btn-xs btn-pink tooltip1">
+                            <i class="ace-icon fa fa-print bigger-140"></i>
+                        </a>
+
+                    </div>
+
+                    <div class="hidden-md hidden-lg">
+                        <div class="inline position-relative">
+                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                <li>
+                                    <a data-Id="@item.AssessmentOfTrainingServiceId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                        <span class="green">
+                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a data-Id="@item.AssessmentOfTrainingServiceId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                        <span class="red">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            i++;
+        }
+    }
+</table>
+

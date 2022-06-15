@@ -1,0 +1,363 @@
+﻿@model IEnumerable<InterfaceEntity.CourseObjectivesEffectivenessTrainingEntity>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "دارد",
+        Value = "True",
+        //Selected = true
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "ندارد",
+        Value = "False"
+    });
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        var CourseRegistrationId = '@ViewBag.CourseRegistrationId';
+
+        $(document).ready(function () {
+
+            new AMIB.persianCalendar('EffectivenessTrainingDate');
+
+            $('.tooltip1').tooltip();
+
+            $("#btnAddNew").click(function () {
+                $.get('/CourseObjectivesEffectivenessTraining/Create', null, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                })
+            });
+
+            $(document).on("click", "#btnSaveCourseObjectivesEffectivenessTraining", function (e) {
+
+                $("#ajaxloader").css("display", "inline");
+                var myObject = new Object();
+                myObject.CourseRegistrationId = $("#CourseRegistrationId").val();
+                myObject.EffectivenessTrainingDate = $("#EffectivenessTrainingDate").val();
+                myObject.SupervisorId = $("#SupervisorId").val();
+                myObject.Correctiveaction = $("#Correctiveaction").val();
+                myObject.CorrectiveactionDescription = $("#CorrectiveactionDescription").val();
+
+                var url = "/EffectivenessTraining/Create"; // the url to the controller
+                $.post(url, myObject, function (data) {
+                    if (data == true) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                    else {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+
+                    alert("aa");
+                    window.setTimeout(function () {
+                        $("#MessageOperation").css("display", "none");
+                    }, 5000);
+                });
+
+                //var myObject = new Object();
+                //var array = [];
+
+                //$('#sample-table-1 tbody tr').each(function () {
+                //    myObject.EffectivenessTrainingId = $(this).find('#EffectivenessTrainingId').html();
+                //    myObject.CourseObjectiveId = $(this).find('#CourseObjectiveId').val();
+                //    myObject.PriorityId = $(this).find('#PriorityId').val();
+                //    myObject.AmountAccessPurposeId = $(this).find('#AmountAccessPurposeId').val();
+
+                //    array.push(myObject);
+                //    alert(EffectivenessTrainingId);
+                //});
+
+                //$.ajax({
+                //    url: "/ListStyleCourse/Createlist",
+                //    data: JSON.stringify(array),
+                //    type: 'POST',
+                //    contentType: 'application/json',
+                //    dataType: 'json',
+                //    success: function (result) {
+                //        if (result == true) {
+                //            $("#ajaxloader").css("display", "none");
+                //            $("#messageOp").empty();
+                //            $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                //            $("#MessageOperation").css("display", "block");
+                //        }
+                //        else {
+                //            $("#ajaxloader").css("display", "none");
+                //            $("#messageOp").empty();
+                //            $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                //            $("#MessageOperation").css("display", "block");
+                //        }
+                //    },
+                //    error: function (xhr, ajaxOptions, thrownError) {
+                //        $("#ajaxloader").css("display", "none");
+                //        $("#messageOp").empty();
+                //        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                //        $("#MessageOperation").css("display", "block");
+                //    }
+                //});
+                //window.setTimeout(function () {
+                //    $("#MessageOperation").css("display", "none");
+                //}, 5000);
+            });
+
+        });
+        
+    </script>
+
+</head>
+<body>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box " id="WidgetBoxCourseObjectivesEffectivenessTraining">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">ثبت / ویرایش</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-up" id="AceIconCourseObjectivesEffectivenessTraining"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: block;" id="WidgetBodyCourseObjectivesEffectivenessTraining">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد ثبت نام دوره : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("CourseRegistrationId", (Int32)ViewBag.CourseRegistrationId, new { @id = "SupervisorId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد ثبت نام دوره" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">مسئولیت سازمانی: </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("PostGroupName", (string)ViewBag.PostGroupName, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "مسئولیت سازمانی" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نام و نام خانوادگی سرپرست واحد مربوطه: </label>
+                                <div class="col-md-9">
+                                    @*@Html.DropDownList("SupervisorId", new MultiSelectList(ViewBag.SupervisorName, "Value", "Text"), "-- نام و نام خانوادگی سرپرست را انتخاب نمائید --", new { @id = "SupervisorId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })*@
+
+                                     @Html.DropDownList("SupervisorId",
+                                   new List<SelectListItem>
+                                   {
+                                   new SelectListItem() {Text = "aa", Value="1"},
+                                   new SelectListItem(){ Text = "bb", Value="2"},
+                                   new SelectListItem(){ Text = "cc", Value="3"},
+                                   new SelectListItem(){ Text = "dd", Value="4"},
+                                   new SelectListItem(){ Text = "ee", Value="5"}
+                                  }, new { @id = "SupervisorId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                
+                                </div>
+                            </div>
+                            <div class="form-group" >
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نیاز به اقدام اصلاحی: </label>
+                                <div class="col-md-9">
+                                    @*@Html.TextBox("Correctiveaction", (bool)ViewBag.Correctiveaction, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نیاز به اقدام اصلاحی" })*@
+                                    @Html.DropDownList("Correctiveaction", listItems, "-- نیاز به اقدام اصلاحی را انتخاب نمائید --", new { @id = "Correctiveaction", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">اقدام اصلاحی: </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("CorrectiveactionDescription", (string)ViewBag.CorrectiveactionDescription, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "اقدام اصلاحی" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تاریخ: </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("EffectivenessTrainingDate", (DateTime)ViewBag.EffectivenessTrainingDate, new {  @class = "col-xs-10 col-sm-5 col-md-10 fs pdate align-right", @placeholder = "تاریخ"  })
+                                    @*@Html.TextBox("EffectivenessTrainingDate", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs pdate align-right", @placeholder = "تاریخ" })*@
+                                    
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="center">
+                                    <label class="position-relative">
+                                        #
+                                    </label>
+                                </th>
+                                <th>اهداف دوره آموزشی</th>
+                                <th>میزان دستیابی به اهداف</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contacts">
+                            @{
+                                int i = 1;
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="center">
+                                            <label class="position-relative">
+                                                @i
+                                            </label>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CourseObjectiveName)
+                                        </td>
+
+                                        @*<td>
+                                            @Html.DropDownList("CourseObjectiveId", new MultiSelectList(ViewBag.TableInterfaceValueIdCourseObjective, "Value", "Text"), "-- هدف دوره آموزشی را انتخاب نمائید --", new { @id = "CourseObjectiveId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                            @Html.ValidationMessageFor(model => item.CourseObjectiveId)
+
+                                        </td>*@
+                                        <td>
+                                            @*@Html.DisplayFor(modelItem => item.AmountAccessPurposeId)*@
+
+                                            @Html.DropDownList("AmountAccessPurposeId",
+                                               new List<SelectListItem>
+                                               {
+                                               new SelectListItem() {Text = "1", Value="1"},
+                                               new SelectListItem(){ Text = "2", Value="2"},
+                                               new SelectListItem(){ Text = "3", Value="3"},
+                                               new SelectListItem(){ Text = "4", Value="4"},
+                                               new SelectListItem(){ Text = "5", Value="5"}
+                                               }, new { @id = "AmountAccessPurposeId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                        </td>
+                                        <td>
+                                            <div class="hidden-sm hidden-xs btn-group">
+                                                <button data-Id="@item.CourseObjectivesEffectivenessTrainingId" class="BtnEdit btn btn-xs btn-warning">
+                                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                                </button>
+
+                                                <button data-Id="@item.CourseObjectivesEffectivenessTrainingId" class="BtnDelete btn btn-xs btn-danger">
+                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                </button>
+                                            </div>
+
+                                            <div class="hidden-md hidden-lg">
+                                                <div class="inline position-relative">
+                                                    <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                        <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                                        <li>
+                                                            <a data-Id="@item.CourseObjectivesEffectivenessTrainingId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                                                <span class="green">
+                                                                    <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a data-Id="@item.CourseObjectivesEffectivenessTrainingId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                                                <span class="red">
+                                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                    </table>
+
+                    <div class="breadcrumbs" id="breadcrumbs">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button id="btnAddCourseObjectivesEffectivenessTraining" class="btn btn-info btn-white btn-round" type="button">
+                                <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                جدید
+                            </button>
+                            &nbsp; &nbsp; &nbsp;
+                            <button id="btnSaveCourseObjectivesEffectivenessTraining" class="btn btn-success btn-white btn-round" type="button">
+                                <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                ذخیره
+                            </button>
+                            &nbsp; &nbsp; &nbsp;
+                            <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                بازگشت
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

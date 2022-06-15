@@ -1,0 +1,307 @@
+﻿@model IEnumerable<InterfaceEntity.ListTrainingRequiredEntity>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        var InventoryjobsId = '@ViewBag.InventoryjobsId';
+
+        function _GetListListTrainingRequired() {
+            $.ajax({
+                url: "/ListTrainingRequired/_GetListListTrainingRequired",
+                data: { inventoryjobsid: InventoryjobsId },
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGridListTrainingRequired').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        $("#btnAddListTrainingRequired").click(function () {
+                       
+            $("#ListTrainingRequiredId").val('');
+            $("#InventoryjobsId").val('');
+            $("#Description").val('');
+            $("#TableTypeOfTrainingFaceId").val('');
+            $("#TitleTraining").val('');
+
+            $("#SD").attr('checked', false);
+            $("#OJT").attr('checked', false);
+            $("#C").attr('checked', false);
+
+            $("#SDTime").val('');
+            $("#OJTTime").val('');
+            $("#CTime").val('');
+        });
+
+        $(document).on('click', '.btnEditListTrainingRequired',function () {
+
+            var sd, ojt, c;
+
+            $("#WidgetBoxListTrainingRequired").removeClass("collapsed");
+            $("#AceIconListTrainingRequired").removeClass("fa-chevron-down");
+            $("#AceIconListTrainingRequired").addClass("fa-chevron-up");
+            $("#WidgetBodyListTrainingRequired").css("display", "block");
+
+            $("#ListTrainingRequiredId").val($(this).attr('data-ListTrainingRequiredId'));
+            $("#InventoryjobsId").val($(this).attr('data-InventoryjobsId'));
+            $("#Description").val($(this).attr('data-Description'));
+            $("#TableTypeOfTrainingFaceId").val($(this).attr('data-TableTypeOfTrainingFaceId'));
+            $("#TitleTraining").val($(this).attr('data-TitleTraining'));
+            $("#SDTime").val($(this).attr('data-SDTime'));
+            $("#OJTTime").val($(this).attr('data-OJTTime'));
+            $("#CTime").val($(this).attr('data-CTime'));
+
+            if ($(this).attr('data-SD') == "True")
+                sd = true;
+            else
+                sd = false;
+
+            if ($(this).attr('data-OJT') == "True")
+                ojt = true;
+            else
+                ojt = false;
+
+            if ($(this).attr('data-C') == "True")
+                c = true;
+            else
+                c = false;
+
+            $("#SD").attr('checked', sd);
+            $("#OJT").attr('checked', ojt);
+            $("#C").attr('checked', c);
+
+            //---------------Time--------
+            //if ($(this).attr('data-SDTime') == "True")
+            //    sdTime = true;
+            //else
+            //    sdTime = false;
+
+            //if ($(this).attr('data-OJTTime') == "True")
+            //    ojtTime = true;
+            //else
+            //    ojtTime = false;
+
+            //if ($(this).attr('data-CTime') == "True")
+            //    cTime = true;
+            //else
+            //    cTime = false;
+
+            //$("#SDTime").attr('checked', sdTime);
+            //$("#OJTTime").attr('checked', ojtTime);
+            //$("#CTime").attr('checked', cTime);
+        });
+
+        $("#btnSaveListTrainingRequired").click(function () {
+            if ($("#ListTrainingRequiredId").val() == "")
+                SaveDataListTrainingRequired()
+            else
+                EditDataListTrainingRequired()
+        });
+
+        $(document).on('click', '.btnDeleteListTrainingRequired',function () {
+            var tabletypeoftrainingfaceid = $(this).attr('data-TableTypeOfTrainingFaceId');
+            var listtrainingrequiredid = $(this).attr('data-ListTrainingRequiredId');
+            DeleteDataListTrainingRequired(tabletypeoftrainingfaceid,listtrainingrequiredid);
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxListTrainingRequired">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">ثبت / ویرایش</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconListTrainingRequired"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;" id="WidgetBodyListTrainingRequired">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شناسایی پرسشنامه شناسنامه مشاغل:</label>
+                                <div class="col-md-9">
+                                    <input id="InventoryjobsId" type="text" name="fname" value="@ViewBag.InventoryjobsId" />
+                                </div>
+                            </div>
+
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شناسایی فهرست آموزش های موردنیاز شغل: </label>
+                                <div class="col-md-9">
+                                    <input id="ListTrainingRequiredId" type="text" name="fname" value="@ViewBag.ListTrainingRequiredId" />
+                                </div>
+                            </div>
+
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شناسایی جدول واسط نوع آموزش شکل انجام آموزش: </label>
+                                <div class="col-md-9">
+                                    <input id="TableTypeOfTrainingFaceId" type="text" name="fname" value="@ViewBag.TableTypeOfTrainingFaceId" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان آموزش:</label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("TitleTraining", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "عنوان آموزش" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">SDTime:</label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("SDTime", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "SDTime" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">OJTTime:</label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("OJTTime", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "OJTTime" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" >
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">CTime:</label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("CTime", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "CTime" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">توضیحات:</label>
+                                <div class="col-md-9">
+                                    @Html.TextArea("Description",null,5,55, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "توضیحات" })
+                                </div>
+                            </div>
+                            
+                            <div class="well">
+                                <p class="green bigger-120 lighter">شکل انجام آموزش </p>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-10">
+                                        <div class="control-group">
+                                            <!-- #section:custom/checkbox -->
+
+                                            <div class="checkbox col-md-4">
+                                                <label>
+                                                    <input id="SD" name="form-field-checkbox" class="ace" type="checkbox">
+                                                    <span class="lbl">&nbsp;SD</span>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox col-md-4">
+                                                <label>
+                                                    <input id="OJT" name="form-field-checkbox" class="ace" type="checkbox">
+                                                    <span class="lbl">&nbsp;OJT</span>
+                                                </label>
+                                            </div>
+
+                                            <div class="checkbox col-md-4">
+                                                <label>
+                                                    <input id="C" name="form-field-checkbox" class="ace" type="checkbox">
+                                                    <span class="lbl">&nbsp;C</span>
+                                                </label>
+                                            </div>
+                                            <!-- /section:custom/checkbox -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="breadcrumbs" id="breadcrumbs">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button id="btnAddListTrainingRequired" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        جدید
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button id="btnSaveListTrainingRequired" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        ذخیره
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                        <i class="ace-icon fa fa-undo bigger-125"></i>
+                                        بازگشت
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGridListTrainingRequired">
+                        @Html.Partial("_GetListListTrainingRequired", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+
+
+

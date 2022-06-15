@@ -1,0 +1,200 @@
+﻿
+@model InterfaceEntity.InventoryjobEntity
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+    <!-- .page-content -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نام واحد:</label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("UnitSCenterId", new MultiSelectList(ViewBag.TableInterfaceValueIdUnitSCenter, "Value", "Text"), "-- نام واحد را انتخاب نمائید --", new { @id = "UnitSCenterId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @onchange = "javascript:GetDepartment(this.value);" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نام بخش : </label>
+                            <div class="col-md-9">
+                                <select id="DepartmentId" name="DepartmentId" class = "col-xs-10 col-sm-5 col-md-10 fs" onchange = "javascript: GetSection(this.value);"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نام قسمت : </label>
+                            <div class="col-md-9">
+                                <select id="SectionId" name="SectionId" class="col-xs-10 col-sm-5 col-md-10 fs"></select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان شغل: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.PostGroupName, new { @id = "PostGroupName", @class = "col-xs-10 col-sm-5  col-md-10 fs", @placeholder = "عنوان شغل" })
+                                @Html.ValidationMessageFor(model => model.PostGroupName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تعداد افراد شاغل در شغل مربوطه : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NumberEmployees, new { @id = "NumberEmployees", @class = "col-xs-10 col-sm-5  col-md-10 fs", @placeholder = "تعداد افراد شاغل در شغل مربوطه" })
+                                @Html.ValidationMessageFor(model => model.NumberEmployees)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان مشاغل بالاتر حداقل تا 2 رده:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.AsJobs2, new { @id = "AsJobs2", @class = "col-xs-10 col-sm-5  col-md-10 fs", @placeholder = "عنوان مشاغل بالاتر حداقل تا 2 رده" })
+                                @Html.ValidationMessageFor(model => model.AsJobs2)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان مشاغل پایین تر حداقل تا 2 رده:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.AsJobs3, new { @id = "AsJobs3", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "عنوان مشاغل پایین تر حداقل تا 2 رده" })
+                                @Html.ValidationMessageFor(model => model.AsJobs3)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تحصیلات/رشته/گرایش: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Education, new { @id = "Education", @class = "col-xs-10 col-sm-5  col-md-10 fs", @placeholder = "تحصیلات/رشته/گرایش" })
+                                @Html.ValidationMessageFor(model => model.Education)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">میزان تجربه موردنیاز:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Experience, new { @id = "Experience", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "میزان تجربه موردنیاز" })
+                                @Html.ValidationMessageFor(model => model.Experience)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">فهرست مسئولیت ها و اختیارات : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("ListResponsibilitiePowerId", new MultiSelectList(ViewBag.ListResponsibilitiePower, "Value", "Text"), "-- نام واحد را انتخاب نمائید --", new { @id = "ListResponsibilitiePowerId", @class = "col-xs-10 col-sm-5 col-md-10 fs"})
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">درصد فعالیت فیزیکی و انواع آن: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.PercentPhysicalActivity, new { @id = "PercentPhysicalActivity", @class = "col-xs-10 col-sm-5  col-md-10 fs", @placeholder = "درصد فعالیت فیزیکی و انواع آن" })
+                                @Html.ValidationMessageFor(model => model.PercentPhysicalActivity)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">درصد فعالیت ذهنی و انواع آن: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.PercentMentalActivity, new { @id = "PercentMentalActivity", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "درصد فعالیت ذهنی و انواع آن" })
+                                @Html.ValidationMessageFor(model => model.PercentMentalActivity)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">فهرست معلومات نظری شغل: </label>
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(model => model.TheoreticalKnowledge, 5, 55, new { @id = "TheoreticalKnowledge", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "فهرست معلومات نظری شغل" })
+                                @Html.ValidationMessageFor(model => model.TheoreticalKnowledge)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">فهرست توانمندی و صلاحیت کار با دستگاهها: </label>
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(model => model.Qualified, 5, 55, new { @id = "Qualified", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "فهرست توانمندی و صلاحیت کار با دستگاهها " })
+                                @Html.ValidationMessageFor(model => model.Qualified)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">سایر موارد و نکات مرتبط با آموزش های موردنیاز شغل: </label>
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(model => model.OtherTraining, 5, 55, new { @id = "OtherTraining", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "سایر موارد و نکات مرتبط با آموزش های موردنیاز شغل" })
+                                @Html.ValidationMessageFor(model => model.OtherTraining)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">سایر موارد فهرست توانایی های ویژه موردنیاز شغل : </label>
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(model => model.OtherAbilityRequiredJob, 5, 55, new { @id = "OtherAbilityRequiredJob", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "سایر موارد فهرست توانایی های ویژه موردنیاز شغل" })
+                                @Html.ValidationMessageFor(model => model.OtherAbilityRequiredJob)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">ارتباطات درون و برون سازمانی و شیوه ارتباط : </label>
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(model => model.ListCommunityOrganizationComment, 5, 55, new { @id = "ListCommunityOrganizationComment", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "ارتباطات درون و برون سازمانی و شیوه ارتباط" })
+                                @Html.ValidationMessageFor(model => model.ListCommunityOrganizationComment)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <script type="text/javascript">
+                                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                            </script>
+
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="SaveUser" onclick="SaveDataInventoryjob()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+
+</body>
+
+</html>
+

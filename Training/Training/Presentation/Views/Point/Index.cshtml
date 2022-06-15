@@ -1,0 +1,256 @@
+﻿
+@model IEnumerable<InterfaceEntity.PointEntity>
+
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+
+        $("#btnAddPoint").click(function () {
+            $("#PointId").val(''); 
+            $("#DetailTypeRateId").val('');
+            $("#PointName").val('');
+            $("#NumPoint").val('');
+        });
+
+        $(".btnEditPoint").click(function () {
+
+                $("#WidgetBoxEducationEmployeme").removeClass("collapsed");
+                $("#AceIconEducationEmployeme").removeClass("fa-chevron-down");
+                $("#AceIconEducationEmployeme").addClass("fa-chevron-up");
+                $("#WidgetBodyEducationEmployeme").css("display", "block");
+
+                $("#PointId").val($(this).attr('data-PointId'));
+                $("#DetailTypeRateId").val($(this).attr('data-DetailTypeRateId'));
+                $("#PointName").val($(this).attr('data-PointName'));
+                $("#NumPoint").val($(this).attr('data-NumPoint'));
+        });
+
+        $("#btnSavePoint").click(function () {
+            if ($("#PointId").val() == "")
+                SaveDataPoint()
+            else
+                EditDataPoint()
+
+        });
+
+        $(".btnDeletePoint").click(function () {
+            var ID = $(this).attr('data-PointId');
+            DeleteDataPoint(ID);
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxEducationEmployeme">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">ثبت / ویرایش</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEducationEmployeme"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;" id="WidgetBodyEducationEmployeme">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد امتیاز : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("PointId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد امتیاز" })
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد نوع امتیاز : </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("DetailTypeRateId", new MultiSelectList(ViewBag.DetailTypeRateId, "Value", "Text"), new { @id = "DetailTypeRateId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان امتیاز : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("PointName", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "عنوان امتیاز" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">امتیاز : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("NumPoint", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "امتیاز" })
+                                </div>
+                            </div>
+
+                            <div class="breadcrumbs" id="breadcrumbs">
+
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button id="btnAddPoint" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        جدید
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button id="btnSavePoint" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        ذخیره
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                        <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                        بازگشت
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="center">
+                                    <label class="position-relative">
+                                        #
+                                    </label>
+                                </th>
+                                <th>عنوان امتیاز</th>
+                                <th>امتیاز</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        @{
+                            int i = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="center">
+                                        <label class="position-relative">
+                                            @i
+                                        </label>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PointName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NumPoint)
+                                    </td>
+                                    <td>
+                                        <div class="hidden-sm hidden-xs btn-group">
+                                            <button data-PointId="@item.PointId" data-DetailTypeRateId="@item.DetailTypeRateId" data-PointName="@item.PointName" data-NumPoint="@item.NumPoint" class="btnEditPoint btn btn-xs btn-warning">
+                                                <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                            </button>
+
+                                            <button data-PointId="@item.PointId" class="btnDeletePoint btn btn-xs btn-danger">
+                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="hidden-md hidden-lg">
+                                            <div class="inline position-relative">
+                                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                                    <li>
+                                                        <a data-Id="@item.PointId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                                            <span class="green">
+                                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a data-Id="@item.PointId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                                            <span class="red">
+                                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </table>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

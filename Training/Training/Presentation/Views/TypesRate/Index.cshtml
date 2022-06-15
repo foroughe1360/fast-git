@@ -1,0 +1,329 @@
+﻿
+@model IEnumerable<InterfaceEntity.TypesRateEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+
+        function SaveData() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.RateName = $("#RateName").val();
+            myObject.NumberRate = $("#NumberRate").val();
+
+            var url = "/TypesRate/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                GetTypesRate();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+
+        function EditData() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.TypesRateId = $("#TypesRateId").val();
+            myObject.RateName = $("#RateName").val();
+            myObject.NumberRate = $("#NumberRate").val();
+
+            var url = "/TypesRate/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                GetTypesRate();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+
+        function DeleteDataTypesRate() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/TypesRate/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+            });
+
+        }
+
+        function GetTypesRate() {
+            $.ajax({
+                url: "/TypesRate/GetTypesRate",
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                // data: { employemeid: EmployemeId },
+                dataType: "json",
+                success: function (data) {
+                    var row = "";
+                    var i = 1;
+                    $.each(data, function (index, item) {
+                        row += "<tr><td class='center'><label class='position-relative'>" + i + "</label></td><td>" + item.RateName + "</td><td>" + item.NumberRate + "</td> "
+                        + "<td>"
+                            + "<div class='hidden-sm hidden-xs btn-group'>"
+                                 + "<button data-Id=" + item.TypesRateId + "class='BtnEdit btn btn-xs btn-warning'><i class='ace-icon fa fa-pencil bigger-120'></i></button>"
+                                 + "<button data-Id=" + item.TypesRateId + "data-DeleteName='DeleteDataTypesRate()' class='BtnDelete btn btn-xs btn-danger'><i class='ace-icon fa fa-trash-o bigger-120'></i></button>"
+                             + "</div>"
+                                   + "<div class='hidden-md hidden-lg'>"
+                                       + "<div class='inline position-relative'>"
+                                            + "<button class='btn btn-minier btn-primary dropdown-toggle' data-toggle='dropdown' data-position='auto'><i class='ace-icon fa fa-cog icon-only bigger-110'></i></button>"
+                                            + "<ul class='dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close'>"
+                                               + "<li><a data-Id=" + item.TypesRateId + " class='BtnEdit tooltip-success' data-rel='tooltip' title='ویرایش'><span class='green'><i class='ace-icon fa fa-pencil-square-o bigger-120'></i></span></a></li>"
+                                               + "<li><a data-Id=" + item.TypesRateId + " class='BtnDelete tooltip-error' data-rel='tooltip' title='حدف'><span class='red'><i class='ace-icon fa fa-trash-o bigger-120'></i></span></a></li>"
+                                           + "</ul>"
+                                + "</div>"
+                            + "</div>"
+                        + "</td>";
+                        i++;
+                    });
+                    $("#contacts").html(row);
+                },
+                error: function (result) {
+                    alert("Error");
+                }
+            });
+        }
+
+        $(document).ready(function () {
+
+            $('.tooltip1').tooltip();
+
+            $("#btnAddNew").click(function () {
+                $.get('/TypesRate/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت انواع امتیازات</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                })
+
+            });
+
+            $(".BtnEdit").click(function () {
+
+                var TypesRateId = $(this).attr('data-Id');
+                $.get('/TypesRate/Edit', "ID=" + TypesRateId, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت انواع امتیازات</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                });
+            });
+
+            $(".BtnDelete").click(function () {
+
+                var TypesRateId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: TypesRateId, viewname: ViewName }, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم حذف انواع امتیازات</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                });
+
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">اطلاعات اولیه</li>
+            <li class="active">انواع امتیازات</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-11 col-md-9" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="center">
+                                    <label class="position-relative">
+                                        #
+                                    </label>
+                                </th>
+                                <th>عنوان امتیاز </th>
+                                <th>عدد امتیاز</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contacts">
+                            @{
+                                int i = 1;
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="center">
+                                            <label class="position-relative">
+                                                @i
+                                            </label>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RateName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NumberRate)
+                                        </td>
+                                        <td>
+                                            <div class="hidden-sm hidden-xs btn-group">
+                                                <button data-original-title="ویرایش" data-placement="top" data-toggle="tooltip" data-Id="@item.TypesRateId" class="BtnEdit btn btn-xs btn-warning tooltip1">
+                                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                                </button>
+
+                                                <button data-original-title="حذف" data-DeleteName="DeleteDataTypesRate()" data-placement="top" data-toggle="tooltip" data-Id="@item.TypesRateId" class="BtnDelete btn btn-xs btn-danger tooltip1">
+                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                </button>
+
+                                                <a href="/DetailTypeRate/Index/@item.TypesRateId" data-original-title="جزئیات" data-placement="top" data-toggle="tooltip" class="BtnDelete btn btn-xs btn-info tooltip1">
+                                                    <i class="ace-icon fa fa-list bigger-120"></i>
+                                                </a>
+                                            </div>
+
+                                            <div class="hidden-md hidden-lg">
+                                                <div class="inline position-relative">
+                                                    <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                        <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                                        <li>
+                                                            <a data-Id="@item.TypesRateId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                                                <span class="green">
+                                                                    <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a data-Id="@item.TypesRateId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                                                <span class="red">
+                                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

@@ -1,0 +1,252 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.FinancialCommitmentEntity>
+
+<head>
+
+    <link href="~/Content/DataTable/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/DataTable/datatables.min.css" rel="stylesheet" />
+    <link href="~/Content/DataTable/datatables.css" rel="stylesheet" />
+
+    @*
+    <script src="~/scripts/jquery-1.12.3.js"></script>*@
+    <script src="~/Content/DataTable/datatables.min.js"></script>
+
+    <script src="~/Content/DataTable/dataTables.buttons.min.js"></script>
+    <script src="~/Content/DataTable/jszip.min.js"></script>
+    <script src="~/Content/DataTable/buttons.html5.min.js"></script>
+
+    <style>
+        #sample-table-1 tr:hover {
+            color: #2980B9 !important;
+            background-color: #eeeeee !important; /*  working for td */
+        }
+
+        #sample-table-1, #sample-table-1 th {
+            border-color: #ccc !important;
+        }
+
+            #sample-table-1 .paginate_button:hover {
+                border-color: #ccc !important;
+            }
+
+        /*.dataTables_wrapper .dataTables_paginate .paginate_button {
+             background: none;
+             background-color: #fff;
+             color: #2980B9 !important;
+             border-radius: 4px;
+             border: 1px solid #2980B9;
+         }
+         .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+             background: none;
+             background-color: #fff;
+             color: #2980B9 !important;
+             border-radius: 4px;
+             border: 1px solid #2980B9;
+         }
+         .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+             background: none;
+             background-color: #fff !important;
+             color: #2980B9 !important;
+         }*/
+    </style>
+</head>
+
+
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th>نام کارمند </th>
+            <th> زمان برگزاری </th>
+            <th>نام دوره آموزشی</th>
+            <th>مکان دوره آموزشی</th>
+            <th>مبلغ سفته (ریـال)</th>
+            <th>مدت اشتغال (سال)</th>
+            <th>تاریخ شروع اعتبار سفته</th>
+            <th>تاریخ پایان اعتبار سفته</th>
+            <th>وضعیت اعتبار سفته</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+        <tr>
+            <td class="center">
+                <label class="position-relative">
+                    @i
+                </label>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployemesName)
+            </td>
+
+            @*@if (@item.TookHold.MiladiToPersion() == "1131/10/12")
+        {
+            <td class="blue" style="font-weight:bold"> -- </td>
+        }
+        else
+        {
+            <td>@item.TookHold.MiladiToPersion()</td>
+        }*@
+            <td>
+                @item.ToDate.MiladiToPersion()
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainingCourseName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainingVenueName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountPierced)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeEmployment)
+            </td>
+            <td>
+                @item.FromDate.MiladiToPersion()
+            </td>
+            <td>
+                @item.ToDate.MiladiToPersion()
+            </td>
+
+            @*@if (DateTime.Compare(@item.ToDate, DateTime.Now) > 0)
+            {
+        <td class="blue" style="font-weight:bold"> بدهکار </td>
+            }
+            else
+            {
+        <td class="blue" style="font-weight:bold">--</td>
+            }*@
+            @if (@item.CheckFinancialCommitment == true)
+            {
+                <td class="blue" style="font-weight:bold"> بدهکار </td>
+            }
+            else
+            {
+                <td class="blue" style="font-weight:bold">--</td>
+            }
+            <td>
+                <div class="hidden-sm hidden-xs btn-group">
+                    <button data-Id="@item.FinancialCommitmentId" class="BtnEdit btn btn-xs btn-warning">
+                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                    </button>
+
+                    <button data-Id="@item.FinancialCommitmentId" data-DeleteName="DeleteDataFinancialCommitment()" class="BtnDelete btn btn-xs btn-danger">
+                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                    </button>
+                    <a href="/FinancialCommitment/Print/@item.FinancialCommitmentId" data-original-title="پرینت برگه تضمین و تعهد" data-placement="top" data-toggle="tooltip" class="btn btn-xs btn-info tooltip1">
+                        <i class="ace-icon fa fa-print bigger-120"></i>
+                    </a>
+                </div>
+
+                <div class="hidden-md hidden-lg">
+                    <div class="inline position-relative">
+                        <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                            <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                            <li>
+                                <a data-Id="@item.FinancialCommitmentId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                    <span class="green">
+                                        <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-Id="@item.FinancialCommitmentId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                    <span class="red">
+                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </td>
+        </tr>
+            i++;
+        }
+    }
+</table>
+
+
+<script>
+    //$('table').dataTable({ searching: false, paging: false, info: false });
+    $(document).ready(function () {
+        var d = new Date();
+        var date = d.getDate();
+        $('table').DataTable({
+            dom: 'Blfrtip',
+            info: false,
+            stateSave: true,
+            lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+            //oSelectorOpts: { filter: 'applied' },
+            columnDefs: [
+                { "width": "9%", "orderable": false, "targets": 10 }
+            ],
+            oLanguage: {
+                oPaginate: {
+                    "sFirst": "اولین صفحه", // This is the link to the first page
+                    "sPrevious": "قبلی", // This is the link to the previous page
+                    "sNext": "بعدی", // This is the link to the next page
+                    "sLast": "آخرین صفحه" // This is the link to the last page
+                },
+                sSearch: "جستجو:",
+                sLengthMenu: "تعداد داده: _MENU_ "
+            },
+            buttons: [{
+                text: 'ذخیره تمام اطلاعات  در اکسل',
+                className: "ExportAll",
+                extend: 'excelHtml5',
+                title: 'گزارش' + ' ' + $('#PageReportName').text() + '' + d.getFullYear() + '/' + ("0" + (d.getMonth() + 1)).slice(-2) + '/' + ("0" + d.getDate()).slice(-2),
+                exportOptions: {
+                    modifier: {
+                        selected: true
+                    },
+                    columns: [1, 2, 3, 4, 5, 6, 7,8,9,10],
+                    format: {
+                        header: function (data, columnIdx) {
+                            return data;
+                        },
+                        body: function (data, column, row) {
+                            // Strip $ from salary column to make it numeric
+                            debugger;
+                            return column === 10 ? "" : data;
+                        }
+                    }
+                },
+                footer: false,
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    //$('c[r=A1] t', sheet).text( 'Custom text' );
+                    //$('row c[r^="C"]', sheet).attr('s', '2');
+                }
+            }
+                ,
+            {
+                text: 'ذخیره همین صفحه در اکسل',
+                extend: 'excelHtml5',
+                exportOptions: {
+                    modifier: {
+                        page: 'current'
+                    }
+                }
+            },
+            ]
+        });
+        $('.dt-button').addClass('btn btn-lg btn-primary');
+        $('.ExportAll').addClass('btn btn-lg btn-success');
+    });
+</script>

@@ -1,0 +1,186 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.AttendanceEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+
+        var AttendanceDateId = '@ViewBag.AttendanceDateId';
+        var CourseRegistrationId = '@ViewBag.CourseRegistrationId';
+        var DesignTrainingCourseId = '@ViewBag.DesignTrainingCourseId';
+
+        
+
+        $(document).ready(function () {
+
+            $("#btnSaveAttendance").click(function () {
+                var array = [];
+
+                $('#sample-table-1 tbody tr').each(function () {
+                    var myObject = new Object();
+                    myObject.AttendanceId = $(this).attr('data-AttendanceId');
+                    myObject.AttendanceDateId = AttendanceDateId;
+                    myObject.CourseRegistrationId = $(this).attr('data-CourseRegistrationId');
+                    myObject.EmployemesnName = $(this).find('#EmployemesnName').html();
+                    myObject.TypeAttendanceId = $(this).find('#TypeAttendanceId').val();
+                    myObject.HourDelayFrom = $(this).find('#HourDelayFrom').val();
+                    myObject.HourDelayTo = $(this).find('#HourDelayTo').val();
+                    array.push(myObject);
+                });
+
+                $.ajax({
+                    url: "/Attendance/Createlist",
+                    data: JSON.stringify(array),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result == true) {
+
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                            $("#MessageOperation").css("display", "block");
+                            _GetListAttendance();
+                        }
+                        else {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                });
+
+               
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+            function _GetListAttendance() {
+                debugger;
+                var myObjectSearch = new Object();
+                myObjectSearch.attendancedateid = AttendanceDateId;
+                myObjectSearch.designtrainingcourseid = DesignTrainingCourseId;
+                myObjectSearch.designtrainingcoursedateid = 0;
+
+                var url = "/Attendance/_GetListAttendance"; // the url to the controller
+                $.post(url, myObjectSearch, function (data) {
+                    $('#theGrid').html(data);
+                });
+            }
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">فهرست حضور و غیاب <span class="red"> @ViewBag.CourseDate</span></li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+    
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-top:20px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div  style="margin-top:20px" id="breadcrumbs">
+        <script type="text/javascript">
+                                    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="col-md-offset-1">
+            <button id="btnSaveAttendance" class="btn btn-success btn-white btn-round" type="button">
+                <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                ذخیره
+            </button>
+            &nbsp; &nbsp; &nbsp;
+            <a href="/AttendanceDate/Index/?Id=@ViewBag.DesignTrainingCourseId&designtrainingcoursedateid=@ViewBag.DesignTrainingCourseDateId" class="btn btn-danger btn-white btn-round">
+                <i class="ace-icon fa fa-undo bigger-125"></i>
+                برگشت
+            </a>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListAttendance", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

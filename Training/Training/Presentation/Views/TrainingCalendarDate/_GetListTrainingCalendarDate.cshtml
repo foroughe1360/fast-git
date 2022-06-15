@@ -1,0 +1,96 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.TrainingCalendarDateEntity>
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th>توضیحات</th>
+            <th>تاریخ</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody id="contacts">
+        @{
+            int i = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td class="center">
+                        <label class="position-relative">
+                            @i
+                        </label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @item.TrCalendarDate.MiladiToPersion()
+                    </td>
+                    <td>
+                        <div class="hidden-sm hidden-xs btn-group">
+                            <button data-Id="@item.TrainingCalendarDateId" data-original-title="ویرایش" data-placement="top" data-toggle="tooltip" class="BtnEdit btn btn-xs btn-warning tooltip1">
+                                <i class="ace-icon fa fa-pencil bigger-120"></i>
+                            </button>
+
+                            <button data-Id="@item.TrainingCalendarDateId" data-DeleteName="DeleteDataTrainingCalendarDateId()" data-original-title="حذف" data-placement="top" data-toggle="tooltip" class="BtnDelete btn btn-xs btn-danger tooltip1">
+                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                            </button>
+                            <a href="/TrainingCalendar/Index/@item.TrainingCalendarDateId" data-original-title="جزئیات" data-placement="top" data-toggle="tooltip" class="BtnDelete btn btn-xs btn-info tooltip1">
+                                <i class="ace-icon fa fa-list bigger-120"></i>
+                            </a>
+
+                            <button data-original-title="تنظیم تاریخ" data-placement="top" data-toggle="tooltip"
+                                    data-Id="@item.TrainingCalendarDateId"
+                                    data-EmployemeId="@item.TrainingCalendarDateId"
+                                    data-EmployemeName="@item.Description"
+                                    class="BtnSetDateReport btn btn-xs btn-round tooltip1">
+                                <i class="ace-icon fa fa-list bigger-100"></i>
+                            </button>
+
+                            <a href="/TrainingCalendarDate/Print/@item.TrainingCalendarDateId" data-original-title="پرینت فهرست تقویم آموزشی" data-placement="top" data-toggle="tooltip" data-Id="@item.TrainingCalendarDateId" class="btn btn-xs btn-success tooltip1">
+                                <i class="ace-icon fa fa-print bigger-120"></i>
+                            </a>
+                        </div>
+
+                        <div class="hidden-md hidden-lg">
+                            <div class="inline position-relative">
+                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                    <li>
+                                        <a data-Id="@item.TrainingCalendarDateId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                            <span class="green">
+                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a data-Id="@item.TrainingCalendarDateId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                            <span class="red">
+                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>
+
+
+
+

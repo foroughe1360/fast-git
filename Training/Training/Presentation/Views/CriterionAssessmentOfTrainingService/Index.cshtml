@@ -1,0 +1,140 @@
+﻿@model IEnumerable<InterfaceEntity.CriterionAssessmentOfTrainingServiceEntity>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+        var AssessmentOfTrainingServiceId ='@ViewBag.AssessmentOfTrainingServiceId';
+    </script>
+</head>
+
+<body>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+    <div id="breadcrumbs">
+        <script type="text/javascript">
+                                    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="col-md-offset-1">
+            <button id="btnCriterionAssessmentOfTrainingService" class="btn btn-success btn-white btn-round" type="button">
+                <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                ذخیره
+            </button>
+            &nbsp; &nbsp; &nbsp;
+            <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                <i class="ace-icon fa fa-undo bigger-125"></i>
+                بازگشت
+            </button>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="center" rowspan="2">
+                                    <label class="position-relative">
+                                        #
+                                    </label>
+                                </th>
+                                <th>عنوان معیارارزیابی</th>
+                                <th width="10%">حداکثر امتیاز</th width="12%">
+                                <th width="12%">امتیاز کسب شده</th>
+                                <th>توضیحات</th>
+                            </tr>
+                        </thead>
+                        @{
+                            int i = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr data-CriterionAssessmentOfTrainingServiceId="@item.CriterionAssessmentOfTrainingServiceId"  data-TypeOfEvaluationId="@item.TypeOfEvaluationId">
+                                    <td class="center">
+                                        <label class="position-relative">
+                                            @i
+                                        </label>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TypeOfEvaluationName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MaxScore)
+                                    </td>
+                                    @if (@item.CriterionAssessmentOfTrainingServiceId == 0)
+                                    {
+                                        <td>
+                                            <input type="text" value="0" id="Earnpoints" class="col-xs-10 col-sm-5 col-md-10 fs pdate align-right" , placeholder="امتیاز کسب شده" />
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @Html.TextBoxFor(model => item.Earnpoints, new { @id = "Earnpoints", @class = "col-xs-10 col-sm-5 col-md-10 fs pdate align-right", @placeholder = "امتیاز کسب شده" })
+                                        </td>
+                                    }
+                                    @if (@item.CriterionAssessmentOfTrainingServiceId == 0)
+                                    {
+                                        <td>
+                                            <input type="text" id="Description" class="col-xs-10 col-sm-5 col-md-10 fs pdate align-right" , placeholder="امتیاز کسب شده" />
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            @Html.TextBoxFor(model => item.Description, new { @id = "Description", @class = "col-xs-10 col-sm-5 col-md-10 fs pdate align-right", @placeholder = "امتیاز کسب شده" })
+                                        </td>
+                                    }
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </table>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

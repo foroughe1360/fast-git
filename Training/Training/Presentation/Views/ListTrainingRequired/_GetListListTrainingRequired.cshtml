@@ -1,0 +1,102 @@
+﻿@model IEnumerable<InterfaceEntity.ListTrainingRequiredEntity>
+<table id="sample-table-1" class="table table-striped table-bordered table-hover center">
+    <thead>
+        <tr>
+            <th rowspan="2">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th rowspan="2" class="center">عنوان آموزش</th>
+            <th colspan="3" class="center">شکل انجام آموزش</th>
+            <th colspan="3" class="center">مدت زمان</th>
+            <th rowspan="2" class="center">توضیحات</th>
+            <th rowspan="2" class="center">عملیات</th>
+        </tr>
+        <tr>
+            <th class="center">SD</th>
+            <th class="center">OJT</th>
+            <th class="center">C</th>
+            <th class="center">SD</th>
+            <th class="center">OJT</th>
+            <th class="center">C</th>
+        </tr>
+    </thead>
+    @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td class="center">
+                    <label class="position-relative">
+                        @i
+                    </label>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TitleTraining)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OJT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.C)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SDTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OJTTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <div class="hidden-sm hidden-xs btn-group">
+                        <button class="btnEditListTrainingRequired btn btn-xs btn-warning" data-ListTrainingRequiredId="@item.ListTrainingRequiredId" data-InventoryjobsId="@item.InventoryjobsId" data-Description="@item.Description" data-TableTypeOfTrainingFaceId="@item.TableTypeOfTrainingFaceId" data-TitleTraining="@item.TitleTraining" data-SD="@item.SD" data-OJT="@item.OJT" data-C="@item.C" data-SDTime="@item.SDTime" data-OJTTime="@item.OJTTime" data-CTime="@item.CTime">
+                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                        </button>
+
+                        <button data-ListTrainingRequiredId="@item.ListTrainingRequiredId" data-TableTypeOfTrainingFaceId="@item.TableTypeOfTrainingFaceId" class="btnDeleteListTrainingRequired btn btn-xs btn-danger">
+                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                        </button>
+                    </div>
+
+                    <div class="hidden-md hidden-lg">
+                        <div class="inline position-relative">
+                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                <li>
+                                    <a data-Id="@item.ListTrainingRequiredId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                        <span class="green">
+                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a data-Id="@item.ListTrainingRequiredId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                        <span class="red">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            i++;
+        }
+    }
+</table>
+

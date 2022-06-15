@@ -1,0 +1,105 @@
+﻿@model InterfaceEntity.DetailOfferTrainingForEmployemeEntity
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/Style.css" rel="stylesheet" />
+    <script src="~/Content/Date/js/jquery.min.js"></script>
+    <script src="~/ControllerJS/UserController.js"></script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.DetailOfferTrainingForEmployemeId, new { @id = "DetailOfferTrainingForEmployemeId" })
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شناسایی فهرست آموزشهای پیشنهاد شده برای کارکنان : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.OfferTrainingForEmployemesId, new { @id = "OfferTrainingForEmployemesId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد شناسایی فهرست آموزشهای پیشنهاد شده برای مشاغل" })
+                                @Html.ValidationMessageFor(model => model.OfferTrainingForEmployemesId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">آموزش موردنیاز: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NeedTraining, new { @id = "NeedTraining", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "آموزش موردنیاز" })
+                                @Html.ValidationMessageFor(model => model.NeedTraining)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شناسایی الویت : </label>
+                            @*@Html.LabelFor(model => model.Mobile, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.PriorityId, new { @id = "PriorityId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد شناسایی الویت " })
+                                @Html.ValidationMessageFor(model => model.PriorityId)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <script type="text/javascript">
+                                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                            </script>
+
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="btnEdit" onclick="EditData()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+</body>
+
+</html>
+
+
+
+

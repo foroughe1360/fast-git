@@ -1,0 +1,120 @@
+﻿@model IEnumerable<InterfaceEntity.ListCommunityOrganizationEntity>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <SCRIPT language="javascript">
+        var InventoryjobsId = '@ViewBag.InventoryjobsId';
+        $("#ListCommunicationOrganization").val("257");
+        
+        function _GetListTeacher() {
+            debugger;
+            var CommunicationOrganizationId = $("#ListCommunicationOrganization").val();
+            $.ajax({
+                url: "/ListCommunityOrganization/_GetListCommunityOrganization",
+                type: 'GET',
+                datatype: 'json',
+                data: { ID: InventoryjobsId, communicationorganizationid: CommunicationOrganizationId },
+                success: function (data) {
+                    $('#theGridListCommunityOrganization').html(data);
+                    if ($(".case").length == $(".case:checked").length) {
+                        $("#selectall").attr("checked", "checked");
+                    } else {
+                        $("#selectall").removeAttr("checked");
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        
+        if ($(".case").length == $(".case:checked").length) {
+            $("#selectall").attr("checked", "checked");
+        } else {
+            $("#selectall").removeAttr("checked");
+        }
+
+        // add multiple select / deselect functionality
+        $(document).on("click", "#selectall", function () {
+            $('.case').attr('checked', this.checked);
+        });
+
+        // if all checkbox are selected, check the selectall checkbox
+        // and viceversa
+        $(document).on("click", ".case", function () {
+            if ($(".case").length == $(".case:checked").length) {
+                $("#selectall").attr("checked", "checked");
+            } else {
+                $("#selectall").removeAttr("checked");
+            }
+        });
+
+    </SCRIPT>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+    
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+                        <div class="form-group">
+                            <label id="lblUnitSCenterId" class="col-sm-4 control-label no-padding-right" for="form-field-1">ارتباطات درون و برون سازمانی و شیوه ارتباط : </label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("ListCommunicationOrganization", new MultiSelectList(ViewBag.TableInterfaceValueListCommunityOrganizations, "Value", "Text"), "-- ارتباطات درون و برون سازمانی و شیوه ارتباط را انتخاب نمائید --", new { @id = "ListCommunicationOrganization", @class = "col-xs-10 col-sm-5 col-md-10 fs", @onchange = "javascript:_GetListTeacher();" })
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGridListCommunityOrganization">
+                        @Html.Partial("_GetListCommunityOrganization", Model)
+                    </div>
+                </div>               
+            <!-- /.row -->
+        </div>
+
+            <div class="breadcrumbs" id="breadcrumbs">
+                <div class="col-md-offset-3 col-md-9">
+                    <button id="btnSaveListCommunityOrganization"  class="btn btn-success btn-white btn-round" type="button">
+                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                        ذخیره
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                        <i class="ace-icon fa fa-undo bigger-125"></i>
+                        بازگشت
+                    </button>
+                </div>
+            </div>
+        <!-- /.page-content-area -->
+    </div>
+    </div>
+    <!-- /.page-content -->
+</body>
+
+</html>
+

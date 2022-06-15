@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D1528832-93DD-43C8-AAC7-B21C19AE7758}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InterfaceEntity</RootNamespace>
+    <AssemblyName>InterfaceEntity</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\AccessAndLog\AccessMenuUserEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\AccessUserEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\EmployemeSignaturyEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\LogErrorEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\MenuEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\NameOfSignatoryEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\OperationLogEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\PostGroupEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\SideSignatoryEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\SignatureResponsibilityEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\SupervisorEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\UserEntity.cs" />
+    <Compile Include="Entities\AccessAndLog\CustomPrincipalSerializeModel.cs" />
+    <Compile Include="Entities\BasicInformation\AbsenceCountEntity.cs" />
+    <Compile Include="Entities\BasicInformation\AssessorEntity.cs" />
+    <Compile Include="Entities\BasicInformation\CodingTrainingPageEntity.cs" />
+    <Compile Include="Entities\BasicInformation\DepartmentEntity.cs" />
+    <Compile Include="Entities\BasicInformation\DetailTypeRateEntity.cs" />
+    <Compile Include="Entities\BasicInformation\DeviceCollectionEntity.cs" />
+    <Compile Include="Entities\BasicInformation\EducationEmployemeEntity.cs" />
+    <Compile Include="Entities\BasicInformation\EmployeeTrainingPassedEntity.cs" />
+    <Compile Include="Entities\BasicInformation\EmployeeTrainingPassedReportEntity.cs" />
+    <Compile Include="Entities\BasicInformation\EmployemeEntity.cs" />
+    <Compile Include="Entities\BasicInformation\EmployemeJobEntity.cs" />
+    <Compile Include="Entities\BasicInformation\FileRepositoryEntity.cs" />
+    <Compile Include="Entities\BasicInformation\HoursCertificationEntity.cs" />
+    <Compile Include="Entities\BasicInformation\JobGroupEntity.cs" />
+    <Compile Include="Entities\BasicInformation\ListResponsibilitiePowerEntity.cs" />
+    <Compile Include="Entities\BasicInformation\MasterRateItEntity.cs" />
+    <Compile Include="Entities\BasicInformation\NumberSucceedEntity.cs" />
+    <Compile Include="Entities\BasicInformation\PointEntity.cs" />
+    <Compile Include="Entities\BasicInformation\RatingEvaluationEntity.cs" />
+    <Compile Include="Entities\BasicInformation\SampleTableCourse.cs" />
+    <Compile Include="Entities\BasicInformation\SectionEntity.cs" />
+    <Compile Include="Entities\BasicInformation\SetDateForReportEntity.cs" />
+    <Compile Include="Entities\BasicInformation\TableInterfaceEntity.cs" />
+    <Compile Include="Entities\BasicInformation\TableInterfaceValueEntity.cs" />
+    <Compile Include="Entities\BasicInformation\TableTypeOfTrainingEntity.cs" />
+    <Compile Include="Entities\BasicInformation\TariffEntity.cs" />
+    <Compile Include="Entities\BasicInformation\TeacherEntity.cs" />
+    <Compile Include="Entities\BasicInformation\TeacherLevelDateEntity.cs" />
+    <Compile Include="Entities\BasicInformation\TeacherLevelEntity.cs" />
+    <Compile Include="Entities\BasicInformation\TestsCollectionEntity.cs" />
+    <Compile Include="Entities\BasicInformation\TrainingCourseEntity.cs" />
+    <Compile Include="Entities\BasicInformation\TypeOfEvaluationEntity.cs" />
+    <Compile Include="Entities\BasicInformation\TypesRateEntity.cs" />
+    <Compile Include="Entities\IT\HardwareEquipmentEntity.cs" />
+    <Compile Include="Entities\IT\HardwareInformationEntity.cs" />
+    <Compile Include="Entities\IT\HardwareNameEntity.cs" />
+    <Compile Include="Entities\Promotion\CompetencyOperateTheMachineEntity.cs" />
+    <Compile Include="Entities\Promotion\CompetencyTestingEntity.cs" />
+    <Compile Include="Entities\Promotion\EmployeeEvaluationEntity.cs" />
+    <Compile Include="Entities\Promotion\HistoryQualificationOfStaffEntity.cs" />
+    <Compile Include="Entities\Promotion\ListEmployeeEvaluationEntity.cs" />
+    <Compile Include="Entities\Promotion\ListQualificationOfStaffEntity.cs" />
+    <Compile Include="Entities\Training\AssessmentOfTrainingServiceEntity.cs" />
+    <Compile Include="Entities\Training\AssessmentOfTrainingServiceInformationEntity.cs" />
+    <Compile Include="Entities\Training\AttendanceDateEntity.cs" />
+    <Compile Include="Entities\Training\AttendanceEntity.cs" />
+    <Compile Include="Entities\Training\CourseObjectivesEffectivenessTrainingEntity.cs" />
+    <Compile Include="Entities\Training\CourseRegistrationEntity.cs" />
+    <Compile Include="Entities\Training\CriterionAssessmentOfTrainingServiceEntity.cs" />
+    <Compile Include="Entities\Training\DataInventoryjobForCoyEintity.cs" />
+    <Compile Include="Entities\Training\DesignTrainingCourseDateEntity.cs" />
+    <Compile Include="Entities\Training\DesignTrainingCourseEntity.cs" />
+    <Compile Include="Entities\Training\DetailOfferTrainingForEmployemeEntity.cs" />
+    <Compile Include="Entities\Training\DetailOfferTrainingForJobEntity.cs" />
+    <Compile Include="Entities\Training\DetailPlacementTabJobTrainingEntity.cs" />
+    <Compile Include="Entities\Training\DetialHistoryTrainingUploadPageEntity.cs" />
+    <Compile Include="Entities\Training\EffectivenessTrainingEntity.cs" />
+    <Compile Include="Entities\Training\EvaluationTrainingProgramEntity.cs" />
+    <Compile Include="Entities\Training\FinancialCommitmentEntity.cs" />
+    <Compile Include="Entities\Training\HistoryTrainingUploadPageEntity.cs" />
+    <Compile Include="Entities\Training\InventoryjobEntity.cs" />
+    <Compile Include="Entities\Training\ListAbilityRequiredJobEntity.cs" />
+    <Compile Include="Entities\Training\ListCommunityOrganizationEntity.cs" />
+    <Compile Include="Entities\Training\ListEffectivenessOfCourseEntity.cs" />
+    <Compile Include="Entities\Training\ListHealthConditionEntity.cs" />
+    <Compile Include="Entities\Training\ListLearningAssistToolEntity.cs" />
+    <Compile Include="Entities\Training\ListOfCorporateJobDateEntity.cs" />
+    <Compile Include="Entities\Training\ListOfCorporateJobEntity.cs" />
+    <Compile Include="Entities\Training\ListPhysicalConditionEntity.cs" />
+    <Compile Include="Entities\Training\ListStyleCourseEntity.cs" />
+    <Compile Include="Entities\Training\ListTrainingCoursesWithAttendancesEntity.cs" />
+    <Compile Include="Entities\Training\ListTrainingRequiredEntity.cs" />
+    <Compile Include="Entities\Training\ListTypeTestScoresEntity.cs" />
+    <Compile Include="Entities\Training\NoteAbsenceEntity.cs" />
+    <Compile Include="Entities\Training\OfferTrainingForEmployeeDateEntity.cs" />
+    <Compile Include="Entities\Training\OfferTrainingForEmployemeEntity.cs" />
+    <Compile Include="Entities\Training\OfferTrainingForJobDateEntity.cs" />
+    <Compile Include="Entities\Training\OfferTrainingForJobEntity.cs" />
+    <Compile Include="Entities\Training\OJTLevelEntity.cs" />
+    <Compile Include="Entities\Training\PlacementTabJobTrainingDateEntity.cs" />
+    <Compile Include="Entities\Training\PlacementTabJobTrainingEntity.cs" />
+    <Compile Include="Entities\Training\TablesRelatedAssessmentOfTrainingServiceEntity.cs" />
+    <Compile Include="Entities\Training\TestScoreEntity.cs" />
+    <Compile Include="Entities\Training\TrainingCalendarDateEntity.cs" />
+    <Compile Include="Entities\Training\TrainingCalendarEntity.cs" />
+    <Compile Include="Entities\Training\TrainingPageFileEntity.cs" />
+    <Compile Include="Report\AccessAndLog\ReportName.cs" />
+    <Compile Include="Report\AccessAndLog\SideSignatoryReport.cs" />
+    <Compile Include="Report\IT\HardwareInformation\HardwareInformationReport.cs" />
+    <Compile Include="Report\Training\AttendanceDate\AttendanceDateReport.cs" />
+    <Compile Include="Report\Training\Employeme\EmployemeForReport.cs" />
+    <Compile Include="Report\Training\OfferTrainingForEmployeme\DetailOfferTrainingForEmployemeReport.cs" />
+    <Compile Include="Report\Training\OfferTrainingForEmployeme\PostReport.cs" />
+    <Compile Include="Search\BasicInformation\ListResponsibilitiePowerSearch.cs" />
+    <Compile Include="Search\BasicInformation\TeacherLevelSearch.cs" />
+    <Compile Include="Search\BasicInformation\TeacherSearch.cs" />
+    <Compile Include="Search\BasicInformation\TypeSearch.cs" />
+    <Compile Include="Search\IT\HardwareEquipmentSearch.cs" />
+    <Compile Include="Search\IT\HardwareInformationSearch.cs" />
+    <Compile Include="Search\Trianing\AttendanceSearch.cs" />
+    <Compile Include="Search\Trianing\DetailoffertrainingforemployemeSearch.cs" />
+    <Compile Include="Search\Trianing\EmployeeTrainingPassedReportSearch.cs" />
+    <Compile Include="Search\Trianing\FinancialCommitmentSearch.cs" />
+    <Compile Include="Search\Trianing\ListTrainingCoursesWithAttendancesSearch.cs" />
+    <Compile Include="Search\Trianing\PlacementTabJobTrainingSearch.cs" />
+    <Compile Include="Search\Trianing\TrainingCalendarSearch.cs" />
+    <Compile Include="Utillity\Attachment.cs" />
+    <Compile Include="Utillity\HeaderImage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\BasicInformation\Employeme\EmployeeTrainingPassedReport.cs" />
+    <Compile Include="Report\BasicInformation\Employeme\EmployemeReport.cs" />
+    <Compile Include="Report\BasicInformation\Employeme\SignatureResponsibilityReport.cs" />
+    <Compile Include="Report\Training\DesignTrainingCourse\ListEffectivenessOfCourseReport.cs" />
+    <Compile Include="Report\Training\DesignTrainingCourse\DesignTrainingCourseReport.cs" />
+    <Compile Include="Report\Training\DesignTrainingCourse\ListLearningAssistToolReport.cs" />
+    <Compile Include="Report\Training\DesignTrainingCourse\ListStyleCourseReport.cs" />
+    <Compile Include="Report\Training\Inventoryjob\InventoryjobsReport.cs" />
+    <Compile Include="Report\Training\Inventoryjob\ListAbilityRequiredJobReport.cs" />
+    <Compile Include="Report\Training\Inventoryjob\ListHealthConditionsReport.cs" />
+    <Compile Include="Report\Training\Inventoryjob\ListTrainingRequiredReport.cs" />
+    <Compile Include="Report\Training\ListAttendance\AttendanceDateReport.cs" />
+    <Compile Include="Report\Training\ListAttendance\AttendanceReport.cs" />
+    <Compile Include="Report\Training\ListCommunityOrganization\CommunicationRowReport.cs" />
+    <Compile Include="Report\Training\ListCommunityOrganization\CommunityOrganization.cs" />
+    <Compile Include="Report\Training\ListCommunityOrganization\DownstreamCommunicationReport.cs" />
+    <Compile Include="Report\Training\ListCommunityOrganization\ExternalCommunicationReport.cs" />
+    <Compile Include="Report\Training\ListCommunityOrganization\UpstreamCommunicationReport.cs" />
+    <Compile Include="Report\Training\ListOfCorporateJob\ListOfCorporateJobReport.cs" />
+    <Compile Include="Report\Training\NoteAbsence\NoteAbsenceReport.cs" />
+    <Compile Include="Report\Training\OfferTrainingForJob\DetailOfferTrainingForJobReport.cs" />
+    <Compile Include="Report\Training\OfferTrainingForJob\PostReport.cs" />
+    <Compile Include="Report\Training\PlacementTabJobTraining\EmployemeOJTReport.cs" />
+    <Compile Include="Report\Training\PlacementTabJobTraining\PlacementTabJobTrainingReport.cs" />
+    <Compile Include="Search\BasicInformation\EmployemeSearch.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DomainModel\DomainModel.csproj">
+      <Project>{f7d45fa4-823f-4b01-946f-f300344ebd30}</Project>
+      <Name>DomainModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

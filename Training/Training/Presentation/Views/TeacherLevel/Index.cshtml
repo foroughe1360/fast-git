@@ -1,0 +1,450 @@
+﻿
+@model IEnumerable<InterfaceEntity.TeacherLevelEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+
+        var _TeacherLevelDateId = '@ViewBag.TeacherLevelDateId';
+        var myObjectTC = '';
+
+
+        function SaveData() {
+            debugger;
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.TeacherLevelDateId = _TeacherLevelDateId;
+            myObject.TeacherId = $("#TeacherId").val();
+            myObject.EffectivenessOfPreviousPeriod = $("#EffectivenessOfPreviousPeriod").val();
+            myObject.Rhetorical = $("#Rhetorical").val();
+            myObject.EducationId = $("#EducationId").val();
+            myObject.Experience = $("#Experience").val();
+            myObject.CoursePlan = $("#CoursePlan").val();
+            myObject.HistoryOfCooperation = $("#HistoryOfCooperation").val();
+            myObject.Degree = $("#Degree").val();
+
+            $("#sample-table-Course tr:gt(0)").each(function () {
+                
+                var this_row = $(this);
+                if (myObjectTC != '')
+                    myObjectTC = myObjectTC + ',';
+
+                myObjectTC = myObjectTC + parseInt($.trim(this_row.find('td:eq(0)').html()));
+            });
+
+            myObject.TrainingCourse = myObjectTC;
+
+            var url = "/TeacherLevel/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListTeacherLevel(1);
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+        function EditData() {
+            debugger;
+            myObjectTC = '';
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.TeacherLevelId = $("#TeacherLevelId").val();
+            myObject.TeacherLevelDateId = _TeacherLevelDateId;
+            myObject.TeacherId = $("#TeacherId").val();
+            myObject.TrainingCourseId = $("#TrainingCourseId").val();
+            myObject.EffectivenessOfPreviousPeriod = $("#EffectivenessOfPreviousPeriod").val();
+            myObject.Rhetorical = $("#Rhetorical").val();
+            myObject.EducationId = $("#EducationId").val();
+            myObject.Experience = $("#Experience").val();
+            myObject.CoursePlan = $("#CoursePlan").val();
+            myObject.HistoryOfCooperation = $("#HistoryOfCooperation").val();
+            myObject.Degree = $("#Degree").val();
+
+            $("#sample-table-Course tr:gt(0)").each(function () {
+
+                var this_row = $(this);
+                if (myObjectTC != '')
+                    myObjectTC = myObjectTC + ',';
+
+                myObjectTC = myObjectTC + parseInt($.trim(this_row.find('td:eq(0)').html()));
+            });
+
+            myObject.TrainingCourse = myObjectTC;
+
+            var url = "/TeacherLevel/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListTeacherLevel(1);
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+        function DeleteDataTeacherLevel() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/TeacherLevel/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListTeacherLevel(1);
+            });
+
+        }
+        function _GetListTeacherLevel(typesearch) {
+
+            debugger;
+            //typesearch { WithoutParameter =1, WithParameter = 2}
+            if (typesearch == 1) {
+                var myObjectSearch = new Object();
+                myObjectSearch.TeacherName = $("#TeacherNameSearch").val();
+                myObjectSearch.TeacherLevelDateId = _TeacherLevelDateId;
+                myObjectSearch.typesearch = 1;
+            }
+            else if (typesearch == 2) {
+                var myObjectSearch = new Object();
+                myObjectSearch.TeacherName = $("#TeacherNameSearch").val();
+                myObjectSearch.TeacherLevelDateId = _TeacherLevelDateId;
+                myObjectSearch.typesearch = 2;
+            }
+
+            var url = "/TeacherLevel/_GetListTeacherLevel"; // the url to the controller
+            $.post(url, myObjectSearch, function (data) {
+                $('#theGrid').html(data);
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#TeacherId').val() == '') {
+                $('#lblteacher').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblteacher').css('color', 'black');
+            }
+
+            //if ($('#TrainingCourseId').val() == '') {
+            //    $('#lblTrainingCourse').css('color', 'red');
+            //    StateValue = true;
+            //}
+            //else {
+            //    $('#lblTrainingCourse').css('color', 'black');
+            //}
+
+            if ($('#EffectivenessOfPreviousPeriod').val() == '') {
+                $('#lblEffectivenessOfPreviousPeriod').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblEffectivenessOfPreviousPeriod').css('color', 'black');
+            }
+
+            if ($('#Rhetorical').val() == '') {
+                $('#lblRhetorical').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblRhetorical').css('color', 'black');
+            }
+
+            if ($('#EducationId').val() == '') {
+                $('#lblEducationId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblEducationId').css('color', 'black');
+            }
+
+            if ($('#Experience').val() == '') {
+                $('#lblExperience').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblExperience').css('color', 'black');
+            }
+
+            if ($('#CoursePlan').val() == '') {
+                $('#lblCoursePlan').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblCoursePlan').css('color', 'black');
+            }
+
+            if ($('#HistoryOfCooperation').val() == '') {
+                $('#lblHistoryOfCooperation').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblHistoryOfCooperation').css('color', 'black');
+            }
+
+            if ($('#Degree').val() == '') {
+                $('#lblDegree').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblDegree').css('color', 'black');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+
+
+        $(document).ready(function () {
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on('click', '#btnAddNew', function () {
+                $("div#divLoading").addClass('show');
+                $.get('/TeacherLevel/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت فهرست مدرسین ارزیابی شده </span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(document).on('click', '.BtnEdit', function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم ویرایش فهرست مدرسین ارزیابی شده </span>");
+                var TeacherLevelId = $(this).attr('data-Id');
+                $.get('/TeacherLevel/Edit', "ID=" + TeacherLevelId, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete', function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم حذف فهرست مدرسین ارزیابی شده </span>");
+                var EmployemeId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: EmployemeId, viewname: ViewName }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+
+            });
+
+            $(document).on('click', '.deleteRowButton', function () {
+                $(this).parents('tr').first().remove();
+            });
+
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">اطلاعات اولیه</li>
+            <li class="active">فهرست مدرسین ارزیابی شده </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxEmployemeSearch">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active bigger-150"><a href="#">جستجو</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEmployemeSearch"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;height:110px" id="WidgetBodyEmployemeSearch">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-6">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">نام استاد : </label>
+                                <div class="col-md-10">
+                                    @Html.TextBox("TeacherNameSearch", null, new { @id = "TeacherNameSearch", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام استاد" })
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-xs-6">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">نام دوره : </label>
+                                <div class="col-md-10">
+                                    @Html.TextBox("LastNameSearch", null, new { @id = "LastNameSearch", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام دوره" })
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-xs-12">
+                        <div class="col-md-offset-10">
+                            <button onclick="_GetListTeacherLevel(2)" class="btn btn-info btn-white btn-round" type="button">
+                                <i class="ace-icon fa fa-search bigger-125"></i>
+                                جستجو
+                            </button>
+                            <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-10" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+                &nbsp; &nbsp; &nbsp;
+                <a href="/TeacherLevelDate/Index" class="btn btn-danger btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-check bigger-125"></i>
+                    بازگشت
+                </a>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListTeacherLevel", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

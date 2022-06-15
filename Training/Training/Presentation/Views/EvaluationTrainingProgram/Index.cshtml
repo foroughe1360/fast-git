@@ -1,0 +1,244 @@
+﻿@model IEnumerable<InterfaceEntity.EvaluationTrainingProgramEntity>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        var CourseRegistrationId = '@ViewBag.CourseRegistrationId';
+
+        $(document).ready(function () {
+
+            $("#btnAddNew").click(function () {
+                $.get('/EvaluationTrainingProgram/Create', null, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                })
+            });
+
+            $(document).on("click", "#btnSaveEvaluationTrainingProgram", function (e) {
+               
+                var myObject = new Object();
+                var array = [];
+
+                $('#sample-table-1 tbody tr').each(function () {
+                    myObject.DirectorEducationQuestionId = $(this).find('#DirectorEducationQuestionId').html();
+                    myObject.CourseRegistrationId = $(this).find('#CourseRegistrationId').val();
+                    myObject.EvaluationTrainingProgramsName = $(this).find('#EvaluationTrainingProgramsName').val();
+                    myObject.QuestionsID = $(this).find('#QuestionsID').val();
+
+                    array.push(myObject);
+                    alert(CourseRegistrationId);
+               });
+
+                //$.ajax({
+                //    url: "/ListStyleCourse/Createlist",
+                //    data: JSON.stringify(array),
+                //    type: 'POST',
+                //    contentType: 'application/json',
+                //    dataType: 'json',
+                //    success: function (result) {
+                //        if (result == true) {
+                //            $("#ajaxloader").css("display", "none");
+                //            $("#messageOp").empty();
+                //            $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                //            $("#MessageOperation").css("display", "block");
+                //        }
+                //        else {
+                //            $("#ajaxloader").css("display", "none");
+                //            $("#messageOp").empty();
+                //            $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                //            $("#MessageOperation").css("display", "block");
+                //        }
+                //    },
+                //    error: function (xhr, ajaxOptions, thrownError) {
+                //        $("#ajaxloader").css("display", "none");
+                //        $("#messageOp").empty();
+                //        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                //        $("#MessageOperation").css("display", "block");
+                //    }
+                //});
+                //window.setTimeout(function () {
+                //    $("#MessageOperation").css("display", "none");
+                //}, 5000);
+            });
+        });
+
+        function setvalue(DirectorEducationQuestionId) {
+            ("#DirectorEducationQuestionId").val(DirectorEducationQuestionId);
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">نظرسنجی و ارزیابی دوره ها</li>
+            <li class="active"> پرسشنامه ارزشیابی دوره های آموزشی</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="margin-top:20px" id="breadcrumbs">
+        <script type="text/javascript">
+                                    try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="col-md-offset-1">
+            <button id="btnSaveEvaluationTrainingProgram" class="btn btn-success btn-white btn-round" type="button">
+                <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                ذخیره
+            </button>
+            &nbsp; &nbsp; &nbsp;
+            <a href="/CourseRegistration/Index/@ViewBag.CourseRegistrationId" class="btn btn-danger btn-white btn-round">
+                <i class="ace-icon fa fa-undo bigger-125"></i>
+                برگشت
+            </a>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="center">
+                                    <label class="position-relative">
+                                        #
+                                    </label>
+                                </th>
+                                <th>عنوان پرسشهای مرتبط با محتوای دوره و مدرس</th>
+                                <th>امتیاز</th>
+                            </tr>
+                        </thead>
+                        @{
+                            int i = 1; bool check = false;
+                            foreach (var item in Model)
+                            {
+                                if (item.QuestionsID == 28 && check == false)
+                                {
+                                    <tr>
+                                        <th class="center">
+                                            <label class="position-relative">
+                                                #
+                                            </label>
+                                        </th>
+                                        <th>عنوان پرسشهای مرتبط بامدیر آموزش و اطلاع رسانی و تدارکات آموزش</th>
+                                        <th>امتیاز</th>
+                                    </tr>
+                                    check = true;
+                                }
+
+                                <tr>
+                                    <td class="center">
+                                        <label class="position-relative">
+                                            @i
+                                        </label>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EvaluationTrainingProgramsName)
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList("DirectorEducationQuestionId", new MultiSelectList(ViewBag.DirectorEducationQuestionId, "Value", "Text"), "-- امتیاز را انتخاب نمائید --", new { @id = "DirectorEducationQuestionId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                        @Html.ValidationMessageFor(model => item.DirectorEducationQuestionId)
+
+                                    </td>
+                                    <td>
+                                        <div class="hidden-sm hidden-xs btn-group">
+                                            <button data-Id="@item.EvaluationTrainingProgramId" class="BtnEdit btn btn-xs btn-warning">
+                                                <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                            </button>
+
+                                            <button data-Id="@item.EvaluationTrainingProgramId" class="BtnDelete btn btn-xs btn-danger">
+                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="hidden-md hidden-lg">
+                                            <div class="inline position-relative">
+                                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                                    <li>
+                                                        <a data-Id="@item.EvaluationTrainingProgramId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                                            <span class="green">
+                                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a data-Id="@item.EvaluationTrainingProgramId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                                            <span class="red">
+                                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </table>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

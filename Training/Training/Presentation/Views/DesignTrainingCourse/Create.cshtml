@@ -1,0 +1,205 @@
+﻿
+@model InterfaceEntity.DesignTrainingCourseEntity
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        new AMIB.persianCalendar('TookHoldStr');
+        new AMIB.persianCalendar('ExamDatesStr');
+        $("#TrainingCourseId").select2(); 
+        $("#TeacherId").select2(); 
+        $("#TrainingVenueId").select2();
+    </script>
+</head>
+
+<body>
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+
+                        <div class="form-group">
+                            <label id="lblTrainingCourseId" class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان دوره آموزشی: </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("TrainingCourseId", new MultiSelectList(ViewBag.TrainingCourseId, "Value", "Text"), "-- عنوان دروه آموزشی را انتخاب نمائید --",  new { @id = "TrainingCourseId", @class = "col-xs-10 col-sm-5 col-md-10  col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.TrainingCourseId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblTeacherId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام استاد: </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("TeacherId", new MultiSelectList(ViewBag.TeacherId, "Value", "Text"), "-- نام استاد را انتخاب نمائید --", new { @id = "TeacherId", @class = "col-xs-10 col-sm-5 col-md-10 col-md-10  fs" })
+                                @Html.ValidationMessageFor(model => model.TeacherId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblTookHoldStr" class="col-sm-3 control-label no-padding-right" for="form-field-1">زمان برگزاری: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.TookHold, new { @id = "TookHoldStr", @class = "col-xs-10 col-sm-5 col-md-10 fs  pdate align-right", @placeholder = "زمان برگزاری" })
+                                @Html.ValidationMessageFor(model => model.TookHold)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblTrainingVenueId" class="col-sm-3 control-label no-padding-right" for="form-field-1">مکان برگزاری: </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("TrainingVenueId", new MultiSelectList(ViewBag.TableInterfaceIdTrainingVenue, "Value", "Text"), "-- مکان برگزاری  را انتخاب نمائید --", new { @id = "TrainingVenueId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.TrainingVenueId)
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label id="lblDuration" class="col-sm-3 control-label no-padding-right" for="form-field-1">مدت دوره: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Duration, new { @id = "Duration", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "مدت دوره" })
+                                @Html.ValidationMessageFor(model => model.Duration)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblNumberOfParticipants" class="col-sm-3 control-label no-padding-right" for="form-field-1">تعداد شرکت کنندگان : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NumberOfParticipants, new { @id = "NumberOfParticipants", @class = "col-xs-10 col-sm-5  col-md-10  fs", @placeholder = "تعداد شرکت کنندگان" })
+                                @Html.ValidationMessageFor(model => model.NumberOfParticipants)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblCostCourses" class="col-sm-3 control-label no-padding-right" for="form-field-1">هزینه دوره به ازای هر نفر: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.CostCourses, new { @id = "CostCourses", @class = "col-xs-10 col-sm-5 col-md-10  fs", @placeholder = "هزینه دوره به ازای هر نفر" })
+                                @Html.ValidationMessageFor(model => model.CostCourses)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblCourseObjectives" class="col-sm-3 control-label no-padding-right" for="form-field-1">اهداف دوره : </label>
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(model => model.CourseObjectives,5,55, new { @id = "CourseObjectives", @class = "col-xs-10 col-sm-5 col-md-10  fs", @placeholder = "اهداف دوره " })
+                                @Html.ValidationMessageFor(model => model.CourseObjectives)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblCourseContent" class="col-sm-3 control-label no-padding-right" for="form-field-1">محتوای  دوره : </label>
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(model => model.CourseContent,5, 55, new { @id = "CourseContent", @class = "col-xs-10 col-sm-5 col-md-10  fs", @placeholder = "محتوای  دوره " })
+                                @Html.ValidationMessageFor(model => model.CourseContent)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblOtherNotes" class="col-sm-3 control-label no-padding-right" for="form-field-1">سایر نکات : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.OtherNotes, new { @id = "OtherNotes", @class = "col-xs-10 col-sm-5 col-md-10  fs", @placeholder = "سایر نکات " })
+                                @Html.ValidationMessageFor(model => model.OtherNotes)
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label id="lblExamDatesStr" class="col-sm-3 control-label no-padding-right" for="form-field-1">تاریخ برگزاری آزمون:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.ExamDates, new { @id = "ExamDatesStr", @class = "col-xs-10 col-sm-5  col-md-10  fs", @placeholder = "تاریخ برگزاری آزمون" })
+                                @Html.ValidationMessageFor(model => model.ExamDates)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblTypesOfTrainingId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نوع دوره آموزشی: </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("TypesOfTrainingId", new MultiSelectList(ViewBag.TableInterfaceValueIdTypesOfTraining, "Value", "Text"), "-- نوع دوره آموزشی را انتخاب نمائید --", new { @id = "TypesOfTrainingId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.TypesOfTrainingId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblMaximumScore" class="col-sm-3 control-label no-padding-right" for="form-field-1"> حداکثر نمره:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.MaximumScore, new { @id = "MaximumScore", @class = "col-xs-10 col-sm-5 col-md-10  fs", @placeholder = "حداکثر نمره" })
+                                @Html.ValidationMessageFor(model => model.MaximumScore)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblHoursHolding" class="col-sm-3 control-label no-padding-right" for="form-field-1"> ساعت برگزاری:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.HoursHolding, new { @id = "HoursHolding", @class = "col-xs-10 col-sm-5 col-md-10  fs", @placeholder = "ساعت برگزاری" })
+                                @Html.ValidationMessageFor(model => model.HoursHolding)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblMinutesHolding" class="col-sm-3 control-label no-padding-right" for="form-field-1"> دقیقه برگزاری:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.MinutesHolding, new { @id = "MinutesHolding", @class = "col-xs-10 col-sm-5 col-md-10  fs", @placeholder = "دقیقه برگزاری" })
+                                @Html.ValidationMessageFor(model => model.MinutesHolding)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblCourseObjectives" class="col-sm-3 control-label no-padding-right" for="form-field-1">وسایل کمک آموزشی لازم و مورد نیاز : </label>
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(model => model.ListLearningAssistToolComment, 5, 55, new { @id = "ListLearningAssistToolComment", @class = "col-xs-10 col-sm-5 col-md-10  fs", @placeholder = "وسایل کمک آموزشی لازم و مورد نیاز" })
+                                @Html.ValidationMessageFor(model => model.ListLearningAssistToolComment)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <script type="text/javascript">
+                                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                            </script>
+
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="SaveUser" onclick="SaveDataDesignTrainingCourse()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+
+</body>
+
+</html>
+

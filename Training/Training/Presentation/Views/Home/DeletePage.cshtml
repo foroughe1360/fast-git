@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content" id="DeleteContent">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+                        
+                        <div class="form-group">
+                            <label class="col-md-offset-3 col-sm-offset-3  control-label no-padding-right bigger-150 blue" for="form-field-1">آیا اطلاعات موردنظر حذف گردد؟ </label>
+                            <input id="TableId" hidden="hidden" type="text" name="fname" value="@ViewBag.ID">
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <div class="col-md-offset-3">
+
+                                <button id="btnDelete" onclick="@ViewBag.ViewName"  class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    بله
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+                                    برگشت
+                                </button>
+                                <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+</body>
+
+</html>

@@ -1,0 +1,194 @@
+﻿
+@model IEnumerable<InterfaceEntity.SectionEntity>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+        var DepartmentId = '@ViewBag.Department';
+
+        function _GetListSection() {
+            $.ajax({
+                url: "/Section/_GetListSection",
+                type: 'GET',
+                data: { DepartmentID: DepartmentId },
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGridSection').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        $(document).on('mousemove', '.tooltip1', function () {
+            $('.tooltip1').tooltip();
+        });
+
+        $("#btnAddSection").click(function () {
+            $("#SectionId").val('');
+            $("#DepartmentId").val('');
+            $("#Name").val('');
+        });
+
+        $(document).on('click', '.btnEditSection',function () {
+
+                $("#WidgetBoxEducationEmployeme").removeClass("collapsed");
+                $("#AceIconEducationEmployeme").removeClass("fa-chevron-down");
+                $("#AceIconEducationEmployeme").addClass("fa-chevron-up");
+                $("#WidgetBodyEducationEmployeme").css("display", "block");
+
+                $("#SectionId").val($(this).attr('data-SectionId'));
+                $("#DepartmentId").val($(this).attr('data-DepartmentId'));
+                $("#Name").val($(this).attr('data-Name'));
+        });
+
+        $("#btnSaveSection").click(function () {
+            if ($("#SectionId").val() == "")
+                SaveDataSection()
+            else
+                EditDataSection()
+
+        });
+
+        $(document).on('click', '.btnDeleteSection',function () {
+            var ID = $(this).attr('data-SectionId');
+            DeleteDataSection(ID);
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxEducationEmployeme">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">ثبت / ویرایش</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEducationEmployeme"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;" id="WidgetBodyEducationEmployeme">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد قسمت : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("SectionId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد قسمت" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نام بخش : </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("DepartmentId", new MultiSelectList(ViewBag.DepartmentId, "Value", "Text"), "-- نام بخش را انتخاب نمائبد --", new { @id = "DepartmentId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نام قسمت : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("Name", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام قسمت" })
+                                </div>
+                            </div>
+
+                            <div class="breadcrumbs" id="breadcrumbs">
+
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button id="btnAddSection" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        جدید
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button id="btnSaveSection" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        ذخیره
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                        <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                        بازگشت
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGridSection">
+                        @Html.Partial("_GetListSection", Model)
+                    </div>
+                    
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

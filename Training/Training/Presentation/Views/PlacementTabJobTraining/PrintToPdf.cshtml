@@ -1,0 +1,30 @@
+﻿@using Stimulsoft.Report.Mvc;
+@{Layout = null;}
+@{
+    ViewBag.Title = "PrintToPdf";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>عنوان</title>
+</head>
+<body style="direction:ltr !important">
+    @Html.Stimulsoft().StiMvcViewer(new StiMvcViewerOptions()
+{
+    //Theme = StiTheme.Office2013,
+    //ActionGetReportSnapshot = "StiReportPdfFile",
+    //ActionViewerEvent = "ViewerEvent",
+    //ToolbarBackgroundColor = System.Drawing.Color.Silver,
+
+
+    Actions =
+        {
+            GetReport = "StiReportPdfFile",
+            ViewerEvent = "ViewerEvent",
+        },
+
+})
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.NumberSucceedEntity>
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th>درصد نمره کل</th>
+            <th>تاریخ ثبت نمره قبولی</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody id="contacts">
+        @{
+            int i = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td class="center">
+                        <label class="position-relative">
+                            @i
+                        </label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    <td>
+                        @item.NumberSucceedDate.MiladiToPersion()
+                    </td>
+                    <td>
+                        <div class="hidden-sm hidden-xs btn-group">
+                            <button data-Id="@item.NumberSucceedId" data-original-title="ویرایش" data-placement="top" data-toggle="tooltip" class="BtnEdit btn btn-xs btn-warning tooltip1">
+                                <i class="ace-icon fa fa-pencil bigger-120"></i>
+                            </button>
+
+                            <button data-Id="@item.NumberSucceedId" data-DeleteName="DeleteDataNumberSucceed()" data-original-title="حذف" data-placement="top" data-toggle="tooltip" class="BtnDelete btn btn-xs btn-danger tooltip1">
+                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                            </button>
+                        </div>
+
+                        <div class="hidden-md hidden-lg">
+                            <div class="inline position-relative">
+                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                    <li>
+                                        <a data-Id="@item.NumberSucceedId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                            <span class="green">
+                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a data-Id="@item.NumberSucceedId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                            <span class="red">
+                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>
+

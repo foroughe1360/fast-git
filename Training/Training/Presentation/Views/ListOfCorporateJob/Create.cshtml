@@ -1,0 +1,118 @@
+﻿
+@model InterfaceEntity.ListOfCorporateJobEntity
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+        $("#CollectionId").select2();
+        $("#PostTypeId").select2();
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+
+                        <div class="form-group">
+                            <label id="lblCollectionId" class="col-sm-3 control-label no-padding-right" for="form-field-1">گروه آزمایشگاه : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("CollectionId", new MultiSelectList(ViewBag.TableInterfaceValueIdCollection, "Value", "Text"), "-- گروه را انتخاب نمائید --", new { @id = "CollectionId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.CollectionId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblPostTypeId" class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان شغل : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("PostTypeId", new MultiSelectList(ViewBag.TableInterfaceValueIdPostType, "Value", "Text"), "-- عنوان شغل را انتخاب نمائید --", new { @id = "PostTypeId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.PostTypeId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblNumberOfPeopleEmployed" class="col-sm-3 control-label no-padding-right" for="form-field-1">تعداد افراد شاغل : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NumberOfPeopleEmployed, new { @id = "NumberOfPeopleEmployed", @class = "col-xs-10 col-sm-5 col-md-10 fs pdate align-right", @placeholder = "تعداد افراد شاغل" })
+                                @Html.ValidationMessageFor(model => model.NumberOfPeopleEmployed)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblYear" class="col-sm-3 control-label no-padding-right" for="form-field-1">سال : </label>
+                            <div class="col-md-9">
+                                <select id="Year" class="col-xs-10 col-sm-5 col-md-10 fs">
+                                    <option value="1395">1395</option>
+                                    <option value="1396">1396</option>
+                                    <option value="1397">1397</option>
+                                    <option value="1398">1398</option>
+                                    <option value="1399">1399</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.Year)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblDescription" class="col-sm-3 control-label no-padding-right" for="form-field-1">توضیحات : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Description, new { @id = "Description", @class = "col-xs-10 col-sm-5 col-md-10 fs pdate align-right", @placeholder = "توضیحات" })
+                                @Html.ValidationMessageFor(model => model.Description)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <div class="col-md-offset-3">
+                                <button id="btnSave" onclick="SaveData()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+</body>
+
+</html>
+
+
+

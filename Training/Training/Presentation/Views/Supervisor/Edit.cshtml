@@ -1,0 +1,116 @@
+﻿@model InterfaceEntity.SupervisorEntity
+
+@{
+    List<SelectListItem> listState = new List<SelectListItem>();
+    listState.Add(new SelectListItem
+    {
+        Text = "فعال",
+        Value = "True",
+        //Selected = true
+    });
+    listState.Add(new SelectListItem
+    {
+        Text = "غیرفعال",
+        Value = "False"
+    });
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        $("#EmployemeId").select2();
+        $("#DepartmentId").select2();
+        $("#PostTypeId").select2();
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.SupervisorId, new { @id = "SupervisorId" })
+
+                        <div class="form-group">
+                            <label id="lblUnitSCenterId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام واحد : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("DepartmentId", new MultiSelectList(ViewBag.Department, "Value", "Text"), "-- نام بخش را انتخاب نمائید --", new { @id = "DepartmentId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @onchange = "javascript:GetDepartment(this.value);" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblEmployemeId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام کارمند: </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("EmployemeId", new MultiSelectList(ViewBag.Employeme, "Value", "Text"), "-- نام  کارمند را انتخاب نمائید --", new { @id = "EmployemeId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @onchange = "javascript: GetCurrentPostGroup(this.value);" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblEmployemeId" class="col-sm-3 control-label no-padding-right" for="form-field-1"> مسئولیت سازمانی بالاتر : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("PostTypeId", new MultiSelectList(ViewBag.PostType, "Value", "Text"), "-- مسئولیت سازمانی بالاتر را انتخاب نمائید --", new { @id = "PostTypeId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="lblIsActive" class="col-sm-3 control-label no-padding-right" for="form-field-1">وضعیت کاربر : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("State", listState, "-- وضعیت را انتخاب نمائید --", new { @id = "State", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.State)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <div class="col-md-offset-3">
+                                <button id="btnSave" onclick="EditData()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+</body>
+
+</html>

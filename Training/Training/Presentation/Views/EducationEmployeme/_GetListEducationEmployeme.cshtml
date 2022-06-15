@@ -1,0 +1,116 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.EducationEmployemeEntity>
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th> تحصیلات </th>
+            <th>رشته تحصیلی</th>
+            <th>گرایش تحصیلی</th>
+            <th>نوع دانشگاه یا موسسه</th>
+            <th>نام دانشگاه یا موسسه</th>
+            <th>وضعیت دانشگاه</th>
+            <th>وضعیت آخرین مدرک تحصیلی</th>
+           <th>تاریخ اخذ مدرک</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody id="contacts">
+        @{
+            int i = 1;
+            foreach (var item in Model)
+            {
+        <tr>
+            <td class="center">
+                <label class="position-relative">
+                    @i
+                </label>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EducationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FieldOfStudy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcademicOrientation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfUniversityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameOfUniversity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActiveTypeOfUniversity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastEducationalCertificate)
+            </td>
+
+            <td>
+                @item.DateOfGraduation.MiladiToPersion()
+            </td>
+
+            <td>
+                <div class="hidden-sm hidden-xs btn-group">
+                    <button data-original-title="ویرایش"
+                            data-placement="top" data-toggle="tooltip" class="btnEditEducationEmployeme btn btn-xs btn-warning tooltip1"
+                            data-EducationEmployemeId="@item.EducationEmployemeId"
+                            data-EmployemeId="@item.EmployemeId"
+                            data-EducationId="@item.EducationId"
+                            data-FieldOfStudy="@item.FieldOfStudy"
+                            data-AcademicOrientation="@item.AcademicOrientation"
+                            data-DateOfGraduation="@item.DateOfGraduation.MiladiToPersion()"
+                            data-LastEducationalCertificate="@item.LastEducationalCertificate"
+                            data-ActiveTypeOfUniversity="@item.ActiveTypeOfUniversity"
+                            data-TableTypeOfUniversityId="@item.TableTypeOfUniversityId"
+                            data-NameOfUniversity="@item.NameOfUniversity">
+                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                    </button>
+
+                    <button data-original-title="حذف" data-placement="top" data-toggle="tooltip" data-EducationEmployemeId="@item.EducationEmployemeId" class="btnDeleteEducationEmployeme btn btn-xs btn-danger tooltip1">
+                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                    </button>
+                    <button data-original-title="بارگذاری مدرک تحصیلی" data-placement="top" data-toggle="tooltip" data-ContentId="@item.EducationEmployemeId" class="BtnUploadFileEducationEmployeme btn btn-xs btn-info tooltip1">
+                        <i class="ace-icon fa fa-upload bigger-120"></i>
+                    </button>
+                </div>
+
+                <div class="hidden-md hidden-lg">
+                    <div class="inline position-relative">
+                        <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                            <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                            <li>
+                                <a data-Id="@item.EducationEmployemeId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                    <span class="green">
+                                        <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-Id="@item.EducationEmployemeId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                    <span class="red">
+                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </td>
+        </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>

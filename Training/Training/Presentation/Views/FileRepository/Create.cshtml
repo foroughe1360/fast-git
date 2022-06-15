@@ -1,0 +1,133 @@
+﻿@model InterfaceEntity.FileRepositoryEntity
+@{
+
+    var img = String.Format("data:image/jpeg;base64,{0}", Convert.ToBase64String(Model.ContentLength));
+    var pdf = String.Format("data:application/pdf;base64,{0}", Convert.ToBase64String(Model.ContentLength));
+
+}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script language="javascript">
+        var files="";
+        var temppath="";
+        var filename="";
+
+        $('.ace-file-name').attr('data-title', "@Model.FileName");
+
+        $('#UploadedFile').change(function (event) {
+
+            //Set Title In Span
+            $('.ace-file-name').attr('data-title', $("#UploadedFile").val());
+            //Read Path URL Select File In Input File
+            temppath = URL.createObjectURL(event.target.files[0]);
+            files = event.target.files;
+            //Set Path to Src Element Image
+            $("#Imagecontainer").attr("src", temppath);
+            $('#Imagecontainer').width('100%');
+            $('#Imagecontainer').height('100%');
+
+            //Getting just the filename from a path with Javascript
+            var fileNameIndex = temppath.lastIndexOf("/") + 1;
+            filename = temppath.substr(fileNameIndex);
+        });
+
+
+        $('#btnShowFilePDF').click(function () {
+            debugger;
+            if ('@Convert.ToBase64String(Model.ContentLength)'=="ICAgICAgIA==")
+            {
+                window.open(temppath);
+            }
+            else
+            {
+                window.open('@pdf');
+            }
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+
+                        
+                        <input type="text" id="FileRepositoryId" value="@ViewBag.FileRepositoryId" hidden="hidden" />
+                        <input type="text" id="ContentId" value="@ViewBag.ContentId" hidden="hidden" />
+                        <input type="text" id="FileFormId" value="@ViewBag.FileFormId" hidden="hidden" />
+                        
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">امضاء : </label>
+                            <div class="col-md-5">
+                                <label class="ace-file-input">
+                                    <input id="UploadedFile" type="file">
+                                    <span class="ace-file-container" data-title="Choose">
+                                        <span class="ace-file-name" data-title="No File ...">
+                                            <i class="ace-icon fa fa-upload"></i>
+                                        </span>
+                                    </span>
+                                    <a class="remove" href="#">
+                                        <i class="ace-icon fa fa-times"></i>
+                                    </a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <div class="col-md-offset-3">
+
+                                <button id="btnShowFilePDF" class="btn btn-info btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-eye bigger-125"></i>
+                                    مشاهده فایل PDF
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button id="btnSaveFileRepository" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+</body>
+
+</html>

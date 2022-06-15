@@ -1,0 +1,94 @@
+﻿@model IEnumerable<InterfaceEntity.NoteAbsenceEntity>
+@using Bussiness
+
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th>نام کارمند</th>
+            <th> عنوان دوره آموزشی</th>
+            <th>تاریخ جلسات</th>
+            <th>از ساعت</th>
+            <th>تا ساعت</th>
+            <th>تذکر کتبی غیبت کلاس</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td class="center">
+                    <label class="position-relative">
+                        @i
+                    </label>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployemesName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @item.AttendanceDate.MiladiToPersion()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HourDelayFrom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HourDelayTo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WrittenNoticeName)
+                </td>
+                <td>
+                    <div class="hidden-sm hidden-xs btn-group">
+                        @*<button data-original-title="ویرایش" data-placement="top" data-toggle="tooltip" data-Id="@item.NoteAbsenceId" class="BtnEdit btn btn-xs btn-warning tooltip1">
+                            <i class="ace-icon fa fa-pencil bigger-140"></i>
+                        </button>*@
+
+                        <button data-original-title="حذف" data-placement="top" data-toggle="tooltip" data-Id="@item.NoteAbsenceId" data-DeleteName="DeleteDataNoteAbsence()" class="BtnDelete btn btn-xs btn-warning tooltip1">
+                            <i class="ace-icon fa fa-trash-o bigger-140"></i>
+                        </button>
+                        <a href="/NoteAbsence/Print/@item.NoteAbsenceId " data-original-title="برگه تذکر کتبی" data-placement="top" data-toggle="tooltip" data-Id="@item.NoteAbsenceId" class="BtnPrint btn btn-xs btn-danger tooltip1">
+                            <i class="ace-icon fa fa-print bigger-140"></i>
+                        </a>
+                    </div>
+
+                    <div class="hidden-md hidden-lg">
+                        <div class="inline position-relative">
+                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                            </button>
+
+                            <ul class="dropdown-NoteAbsence dropdown-only-icon dropdown-yellow dropdown-NoteAbsence-right dropdown-caret dropdown-close">
+
+                                <li>
+                                    <a data-Id="@item.NoteAbsenceId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                        <span class="green">
+                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a data-Id="@item.NoteAbsenceId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                        <span class="red">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            i++;
+        }
+    }
+</table>

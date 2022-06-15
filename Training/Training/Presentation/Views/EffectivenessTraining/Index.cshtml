@@ -1,0 +1,282 @@
+﻿
+@model IEnumerable<InterfaceEntity.EffectivenessTrainingEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="text/javascript">
+        var CourseRegistrationId = '@ViewBag.CourseRegistrationId';
+
+        function SaveData() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.CourseRegistrationId = $("#CourseRegistrationId").val();
+            myObject.EffectivenessTrainingDate = $("#EffectivenessTrainingDate").val();
+            myObject.SupervisorId = $("#SupervisorId").val();
+            myObject.Correctiveaction = $("#Correctiveaction").val();
+            myObject.CorrectiveactionDescription = $("#CorrectiveactionDescription").val();
+
+            var url = "/EffectivenessTraining/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+
+        function EditData() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.EffectivenessTrainingId = $("#EffectivenessTrainingId").val();
+            myObject.CourseRegistrationId = $("#CourseRegistrationId").val();
+            myObject.EffectivenessTrainingDate = $("#EffectivenessTrainingDate").val();
+            myObject.SupervisorId = $("#SupervisorId").val();
+            myObject.Correctiveaction = $("#Correctiveaction").val();
+            myObject.CorrectiveactionDescription = $("#CorrectiveactionDescription").val();
+
+            var url = "/EffectivenessTraining/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+
+        $(document).ready(function () {
+           
+           $('.tooltip1').tooltip();
+            
+            $("#btnAddNew").click(function () {
+                $("div#divLoading").addClass('show');
+                $.get('/EffectivenessTraining/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت استاد</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(".BtnEdit").click(function () {
+                $("div#divLoading").addClass('show');
+                var EffectivenessTrainingd = $(this).attr('data-Id');
+                $.get('/EffectivenessTraining/Edit', "ID=" + EffectivenessTrainingd, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ویرایش استاد</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(".BtnCourseObjectivesEffectivenessTraining").click(function () {
+                var EffectivenessTrainingId = $(this).attr('data-Id');
+                $.get('/CourseObjectivesEffectivenessTraining/Index', { ID: EffectivenessTrainingId }, function (data) {
+                   
+                    $("#TitleModal").empty();
+                    $("#HeaderModal").val(" فهرست آموزشهای پیشنهاد شده برای مشاغل ،جزئیات فهرست آموزشهای پیشنهاد شده برای مشاغل ");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                });
+            });
+
+
+        });
+
+    </script>
+   
+</head>
+<body>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">نظرسنجی و ارزیابی دوره ها</li>
+            <li class="active">پرسشنامه اثر بخشی آموزشهای انجام شده </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-11 col-md-9" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="center">
+                                    <label class="position-relative">
+                                        #
+                                    </label>
+                                </th>
+                                <th>نام و نام خانوادگی سرپرست واحد مربوطه</th>
+                                <th>مسئولیت سازمانی</th>
+                                <th>نیاز به اقدام اصلاحی </th>
+                                <th>اقدام اصلاحی</th>
+                                <th>تاریخ</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        @{
+                            int i = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="center">
+                                        <label class="position-relative">
+                                            @i
+                                        </label>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SupervisorName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PostGroupName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Correctiveaction)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CorrectiveactionDescription)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EffectivenessTrainingDate)
+                                    </td>
+                                    <td>
+                                        <div class="hidden-sm hidden-xs btn-group">
+                                            <button data-Id="@item.EffectivenessTrainingId" class="BtnEdit btn btn-xs btn-warning">
+                                                <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                            </button>
+
+                                            <button data-Id="@item.EffectivenessTrainingId" class="BtnDelete btn btn-xs btn-danger">
+                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                            </button>
+
+                                            <button data-original-title="اهداف دوره پرسشنامه اثر بخشی آموزشهای انجام شده " data-placement="top" data-toggle="tooltip" data-Id="@item.EffectivenessTrainingId" class="BtnCourseObjectivesEffectivenessTraining btn btn-xs btn-info tooltip1">
+                                                <i class="ace-icon fa fa-list bigger-140"></i>
+                                            </button>
+
+                                        </div>
+
+                                        <div class="hidden-md hidden-lg">
+                                            <div class="inline position-relative">
+                                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                                    <li>
+                                                        <a data-Id="@item.EffectivenessTrainingId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                                            <span class="green">
+                                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a data-Id="@item.EffectivenessTrainingId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                                            <span class="red">
+                                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </table>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,298 @@
+﻿
+@model IEnumerable<InterfaceEntity.TablesRelatedAssessmentOfTrainingServiceEntity>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        var _AssessmentOfTrainingServiceId = '@ViewBag.AssessmentOfTrainingServiceId';
+
+        function SaveDataTRAOTS() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.AssessmentOfTrainingServiceId = _AssessmentOfTrainingServiceId;
+            myObject.AssessmentOfTrainingServiceInformationId = $("#AssessmentOfTrainingServiceInformationId").val();
+            myObject.Value = $("#Value").val();
+
+            var url = "/TablesRelatedAssessmentOfTrainingService/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListTablesRelatedAssessmentOfTrainingService();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditDataTRAOTS() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.TablesRelatedAssessmentOfTrainingServiceId = $("#TablesRelatedAssessmentOfTrainingServiceId").val();
+            myObject.AssessmentOfTrainingServiceId = _AssessmentOfTrainingServiceId;
+            myObject.AssessmentOfTrainingServiceInformationId = $("#AssessmentOfTrainingServiceInformationId").val();
+            myObject.Value = $("#Value").val();
+
+            var url = "/TablesRelatedAssessmentOfTrainingService/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListTablesRelatedAssessmentOfTrainingService();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataTRAOTS(ID) {
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = ID;
+            var url = "/TablesRelatedAssessmentOfTrainingService/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListTablesRelatedAssessmentOfTrainingService();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function _GetListTablesRelatedAssessmentOfTrainingService() {
+            debugger;
+            $.ajax({
+                url: "/TablesRelatedAssessmentOfTrainingService/_GetListTablesRelatedAssessmentOfTrainingService",
+                type: 'GET',
+                datatype: 'json',
+                data: { AssessmentOfTrainingServiceId: _AssessmentOfTrainingServiceId },
+                success: function (data) {
+                    $('#theGridTRAOTS').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#AssessmentOfTrainingServiceInformationId').val() == '') {
+                $('#AssessmentOfTrainingServiceInformationId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#AssessmentOfTrainingServiceInformationId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#Value').val() == '') {
+                $('#Value').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Value').css('border-color', '#d5d5d5');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+
+        $('#btnAddTRAOTS').click(function () {
+            $("#AssessmentOfTrainingServiceInformationId").val('');
+            $("#AOTS").val('');
+            $("#Value").val('');
+            $("#MessageOperation").css("display", "none");
+            $('#AssessmentOfTrainingServiceInformationId').css('border-color', '#d5d5d5');
+            $('#Value').css('border-color', '#d5d5d5');
+        });
+
+        $('#btnSaveTRAOTS').click(function () {
+            debugger;
+            if ($("#TablesRelatedAssessmentOfTrainingServiceId").val() == "") {
+                SaveDataTRAOTS();
+            }
+            else {
+                EditDataTRAOTS();
+            }
+
+        });
+
+        $(document).on('click', '.btnEditTRAOTS', function () {
+            debugger;
+            $("#WidgetBoxEducationEmployeme").removeClass("collapsed");
+            $("#AceIconEducationEmployeme").removeClass("fa-chevron-down");
+            $("#AceIconEducationEmployeme").addClass("fa-chevron-up");
+            $("#WidgetBodyEducationEmployeme").css("display", "block");
+
+            $("#TablesRelatedAssessmentOfTrainingServiceId").val($(this).attr('data-TablesRelatedAssessmentOfTrainingServiceId'));
+            $("#AssessmentOfTrainingServiceId").val($(this).attr('data-AssessmentOfTrainingServiceId'));
+            $("#AssessmentOfTrainingServiceInformationId").val($(this).attr('data-AssessmentOfTrainingServiceInformationId'));
+            $("#Value").val($(this).attr('data-Value'));
+        });
+
+        $(document).on('click', '.btnDeleteTRAOTS', function () {
+            var ID = $(this).attr('data-Id');
+            DeleteDataTRAOTS(ID);
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxEducationEmployeme">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">ثبت / ویرایش</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEducationEmployeme"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;" id="WidgetBodyEducationEmployeme">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group" hidden="hidden">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد جداول مرتبط ارزیابی تامین کنندگان خدمات آموزشی : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("TablesRelatedAssessmentOfTrainingServiceId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد جداول مرتبط ارزیابی تامین کنندگان خدمات آموزشی" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">اطلاعات تکمیلی  : </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("AssessmentOfTrainingServiceInformationId", new MultiSelectList(ViewBag.AOTSI, "Value", "Text"), "--  اطلاعات تکمیلی را انتخاب نمائید --", new { @id = "AssessmentOfTrainingServiceInformationId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">مقدار فیلد : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("Value", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "مقدار فیلد" })
+                                </div>
+                            </div>
+
+                            <div class="breadcrumbs" id="breadcrumbs">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button id="btnAddTRAOTS" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        جدید
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button id="btnSaveTRAOTS" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        ذخیره
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                        <i class="ace-icon fa fa-undo bigger-125"></i>
+                                        بازگشت
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGridTRAOTS">
+                        @Html.Partial("_GetListTablesRelatedAssessmentOfTrainingService", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    
+</body>
+</html>
+
+

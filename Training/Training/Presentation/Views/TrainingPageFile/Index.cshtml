@@ -1,0 +1,157 @@
+﻿@model IEnumerable<InterfaceEntity.TrainingPageFileEntity>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <script type="text/javascript">
+        var viewbagpageid = '@ViewBag.PageID';
+        var files = "";
+        var temppath = "";
+        var filename = "";
+        var DetialHistoryTrainingUploadPageId = '@ViewBag.DetialHistoryTrainingUploadPageId';
+
+        $('#UploadedFile').change(function (event) {
+            debugger;
+            //Set Title In Span
+            $('.ace-file-name').attr('data-title', $("#UploadedFile").val());
+            //Read Path URL Select File In Input File
+            temppath = URL.createObjectURL(event.target.files[0]);
+            files = event.target.files;
+            //Set Path to Src Element Image
+            $("#Imagecontainer").attr("src", temppath);
+            //Getting just the filename from a path with Javascript
+            var fileNameIndex = temppath.lastIndexOf("/") + 1;
+            filename = temppath.substr(fileNameIndex);
+        });
+
+
+    </script>
+
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxEducationEmployeme">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">ثبت / ویرایش</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEducationEmployeme"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="widget-body" style="display: none;" id="WidgetBodyEducationEmployeme">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <form class="form-horizontal" role="form" id="FormUploadFile" style="display:block">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">توضیحات : </label>
+                                <div class="col-md-10">
+                                    @Html.TextBox("TrainingPageFileDesc", null, new { @id = "TrainingPageFileDesc", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "توضیحات" })
+                                </div>
+                            </div>
+
+                            <input type="text" id="DetialHistoryTrainingUploadPageId" value="@ViewBag.DetialHistoryTrainingUploadPageId" hidden="hidden" />
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">برگه آموزش : </label>
+                                <div class="col-md-7">
+                                    <label class="ace-file-input">
+                                        <input id="UploadedFile" type="file">
+                                        <span class="ace-file-container" data-title="Choose">
+                                            <span class="ace-file-name" data-title="No File ...">
+                                                <i class="ace-icon fa fa-upload"></i>
+                                            </span>
+                                        </span>
+                                        <a class="remove" href="#">
+                                            <i class="ace-icon fa fa-times"></i>
+                                        </a>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="breadcrumbs" id="breadcrumbs">
+                                <div class="col-md-offset-3">
+
+                                    <button id="btnSaveTrainingPageFile" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        ذخیره
+                                    </button>
+                                    <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGridTrainingPageFile">
+                        @Html.Partial("_GetListTrainingPageFile", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a href="#">فرم ثبت /ویرایش</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+

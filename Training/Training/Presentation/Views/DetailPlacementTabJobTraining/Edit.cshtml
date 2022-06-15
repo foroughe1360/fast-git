@@ -1,0 +1,130 @@
+﻿@model InterfaceEntity.DetailPlacementTabJobTrainingEntity
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/Style.css" rel="stylesheet" />
+    <script src="~/Content/Date/js/jquery.min.js"></script>
+    <script src="~/ControllerJS/UserController.js"></script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+                        @Html.ValidationSummary(true)
+                        @*@Html.HiddenFor(model => model.DetailPlacementTabJobTrainingId, new { @id = "DetailPlacementTabJobTrainingId" })*@
+                        
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> آموزش حین کار:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.DetailPlacementTabJobTrainingId, new { @id = "DetailPlacementTabJobTrainingId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "آموزش حین کار" })
+                                @Html.ValidationMessageFor(model => model.DetailPlacementTabJobTrainingId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">برگه تعیین سطح اموزش حین کار:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.PlacementTabJobTrainingId, new { @id = "PlacementTabJobTrainingId", @class = "col-xs-10 col-sm-5 fs", @placeholder = "برگه تعیین سطح اموزش حین کار" })
+                                @Html.ValidationMessageFor(model => model.PlacementTabJobTrainingId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">111111عنوان آموزش حین کار:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Title, new { @id = "Title", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام " })
+                                @Html.ValidationMessageFor(model => model.Title)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان آموزش حین کار:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Title, new { @id = "Title", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام " })
+                                @Html.ValidationMessageFor(model => model.Title)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تعداد ساعت ها:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.NumberOfHours, new { @id = "NumberOfHours", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام " })
+                                @Html.ValidationMessageFor(model => model.NumberOfHours)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">سطح: </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("OJTLevelId", new MultiSelectList(ViewBag.OJTLevelId, "Value", "Text"), "-- سطح را انتخاب نمائید --", new { @id = "OJTLevelId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نظر نهایی مدیر:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.FinalComment, new { @id = "FinalComment", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام " })
+                                @Html.ValidationMessageFor(model => model.FinalComment)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <script type="text/javascript">
+                                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                            </script>
+
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="btnEdit" onclick="EditDataDetailPlacementTabJobTraining()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+</body>
+
+</html>
+
+
+

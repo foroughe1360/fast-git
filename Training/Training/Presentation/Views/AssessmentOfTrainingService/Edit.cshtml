@@ -1,0 +1,140 @@
+﻿@model InterfaceEntity.AssessmentOfTrainingServiceEntity
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.AssessmentOfTrainingServiceId, new { @id = "AssessmentOfTrainingServiceId" })
+
+                        <!-- #section:elements.form -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نام موسسه: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.InstitutionName, new { @id = "InstitutionName", @class = "col-xs-10 col-sm-5  col-md-10 fs", @placeholder = "نام موسسه" })
+                                @Html.ValidationMessageFor(model => model.InstitutionName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">مدیر عامل:</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.ManagingDirector, new { @id = "ManagingDirector", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = ":(فقط برای موسسات)نام و نام خانوادگی مدیر عامل" })
+                                @Html.ValidationMessageFor(model => model.ManagingDirector)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نوع شرکت:</label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("TypeOfCompanyId", new MultiSelectList(ViewBag.TableInterfaceIdTypeOfCompanyTemp, "Value", "Text"), "-- نوع شرکت را انتخاب نمائید --",  new { @id = "TypeOfCompanyId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.TypeOfCompanyId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نوع موسسه:</label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("TypeOfInstitutionId", new MultiSelectList(ViewBag.TableInterfaceValueTypeOfInstitution, "Value", "Text"), "-- نوع موسسه را انتخاب نمائید --", new { @id = "TypeOfInstitutionId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.TypeOfInstitutionId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">حیطه فعالیت آموزشی: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.ScopeOfTheActivities, new { @id = "ScopeOfTheActivities", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "حیطه فعالیت آموزشی" })
+                                @Html.ValidationMessageFor(model => model.ScopeOfTheActivities)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد اقتصادی: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.EconomicCode, new { @id = "EconomicCode", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد اقتصادی" })
+                                @Html.ValidationMessageFor(model => model.EconomicCode)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">مدرس: </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.TeacherName, new { @id = "TeacherName", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام و نام خانوادگی مدرس" })
+                                @Html.ValidationMessageFor(model => model.TeacherName)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نشانی شرکت : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Address, new { @id = "Address", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نشانی شرکت (فقط برای موسسات)" })
+                                @Html.ValidationMessageFor(model => model.Address)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">میزان تحصیلات: </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("EducationId", new MultiSelectList(ViewBag.TableInterfaceValueIdEducationTemp, "Value", "Text"), "-- میزان تحصیلات را انتخاب نمائید --", new { @id = "EducationId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.EducationId)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <script type="text/javascript">
+                                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                            </script>
+
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="SaveUser" onclick="EditDataAssessmentOfTrainingService()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+</body>
+
+</html>
+
+
+

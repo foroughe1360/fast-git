@@ -1,0 +1,111 @@
+﻿@model InterfaceEntity.CriterionAssessmentOfTrainingServiceEntity
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/Style.css" rel="stylesheet" />
+    <script src="~/Content/Date/js/jquery.min.js"></script>
+    <script src="~/ControllerJS/CriterionAssessmentOfTrainingServiceController.js"></script>
+    <title></title>
+</head>
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="message">اطلاعات با موفقیت ثبت گردید!</a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.CriterionAssessmentOfTrainingServiceId, new { @id = "CriterionAssessmentOfTrainingServiceId" })
+
+                        <!-- #section:elements.form -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">معیار  ارزیابی تامین کنندگان خدمات آموزشی : </label>
+                            @*@Html.LabelFor(model => model.Name, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.AssessmentOfTrainingServiceId, new { @id = "AssessmentOfTrainingServiceId", @class = "col-xs-10 col-sm-5 fs", @placeholder = "معیار  ارزیابی تامین کنندگان خدمات آموزشی" })
+                                @Html.ValidationMessageFor(model => model.AssessmentOfTrainingServiceId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شناسایی انواع معیار ارزیابی : </label>
+                            @*@Html.LabelFor(model => model.Family, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.TypeOfEvaluationId, new { @id = "TypeOfEvaluationId", @class = "col-xs-10 col-sm-5 fs", @placeholder = "کد شناسایی انواع معیار ارزیابی" })
+                                @Html.ValidationMessageFor(model => model.TypeOfEvaluationId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> امتیاز کسب شده: </label>
+                            @*@Html.LabelFor(model => model.Mobile, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Earnpoints, new { @id = "Earnpoints", @class = "col-xs-10 col-sm-5 fs", @placeholder = "امتیاز کسب شده" })
+                                @Html.ValidationMessageFor(model => model.Earnpoints)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">توضیحات : </label>
+                            @*@Html.LabelFor(model => model.Job, new { @class = "col-sm-3 control-label no-padding-right",@for="form-field-1"})*@
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Description, new { @id = "Description", @class = "col-xs-10 col-sm-5 fs", @placeholder = "توضیحات" })
+                                @Html.ValidationMessageFor(model => model.Description)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <script type="text/javascript">
+                                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                            </script>
+
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="SaveUser" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+</body>
+</html>
+
+
+

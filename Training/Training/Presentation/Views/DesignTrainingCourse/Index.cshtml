@@ -1,0 +1,604 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.DesignTrainingCourseEntity>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+
+        var DesignTrainingCourseDateId = '@ViewBag.DesignTrainingCourseDateId';
+
+        //Operation DesignTrainingCourse--------------
+        function SaveDataDesignTrainingCourse() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.DesignTrainingCourseDateId = DesignTrainingCourseDateId;
+            myObject.TrainingCourseId = $("#TrainingCourseId").val();
+            myObject.TeacherId = $("#TeacherId").val();
+            myObject.TookHoldStr = $("#TookHoldStr").val();
+            myObject.TrainingVenueId = $("#TrainingVenueId").val();
+            myObject.Duration = $("#Duration").val();
+            myObject.NumberOfParticipants = $("#NumberOfParticipants").val();
+            myObject.CostCourses = $("#CostCourses").val();
+            myObject.CourseObjectives = $("#CourseObjectives").val();
+            myObject.CourseContent = $("#CourseContent").val();
+            myObject.OtherNotes = $("#OtherNotes").val();
+            myObject.ExamDatesStr = $("#ExamDatesStr").val();
+            myObject.TypesOfTrainingId = $("#TypesOfTrainingId").val();
+            myObject.MaximumScore = $("#MaximumScore").val();
+            myObject.HoursHolding = $("#HoursHolding").val();
+            myObject.MinutesHolding = $("#MinutesHolding").val();
+            myObject.ListLearningAssistToolComment = $("#ListLearningAssistToolComment").val();
+            myObject.EffectivenessOfCourse = $("#EffectivenessOfCourse").val();
+
+            var url = "/DesignTrainingCourse/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListDesignTrainingCourse();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditDataDesignTrainingCourse() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.DesignTrainingCourseId = $("#DesignTrainingCourseId").val();
+            myObject.TrainingCourseId = $("#TrainingCourseId").val();
+            myObject.TeacherId = $("#TeacherId").val();
+            myObject.TookHoldStr = $("#TookHoldStr").val();
+            myObject.TrainingVenueId = $("#TrainingVenueId").val();
+            myObject.Duration = $("#Duration").val();
+            myObject.NumberOfParticipants = $("#NumberOfParticipants").val();
+            myObject.CostCourses = $("#CostCourses").val();
+            myObject.CourseObjectives = $("#CourseObjectives").val();
+            myObject.CourseContent = $("#CourseContent").val();
+            myObject.OtherNotes = $("#OtherNotes").val();
+            myObject.ExamDatesStr = $("#ExamDatesStr").val();
+            myObject.TypesOfTrainingId = $("#TypesOfTrainingId").val();
+            myObject.MaximumScore = $("#MaximumScore").val();
+            myObject.HoursHolding = $("#HoursHolding").val();
+            myObject.MinutesHolding = $("#MinutesHolding").val();
+            myObject.ListLearningAssistToolComment = $("#ListLearningAssistToolComment").val();
+            myObject.EffectivenessOfCourse = $("#EffectivenessOfCourse").val();
+
+            
+            var url = "/DesignTrainingCourse/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListDesignTrainingCourse();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataDesignTrainingCourse() {
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/DesignTrainingCourse/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListDesignTrainingCourse();
+            });
+
+        }
+        function _GetListDesignTrainingCourse() {
+            $.ajax({
+                url: "/DesignTrainingCourse/_GetListDesignTrainingCourse",
+                type: 'GET',
+                datatype: 'json',
+                data: { ID: DesignTrainingCourseDateId },
+                success: function (data) {
+                    $('#theGrid').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#TrainingCourseId').val() == '') {
+                $('#lblTrainingCourseId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblTrainingCourseId').css('color', 'black');
+            }
+
+            if ($('#TeacherId').val() == '') {
+                $('#lblTeacherId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblTeacherId').css('color', 'black');
+            }
+
+            if ($('#TookHoldStr').val() == '') {
+                $('#lblTookHoldStr').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblTookHoldStr').css('color', 'black');
+            }
+
+            if ($('#TrainingVenueId').val() == '') {
+                $('#lblTrainingVenueId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblTrainingVenueId').css('color', 'black');
+            }
+
+            if ($('#Duration').val() == '') {
+                $('#lblDuration').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblDuration').css('color', 'black');
+            }
+
+            if ($('#NumberOfParticipants').val() == '') {
+                $('#lblNumberOfParticipants').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblNumberOfParticipants').css('color', 'black');
+            }
+
+            if ($('#CostCourses').val() == '') {
+                $('#lblCostCourses').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblCostCourses').css('color', 'black');
+            }
+
+            if ($('#CourseObjectives').val() == '') {
+                $('#lblCourseObjectives').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblCourseObjectives').css('color', 'black');
+            }
+
+            if ($('#CourseContent').val() == '') {
+                $('#lblCourseContent').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblCourseContent').css('color', 'black');
+            }
+
+            if ($('#OtherNotes').val() == '') {
+                $('#lblOtherNotes').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblOtherNotes').css('color', 'black');
+            }
+
+            if ($('#ExamDatesStr').val() == '') {
+                $('#lblExamDatesStr').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblExamDatesStr').css('color', 'black');
+            }
+
+            if ($('#TypesOfTrainingId').val() == '') {
+                $('#lblTypesOfTrainingId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblTypesOfTrainingId').css('color', 'black');
+            }
+
+            if ($('#MaximumScore').val() == '') {
+                $('#lblMaximumScore').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblMaximumScore').css('color', 'black');
+            }
+
+            if ($('#HoursHolding').val() == '') {
+                $('#lblHoursHolding').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblHoursHolding').css('color', 'black');
+            } 
+
+            if ($('#MinutesHolding').val() == '') {
+                $('#lblMinutesHolding').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblMinutesHolding').css('color', 'black');
+            }  
+
+            if ($('#ListLearningAssistToolComment').val() == '') {
+                $('#ListLearningAssistToolComment').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblMinutesHolding').css('color', 'black');
+            }  
+
+            if ($('#EffectivenessOfCourse').val() == '') {
+                $('#EffectivenessOfCourse').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#EffectivenessOfCourse').css('color', 'black');
+            }  
+
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        //--------------------------------------------
+
+        $(document).ready(function () {
+            
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on('click', '#btnAddNew',function () {
+                $("div#divLoading").addClass('show');
+                $.get('/DesignTrainingCourse/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت طرح دوره آموزشی  )</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+            });
+
+            $(document).on('click', '.BtnEdit',function () {
+                $("div#divLoading").addClass('show');
+                var DesignTrainingCourseld = $(this).attr('data-Id');
+                $.get('/DesignTrainingCourse/Edit', "ID=" + DesignTrainingCourseld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ویرایش طرح دوره آموزشی </span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete',function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم حذف طرح دوره آموزشی  )</span>");
+                var DesignTrainingCourseId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: DesignTrainingCourseId, viewname: ViewName }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            //---------------------Btn-----------------------
+            $(document).on('click', '.BtnListLearningAssistTool',function () {
+                $("div#divLoading").addClass('show');
+                var DesignTrainingCourseld = $(this).attr('data-Id');
+                $.get('/ListLearningAssistTool/Index', "ID=" + DesignTrainingCourseld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>وسایل کمک اموزشی لازم و مورد استفاده(طرح دوره آموزشی)</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+            $(document).on('click', '.BtnListStyleCourse',function () {
+                $("div#divLoading").addClass('show');
+                var DesignTrainingCourseld = $(this).attr('data-Id');
+                $.get('/ListStyleCourse/Index', "ID=" + DesignTrainingCourseld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>طرح دوره آموزشی،شیوه برگزاری دروه</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+            $(document).on('click', '.BtnListEffectivenessOfCourse',function () {
+                $("div#divLoading").addClass('show');
+                var DesignTrainingCourseld = $(this).attr('data-Id');
+                $.get('/ListEffectivenessOfCourse/Index', "ID=" + DesignTrainingCourseld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>طرح دوره آموزشی،شیوه ارزیابی اثر بخشی دروه</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+            //----------------------------------------------------
+
+            $(document).on("click", "#btnSaveListLearningAssistTool", function (e) {
+                //$("[id*=sample-table-1] tr [id*=chkSelect]:checked").each(function () {
+                //    var m = $(this).attr('data-Id');
+                //    alert(m);
+                //});
+                //return false;
+
+                var array = [];
+                $("[id*=sample-table-1] tr [id*=chkSelect]").each(function () {
+                    var myObject = new Object();
+                    myObject.ListLearningAssistToolId = $(this).attr('data-ListLearningAssistToolId');
+                    myObject.designtrainingcourseid = designtrainingcourseid;
+                    myObject.learningassisttoolid = $(this).attr('data-LearningAssistToolId');
+                    myObject.State = this.checked;
+                    array.push(myObject);
+                });
+
+                $.ajax({
+                    url: "/ListLearningAssistTool/Createlist",
+                    data: JSON.stringify(array),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (result) {
+                    if (result == true) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                    else {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                });
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+            $(document).on("click", "#btnSaveListStyleCourse", function (e) {
+
+                var array = [];
+                $("[id*=sample-table-1] tr [id*=chkSelect]").each(function () {
+                    var myObject = new Object();
+                    myObject.ListStyleCourseId = $(this).attr('data-ListStyleCourseId');
+                    myObject.DesignTrainingCourseId = designtrainingcourseid;
+                    myObject.StyleCoursesId = $(this).attr('data-StyleCoursesId');
+                    myObject.State = this.checked;
+                    array.push(myObject);
+                });
+
+                $.ajax({
+                    url: "/ListStyleCourse/Createlist",
+                    data: JSON.stringify(array),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result == true) {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                        else {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                });
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+            $(document).on("click", "#btnSaveEffectivenessOfCourse", function (e) {
+
+                var array = [];
+                $("[id*=sample-table-1] tr [id*=chkSelect]").each(function () {
+                    var myObject = new Object();
+                    myObject.ListEffectivenessOfCourseId = $(this).attr('data-ListEffectivenessOfCourseId');
+                    myObject.DesignTrainingCourseId = designtrainingcourseid;
+                    myObject.EffectivenessOfCoursesId = $(this).attr('data-EffectivenessOfCoursesId');
+                    myObject.State = this.checked;
+                    array.push(myObject);
+                });
+
+                $.ajax({
+                    url: "/ListEffectivenessOfCourse/Createlist",
+                    data: JSON.stringify(array),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result == true) {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                        else {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                });
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">طرح دوره آموزشی </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-10" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+                &nbsp; &nbsp; &nbsp;
+                <a href="/DesignTrainingCourseDate/Index" class="btn btn-danger btn-white btn-round">
+                    <i class="ace-icon fa fa-undo bigger-125"></i>
+                    برگشت
+                </a>
+            </div>
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListDesignTrainingCourse", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

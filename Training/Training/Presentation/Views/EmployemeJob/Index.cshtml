@@ -1,0 +1,308 @@
+﻿@using Bussiness
+@model IEnumerable<InterfaceEntity.EmployemeJobEntity>
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "فعال",
+        Value = "True",
+        //Selected = true
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "غیرفعال",
+        Value = "False"
+    });
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <script  type="text/javascript">
+        var EmployemeId = '@ViewBag.EmployemeId';
+
+        $("#PostGroupId").select2();
+
+        new AMIB.persianCalendar('DateStartPostGroupNameStr');
+
+        function GetDepartment(_unitscenterid) {
+            $('#SectionId').empty();
+            var procemessage = "<option value=''> لطفا صبر کنید ....</option>";
+            $("#DepartmentId").html(procemessage).show();
+            var url = "/Department/GetDepartmentByunitscenterid/";
+
+            $.ajax({
+                url: url,
+                data: { unitscenterid: _unitscenterid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>-- نام بخش را انتخاب نمائبد --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#DepartmentId").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+        function GetSection(_departmentid) {
+            var procemessage = "<option value=''> لطفا صبر کنید ....</option>";
+            $("#SectionId").html(procemessage).show();
+            var url = "/Section/GetSectionByuDepartmentId/";
+
+            $.ajax({
+                url: url,
+                data: { departmentid: _departmentid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>-- نام قسمت را انتخاب نمائبد --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#SectionId").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+        function _GetListEmployemeJob() {
+            $.ajax({
+                url: "/EmployemeJob/_GetListEmployemeJob",
+                type: 'GET',
+                datatype: 'json',
+                data: { employemeid: EmployemeId },
+                success: function (data) {
+                    $('#theGridEmployemeJob').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        $('#btnAddEmployemeJob').click(function () {
+            $("#EmployemeJobId").val('');
+            $("#EmployemeId").val(EmployemeId);
+            $("#PostGroupId").select2("val", "");
+            $("#UnitSCenterId").val('');
+            $("#DepartmentId").empty();
+            $("#SectionId").empty();
+            $("#DateStartPostGroupNameStr").val('');
+            $("#ActivePostGroupName").val("");
+        });
+
+        $('#btnSaveEmployemeJob').click(function () {
+            debugger;
+            if ($("#EmployemeJobId").val() == "") {
+                SaveDataEmployemeJob();
+            }
+            else {
+                EditDataEmployemeJob();
+            }          
+
+        });
+
+        $(document).on('click', '.btnEditEmployemeJob', function () {
+            $("#WidgetBoxEducationEmployeme").removeClass("collapsed");
+            $("#AceIconEducationEmployeme").removeClass("fa-chevron-down");
+            $("#AceIconEducationEmployeme").addClass("fa-chevron-up");
+            $("#WidgetBodyEducationEmployeme").css("display", "block");
+
+
+            $("#EmployemeJobId").val($(this).attr('data-EmployemeJobId'));
+            $("#EmployemeId").val($(this).attr('data-EmployemeId'));
+            $("#PostGroupId").select2("val", $(this).attr('data-PostGroupId'));
+            $("#UnitSCenterId").val($(this).attr('data-UnitSCenterId'));
+            var markup = "<option value=" + $(this).attr('data-DepartmentId') + ">" + $(this).attr('data-DepartmentName') + "</option>";
+            $("#DepartmentId").html(markup).show();
+            markup = "<option value=" + $(this).attr('data-SectionId') + ">" + $(this).attr('data-SectionName') + "</option>";
+            $("#SectionId").html(markup).show();
+            $("#DateStartPostGroupNameStr").val($(this).attr('data-DateStartPostGroupName'));
+            $("#ActivePostGroupName").val($(this).attr('data-ActivePostGroupName'));
+
+
+            data - DateStartPostGroupNamedata - ActivePostGroupName
+
+            $("#UnitSCenterId").val($(this).attr('data-UnitSCenterId'));
+        });
+
+        $(document).on('click', '.btnDeleteEmployemeJob', function () {
+            var ID = $(this).attr('data-EmployemeJobId');
+            DeleteDataEmployemeJob(ID);
+        });
+
+    </script>
+
+</head>
+
+<body>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxEducationEmployeme">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">ثبت / ویرایش</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEducationEmployeme"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;" id="WidgetBodyEducationEmployeme">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->                   
+                            
+                            <div class="form-group" hidden="hidden">
+                                <label id="lblEmployemeJobId" class="col-sm-3 control-label no-padding-right" for="form-field-1">کد شغل کارمند : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("EmployemeJobId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد شغل کارمند" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" hidden="hidden">
+                                <label id="lblEmployemeId" class="col-sm-3 control-label no-padding-right" for="form-field-1">کد کارمند : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("EmployemeId", null, new {@Value=ViewBag.EmployemeId, @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد کارمند" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="lblPostGroupId" class="col-sm-3 control-label no-padding-right" for="form-field-1">عنوان شغل : </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("PostGroupId", new MultiSelectList(ViewBag.PostGroupId, "Value", "Text"),"-- عنوان شغل را انتخاب نمائید --", new { @id = "PostGroupId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="lblUnitSCenterId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام واحد : </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("UnitSCenterId", new MultiSelectList(ViewBag.TableInterfaceValueIdUnitSCenter, "Value", "Text"), "-- نام واحد را انتخاب نمائید --", new { @id = "UnitSCenterId", @class = "col-xs-10 col-sm-5 col-md-10 fs", @onchange = "javascript:GetDepartment(this.value);" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="lblDepartmentId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام بخش : </label>
+                                <div class="col-md-9">
+                                    <select id="DepartmentId" name="DepartmentId" class = "col-xs-10 col-sm-5 col-md-10 fs" onchange = "javascript: GetSection(this.value);"></select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="lblSectionId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام قسمت : </label>
+                                <div class="col-md-9">
+                                    <select id="SectionId" name="SectionId" class="col-xs-10 col-sm-5 col-md-10 fs"></select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="lblDateStartPostGroupNameStr" class="col-sm-3 control-label no-padding-right" for="form-field-1">تاریخ شروع به کار : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("DateStartPostGroupName",null, new { @id = "DateStartPostGroupNameStr", @class = "col-xs-10 col-sm-5 col-md-10 fs pdate align-right", @placeholder = "تاریخ شروع به کار" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="lblActivePostGroupName" class="col-sm-3 control-label no-padding-right" for="form-field-1">وضعیت شغلی فعلی : </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("ActivePostGroupName", listItems, "-- وضعیت شغلی فعلی را انتخاب نمائید --", new { @id = "ActivePostGroupName", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+                            <div class="breadcrumbs" id="breadcrumbs">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button id="btnAddEmployemeJob" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        جدید
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button id="btnSaveEmployemeJob" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                      ذخیره
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                        <i class="ace-icon fa fa-undo bigger-125"></i>
+                                        بازگشت
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div id="theGridEmployemeJob">
+                        @Html.Partial("_GetListEmployemeJob", Model)
+                    </div>
+                    
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

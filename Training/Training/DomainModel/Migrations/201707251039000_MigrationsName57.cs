@@ -1,0 +1,27 @@
+namespace DomainModel.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class MigrationsName57 : DbMigration
+    {
+        public override void Up()
+        {
+            DropTable("dbo.Semats");
+        }
+        
+        public override void Down()
+        {
+            CreateTable(
+                "dbo.Semats",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        codp = c.String(maxLength: 50),
+                        semat = c.String(maxLength: 1000),
+                    })
+                .PrimaryKey(t => t.id);
+            
+        }
+    }
+}

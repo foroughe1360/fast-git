@@ -1,0 +1,108 @@
+﻿@model IEnumerable<InterfaceEntity.TeacherLevelEntity>
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th>نام استاد</th>
+            <th>عنوان دوره</th>
+            <th>امتیاز اثربخشی و ارزیابی دوره قبل</th>
+            <th>فن بیان</th>
+            <th>تحصیلات</th>
+            <th>تجربه تدریس</th>
+            <th>جامعیت طرح دوره</th>
+            <th>سابقه همکاری با مرکز</th>
+            <th>مجموع</th>
+            <th>درجه</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody id="contacts">
+        @{
+            int i = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td class="center">
+                        <label class="position-relative">
+                            @i
+                        </label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TeacherName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrainingCourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EffectivenessOfPreviousPeriod)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rhetorical)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EducationId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Experience)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CoursePlan)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HistoryOfCooperation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Degree)
+                    </td>
+                    <td>
+                        <div class="hidden-sm hidden-xs btn-group">
+                            <button data-Id="@item.TeacherLevelId" data-original-title="ویرایش" data-placement="top" data-toggle="tooltip" class="BtnEdit btn btn-xs btn-warning tooltip1">
+                                <i class="ace-icon fa fa-pencil bigger-120"></i>
+                            </button>
+
+                            <button data-Id="@item.TeacherLevelId" data-DeleteName="DeleteDataTeacherLevel()" data-original-title="حذف" data-placement="top" data-toggle="tooltip" class="BtnDelete btn btn-xs btn-danger tooltip1">
+                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                            </button>
+                        </div>
+
+                        <div class="hidden-md hidden-lg">
+                            <div class="inline position-relative">
+                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                    <li>
+                                        <a data-Id="@item.TeacherLevelId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                            <span class="green">
+                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a data-Id="@item.TeacherLevelId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                            <span class="red">
+                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>
+

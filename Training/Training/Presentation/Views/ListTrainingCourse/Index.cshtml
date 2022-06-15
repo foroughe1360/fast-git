@@ -1,0 +1,295 @@
+﻿
+@using Bussiness 
+@model IEnumerable<InterfaceEntity.DesignTrainingCourseEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+
+        //Operation CourseRegistration-------------------------
+        function SaveDataCourseRegistration() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.DesignTrainingCourseId = $("#DesignTrainingCourseId").val();
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.EmployemeStateID = $("#EmployemeStateID").val();
+
+            var url = "/CourseRegistration/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListCourseRegistration();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditDataCourseRegistration() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.CourseRegistrationId = $("#CourseRegistrationId").val();
+            myObject.DesignTrainingCourseId = $("#DesignTrainingCourseId").val();
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.EmployemeStateID = $("#EmployemeStateID").val();
+
+            var url = "/CourseRegistration/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListCourseRegistration();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataCourseRegistration(ID) {
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            var url = "/CourseRegistration/Delete"; // the url to the controller
+            $.post(url, { ID: ID }, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListCourseRegistration();
+            });
+
+        }
+        //--------------------------------------------
+        $(document).ready(function () {
+            $('.tooltip1').tooltip();
+
+            $(".btnCourseRegistration").click(function () {
+                $("div#divLoading").addClass('show');
+                var DesignTrainingCourseId = $(this).attr('data-Id');
+                $.get('/CourseRegistration/index', { ID: DesignTrainingCourseId }, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>ثبت نام شرکت کنندگان برای دوره آموزشی</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">لیست دوره آموزشی </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-11" style="margin-bottom: 5px">
+                <a href="/DesignTrainingCourseDate/Index" class="btn btn-danger btn-white btn-round">
+                    <i class="ace-icon fa fa-undo bigger-125"></i>
+                    برگشت
+                </a>
+            </div>
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th class="center">
+                                    <label class="position-relative">
+                                        #
+                                    </label>
+                                </th>
+                                <th>عنوان دوره آموزشی</th>
+                                <th>نام و نام خانوادگی مدرس</th>
+                                <th>زمان برگزاری</th>
+                                <th> مکان برگزاری</th>
+                                <th>مدت دوره(ساعت)</th>
+                                <th>تعداد شرکت کنندگان</th>
+                                <th>هزینه دوره به ازای هر نفر</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        @{
+                            int i = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="center">
+                                        <label class="position-relative">
+                                            @i
+                                        </label>
+                                    </td>
+                                    <td onmousemove="">
+                                        @Html.DisplayFor(modelItem => item.CourseName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TeacherName)
+                                    </td>
+                                    <td>
+                                        @item.TookHold.MiladiToPersion()
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TrainingVenueName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Duration)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NumberOfParticipants)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CostCourses)
+                                    </td>
+                                    <td>
+                                        <div class="hidden-sm hidden-xs btn-group">
+                                            <button  data-original-title="دانشجو" data-placement="top" data-toggle="tooltip" data-Id="@item.DesignTrainingCourseId" class="btnCourseRegistration btn btn-xs btn-warning tooltip1">
+                                                <i class="ace-icon fa fa-users bigger-140"></i>
+                                            </button>
+
+                                            <a href="/AttendanceDate/Index/?ID=@item.DesignTrainingCourseId&designtrainingcoursedateid=@ViewBag.DesignTrainingCourseDateId" data-original-title="فهرست حضور و غیاب" data-placement="top" data-toggle="tooltip" class="btn btn-xs btn-danger tooltip1">
+                                                <i class="ace-icon fa fa-tasks bigger-140"></i>
+                                            </a>
+
+                                            <a href="/ListTypeTestScore/Index/?ID=@item.DesignTrainingCourseId&designtrainingcoursedateid=@ViewBag.DesignTrainingCourseDateId"data-original-title="نمرات آزمون های برگزار شده" data-placement="top" data-toggle="tooltip" data-Id="@item.DesignTrainingCourseId" class="btn btn-xs btn-info tooltip1">
+                                                <i class="ace-icon fa fa-list  bigger-140"></i>
+                                            </a>
+                                            <a href="/CourseRegistration/CourseRegistrationIndex/?ID=@item.DesignTrainingCourseId&designtrainingcoursedateid=@ViewBag.DesignTrainingCourseDateId" data-original-title="برگه تذکر کتبی غیبت" data-placement="top" data-toggle="tooltip"  class="btn btn-xs btn-success tooltip1">
+                                                <i class="ace-icon fa fa-exclamation-circle  bigger-140"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="hidden-md hidden-lg">
+                                            <div class="inline position-relative">
+                                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                                    <li>
+                                                        <a data-Id="@item.DesignTrainingCourseId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                                            <span class="green">
+                                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a data-Id="@item.DesignTrainingCourseId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                                            <span class="red">
+                                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+                    </table>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

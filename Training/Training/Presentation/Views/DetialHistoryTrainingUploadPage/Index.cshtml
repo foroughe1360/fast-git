@@ -1,0 +1,465 @@
+﻿
+@model IEnumerable<InterfaceEntity.DetialHistoryTrainingUploadPageEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        var HistoryTrainingUploadPageId = '@ViewBag.HistoryTrainingUploadPageId';
+         var viewbagpageid = '@ViewBag.PageID';
+
+
+        function SaveData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.HistoryTrainingUploadPageId = HistoryTrainingUploadPageId;
+            myObject.CodingTrainingPageId = $("#CodingTrainingPageId").val();
+
+            var url = "/DetialHistoryTrainingUploadPage/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListDetialHistoryTrainingUploadPage();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditData() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.DetialHistoryTrainingUploadPageId = $("#DetialHistoryTrainingUploadPageId").val();
+            myObject.HistoryTrainingUploadPageId = HistoryTrainingUploadPageId;
+            myObject.CodingTrainingPageId = $("#CodingTrainingPageId").val();
+
+            var url = "/DetialHistoryTrainingUploadPage/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListDetialHistoryTrainingUploadPage();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataDetialHistoryTrainingUploadPage() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/DetialHistoryTrainingUploadPage/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListDetialHistoryTrainingUploadPage();
+            });
+
+        }
+        function _GetListDetialHistoryTrainingUploadPage() {
+            $.ajax({
+                url: "/DetialHistoryTrainingUploadPage/_GetListDetialHistoryTrainingUploadPage",
+                type: 'GET',
+                datatype: 'json',
+                data: { historytraininguploadpageid: HistoryTrainingUploadPageId },
+                success: function (data) {
+                    $('#theGrid').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        function EmptyTheInputTrainingPageFile() {
+            $("#TrainingPageFileDesc").val('');
+            alert($("#UploadedFile").val());
+
+            $("#UploadedFile").replaceWith($("#UploadedFile").val('').clone(true));
+
+
+            alert($("#UploadedFile").val()+'********');
+        }
+
+        //-----------------------------------------------------------
+
+        function _GetListTrainingPageFile(pageid) {
+            debugger;
+            $("div#divLoading").addClass('show');
+            viewbagpageid = pageid
+            alert(viewbagpageid);
+
+            $.ajax({
+                url: "/TrainingPageFile/_GetListTrainingPageFile",
+                type: 'GET',
+                data: { pageid: pageid, ID: DetialHistoryTrainingUploadPageId },
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGridTrainingPageFile').html(data);
+                    $("div#divLoading").removeClass('show');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#CodingTrainingPageId').val() == '') {
+                $('#CodingTrainingPageId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#CodingTrainingPageId').css('color', 'black');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+
+        $(document).ready(function () {
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on('click', '#btnAddNew', function () {
+                $("div#divLoading").addClass('show');
+                $.get('/DetialHistoryTrainingUploadPage/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت برگه های آموزشی</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(document).on('click', '.BtnEdit', function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم ویرایش برگه های آموزشی</span>");
+                var TableInterfaceValueId = $(this).attr('data-Id');
+                $.get('/DetialHistoryTrainingUploadPage/Edit', "ID=" + TableInterfaceValueId, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on('click', '.BtnDelete', function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم حذف برگه های آموزشی</span>");
+                var DetialHistoryTrainingUploadPageId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: DetialHistoryTrainingUploadPageId, viewname: ViewName }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+
+            });
+
+            $(document).on('click', '.btnupload', function () {
+                debugger;
+          
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم بارگذاری فایل</span>");
+                var DetialHistoryTrainingUploadPageId = $(this).attr('data-DetialHistoryTrainingUploadPageId');
+                $.get('/TrainingPageFile/Index', { pageid: 1, ID: DetialHistoryTrainingUploadPageId }, function (data) {
+                    $("#ModalDialog").css("width", "900px");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on("click", "#btnSaveTrainingPageFile", function (e) {
+                debugger
+                $("#ajaxloader").css("display", "inline");
+
+
+                var DetialHistoryTrainingUploadPageId = $("#DetialHistoryTrainingUploadPageId").val();
+                var TrainingPageFileDesc = $("#TrainingPageFileDesc").val();
+
+                var formData = new FormData();
+                var totalFiles = document.getElementById("UploadedFile").files.length;
+                for (var i = 0; i < totalFiles; i++) {
+                    var file = document.getElementById("UploadedFile").files[i];
+                    formData.append("UploadedFile", file);
+                }
+
+                if (file == undefined) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>فایلی جهت تغییر انتخاب نشده است!</p>");
+                    $("#MessageOperation").css("display", "block");
+                    window.setTimeout(function () {
+                        $("#MessageOperation").css("display", "none");
+                    }, 5000);
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: '/TrainingPageFile/Create/?detialhistorytraininguploadpageid=' + DetialHistoryTrainingUploadPageId + '&TrainingPageFileDesc=' + TrainingPageFileDesc,
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        if (result == true) {
+
+                            _GetListTrainingPageFile(viewbagpageid);
+                           
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                            $("#MessageOperation").css("display", "block")
+                        }
+                        else {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                        EmptyTheInputTrainingPageFile();
+                    },
+                    error: function (error) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                });
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+            $(document).on('click', '.btnShowFilePDF', function () {
+                debugger;
+                temppath = $(this).attr('data-ImageUrl');
+                window.open(temppath);
+            });
+
+            $(document).on('click', '.btnDeleteTrainingPageFile', function () {
+
+                $("#ajaxloader").css("display", "inline");
+                var myObject = new Object();
+                debugger;
+                myObject.ID = $(this).attr('data-TrainingPageFileId');
+                var url = "/TrainingPageFile/Delete"; // the url to the controller
+                $.post(url, myObject, function (data) {
+                    $("#DeleteContent").css("display", "none");
+                    if (data == true) {
+                        _GetListTrainingPageFile(viewbagpageid);
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                        $("#messageOp").css("color", "green");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                    else {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                        $("#messageOp").css("color", "red");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                });
+            });
+
+ 
+            $(document).on('click', '#BtnFirst', function () {
+                debugger;
+                var pageid = $(this).attr('data-Id');
+                var disable = $(this).attr('data-disable');
+                if (disable != "true")
+                    _GetListTrainingPageFile(pageid);
+            });
+
+            $(document).on('click', '#BtnLast', function () {
+                debugger;
+                var pageid = $(this).attr('data-Id');
+                var disable = $(this).attr('data-disable');
+                if (disable != "true")
+                    _GetListTrainingPageFile(pageid);
+            });
+
+            $(document).on('click', '#BtnPrevious', function () {
+                debugger;
+                var pagenumber = $("#PageNumber").val();
+                if (parseInt(pagenumber) > 1) {
+                    pagenumber--;
+                    $("#PageNumber").val(pagenumber);
+                    _GetListTrainingPageFile(pagenumber);
+                }
+            });
+
+            $(document).on('click', '#BtnNext', function () {
+                debugger;
+                var pagenumber = $("#PageNumber").val();
+                var topage = $("#ToPage").text();
+                if (parseInt(pagenumber) < parseInt(topage)) {
+                    pagenumber++;
+                    $("#PageNumber").val(pagenumber);
+                    _GetListTrainingPageFile(pagenumber);
+                }
+            });
+
+            $(document).on('keyup', '#PageNumber', function (event) {
+                debugger;
+                if (event.keyCode == 13) {
+                    var pagenumber = $("#PageNumber").val();
+                    var topage = $("#ToPage").text();
+                    if (parseInt(pagenumber) <= parseInt(topage)) {
+                        _GetListTrainingPageFile(pagenumber);
+                    }
+                }
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="divLoading"></div>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">برگه های آموزش</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-10" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+                &nbsp; &nbsp; &nbsp;
+                <a href="/HistoryTrainingUploadPage/Index" class="btn btn-danger btn-white btn-round">
+                    <i class="ace-icon fa fa-undo bigger-125"></i>
+                    برگشت
+                </a>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListDetialHistoryTrainingUploadPage", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" id="ModalDialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

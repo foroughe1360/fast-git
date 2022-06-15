@@ -1,0 +1,212 @@
+﻿
+@model IEnumerable<InterfaceEntity.NoteAbsenceEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Content/Scripts/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">
+
+        var _DesignTrainingCourseId = '@ViewBag.DesignTrainingCourseId';
+
+        //Operation NoteAbsence-------------------------
+        function SaveDataNoteAbsence() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.AttendanceId = $("#AttendanceId").val();
+            myObject.WrittenNoticeId = $("#WrittenNoticeId").val();
+
+            var url = "/NoteAbsence/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditDataNoteAbsence() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.NoteAbsenceId = $("#NoteAbsenceId").val();
+            myObject.AttendanceId = $("#AttendanceId").val();
+            myObject.WrittenNoticeId = $("#WrittenNoticeId").val();
+
+            var url = "/NoteAbsence/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataNoteAbsence() {
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.NoteAbsenceId = $("#NoteAbsenceId").val();
+            var url = "/NoteAbsence/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+            });
+
+        }
+        //--------------------------------------------
+
+     $(document).ready(function () {
+            $('.tooltip1').tooltip();
+
+            $("#btnAddNew").click(function () {
+                $.get('/NoteAbsence/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>تذکر کتبی غیبت از کلاس آموزش</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                })
+
+            });
+
+            $(".BtnEdit").click(function () {
+                var Tariffld = $(this).attr('data-Id');
+                $.get('/NoteAbsence/Edit', "ID=" + Tariffld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>تذکر کتبی غیبت از کلاس آموزش</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                });
+            });
+
+            $(".BtnDelete").click(function () {
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>تذکر کتبی غیبت از کلاس آموزش</span>");
+                var NoteAbsenceId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: NoteAbsenceId, viewname: ViewName }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                });
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">تذکر کتبی غیبت از کلاس آموزش</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-11" style="margin-bottom: 5px">
+                <a href="/CourseRegistration/CourseRegistrationIndex/@ViewBag.DesignTrainingCourseId" class="btn btn-danger btn-white btn-round" type="button">
+                    <i class="ace-icon fa fa-check bigger-125"></i>
+                    بازگشت
+                </a>
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListNoteAbsence", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

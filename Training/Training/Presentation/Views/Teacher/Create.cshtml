@@ -1,0 +1,119 @@
+﻿
+@model InterfaceEntity.TeacherEntity
+@using Bussiness
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+        new AMIB.persianCalendar('DateOfEmployementStr');
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+                        <!-- #section:elements.form -->
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">نام : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Name, new { @id = "Name", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "نام " })
+                                @Html.ValidationMessageFor(model => model.Name)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">فامیلی : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Family, new { @id = "Family", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "فامیلی " })
+                                @Html.ValidationMessageFor(model => model.Family)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">موبایل : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Mobile, new { @id = "Mobile", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "موبایل " })
+                                @Html.ValidationMessageFor(model => model.Mobile)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تحصیلات: </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("EducationId", new MultiSelectList(ViewBag.TableInterfaceValueId, "Value", "Text"),"-- تحصیلات را انتخاب نمائید --", new { @id = "EducationId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.EducationId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تاریخ استخدام : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.DateOfEmployement, new {  @id = "DateOfEmployementStr", @class = "col-xs-10 col-sm-5 col-md-10 fs pdate align-right", @placeholder = "تاریخ استخدام" })
+                                @Html.ValidationMessageFor(model => model.DateOfEmployement)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">ایمیل : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.Email, new { @id = "Email", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "ایمیل" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <div class="col-md-offset-3">
+                                <button id="btnSave" onclick="SaveData()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,908 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F7D45FA4-823F-4B01-946F-F300344EBD30}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DomainModel</RootNamespace>
+    <AssemblyName>DomainModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Migrations\201608021328595_MigrationsName.cs" />
+    <Compile Include="Migrations\201608021328595_MigrationsName.Designer.cs">
+      <DependentUpon>201608021328595_MigrationsName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608060428225_MigrationsName1.cs" />
+    <Compile Include="Migrations\201608060428225_MigrationsName1.Designer.cs">
+      <DependentUpon>201608060428225_MigrationsName1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608110456401_MigrationsName2.cs" />
+    <Compile Include="Migrations\201608110456401_MigrationsName2.Designer.cs">
+      <DependentUpon>201608110456401_MigrationsName2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608110509365_MigrationsName3.cs" />
+    <Compile Include="Migrations\201608110509365_MigrationsName3.Designer.cs">
+      <DependentUpon>201608110509365_MigrationsName3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608141112501_MigrationsName4.cs" />
+    <Compile Include="Migrations\201608141112501_MigrationsName4.Designer.cs">
+      <DependentUpon>201608141112501_MigrationsName4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608160613158_MigrationsName5.cs" />
+    <Compile Include="Migrations\201608160613158_MigrationsName5.Designer.cs">
+      <DependentUpon>201608160613158_MigrationsName5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609051016077_MigrationsName6.cs" />
+    <Compile Include="Migrations\201609051016077_MigrationsName6.Designer.cs">
+      <DependentUpon>201609051016077_MigrationsName6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609101225454_MigrationsName7.cs" />
+    <Compile Include="Migrations\201609101225454_MigrationsName7.Designer.cs">
+      <DependentUpon>201609101225454_MigrationsName7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609150851098_MigrationsName8.cs" />
+    <Compile Include="Migrations\201609150851098_MigrationsName8.Designer.cs">
+      <DependentUpon>201609150851098_MigrationsName8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609190637421_MigrationsName9.cs" />
+    <Compile Include="Migrations\201609190637421_MigrationsName9.Designer.cs">
+      <DependentUpon>201609190637421_MigrationsName9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609190642200_MigrationsName10.cs" />
+    <Compile Include="Migrations\201609190642200_MigrationsName10.Designer.cs">
+      <DependentUpon>201609190642200_MigrationsName10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609240736571_MigrationsName11.cs" />
+    <Compile Include="Migrations\201609240736571_MigrationsName11.Designer.cs">
+      <DependentUpon>201609240736571_MigrationsName11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610240430021_MigrationsName12.cs" />
+    <Compile Include="Migrations\201610240430021_MigrationsName12.Designer.cs">
+      <DependentUpon>201610240430021_MigrationsName12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611030841596_MigrationsName13.cs" />
+    <Compile Include="Migrations\201611030841596_MigrationsName13.Designer.cs">
+      <DependentUpon>201611030841596_MigrationsName13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611060552504_MigrationsNam.cs" />
+    <Compile Include="Migrations\201611060552504_MigrationsNam.Designer.cs">
+      <DependentUpon>201611060552504_MigrationsNam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611100546276_MigrationsName14.cs" />
+    <Compile Include="Migrations\201611100546276_MigrationsName14.Designer.cs">
+      <DependentUpon>201611100546276_MigrationsName14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612131401587_MigrationsName15.cs" />
+    <Compile Include="Migrations\201612131401587_MigrationsName15.Designer.cs">
+      <DependentUpon>201612131401587_MigrationsName15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612190547548_MigrationsName16.cs" />
+    <Compile Include="Migrations\201612190547548_MigrationsName16.Designer.cs">
+      <DependentUpon>201612190547548_MigrationsName16.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612220851323_MigrationsName17.cs" />
+    <Compile Include="Migrations\201612220851323_MigrationsName17.Designer.cs">
+      <DependentUpon>201612220851323_MigrationsName17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701140842104_MigrationsName18.cs" />
+    <Compile Include="Migrations\201701140842104_MigrationsName18.Designer.cs">
+      <DependentUpon>201701140842104_MigrationsName18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701160902535_MigrationsName19.cs" />
+    <Compile Include="Migrations\201701160902535_MigrationsName19.Designer.cs">
+      <DependentUpon>201701160902535_MigrationsName19.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701171444269_MigrationsName20.cs" />
+    <Compile Include="Migrations\201701171444269_MigrationsName20.Designer.cs">
+      <DependentUpon>201701171444269_MigrationsName20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701180707376_MigrationsName21.cs" />
+    <Compile Include="Migrations\201701180707376_MigrationsName21.Designer.cs">
+      <DependentUpon>201701180707376_MigrationsName21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701230929004_MigrationsName22.cs" />
+    <Compile Include="Migrations\201701230929004_MigrationsName22.Designer.cs">
+      <DependentUpon>201701230929004_MigrationsName22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701281407399_MigrationsName23.cs" />
+    <Compile Include="Migrations\201701281407399_MigrationsName23.Designer.cs">
+      <DependentUpon>201701281407399_MigrationsName23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702260557151_MigrationsName24.cs" />
+    <Compile Include="Migrations\201702260557151_MigrationsName24.Designer.cs">
+      <DependentUpon>201702260557151_MigrationsName24.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703060904402_MigrationsName25.cs" />
+    <Compile Include="Migrations\201703060904402_MigrationsName25.Designer.cs">
+      <DependentUpon>201703060904402_MigrationsName25.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703070714200_MigrationsName26.cs" />
+    <Compile Include="Migrations\201703070714200_MigrationsName26.Designer.cs">
+      <DependentUpon>201703070714200_MigrationsName26.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703091020133_MigrationsName27.cs" />
+    <Compile Include="Migrations\201703091020133_MigrationsName27.Designer.cs">
+      <DependentUpon>201703091020133_MigrationsName27.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703120506592_MigrationsName28.cs" />
+    <Compile Include="Migrations\201703120506592_MigrationsName28.Designer.cs">
+      <DependentUpon>201703120506592_MigrationsName28.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703121139073_MigrationsName29.cs" />
+    <Compile Include="Migrations\201703121139073_MigrationsName29.Designer.cs">
+      <DependentUpon>201703121139073_MigrationsName29.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703130627131_MigrationsName30.cs" />
+    <Compile Include="Migrations\201703130627131_MigrationsName30.Designer.cs">
+      <DependentUpon>201703130627131_MigrationsName30.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703290624104_MigrationsName31.cs" />
+    <Compile Include="Migrations\201703290624104_MigrationsName31.Designer.cs">
+      <DependentUpon>201703290624104_MigrationsName31.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703290743085_MigrationsName32.cs" />
+    <Compile Include="Migrations\201703290743085_MigrationsName32.Designer.cs">
+      <DependentUpon>201703290743085_MigrationsName32.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704050528533_MigrationsName33.cs" />
+    <Compile Include="Migrations\201704050528533_MigrationsName33.Designer.cs">
+      <DependentUpon>201704050528533_MigrationsName33.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704050533157_MigrationsName34.cs" />
+    <Compile Include="Migrations\201704050533157_MigrationsName34.Designer.cs">
+      <DependentUpon>201704050533157_MigrationsName34.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704050544402_MigrationsName35.cs" />
+    <Compile Include="Migrations\201704050544402_MigrationsName35.Designer.cs">
+      <DependentUpon>201704050544402_MigrationsName35.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704090614081_MigrationsName36.cs" />
+    <Compile Include="Migrations\201704090614081_MigrationsName36.Designer.cs">
+      <DependentUpon>201704090614081_MigrationsName36.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704090722573_MigrationsName37.cs" />
+    <Compile Include="Migrations\201704090722573_MigrationsName37.Designer.cs">
+      <DependentUpon>201704090722573_MigrationsName37.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704090909148_MigrationsName38.cs" />
+    <Compile Include="Migrations\201704090909148_MigrationsName38.Designer.cs">
+      <DependentUpon>201704090909148_MigrationsName38.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704090913040_MigrationsName39.cs" />
+    <Compile Include="Migrations\201704090913040_MigrationsName39.Designer.cs">
+      <DependentUpon>201704090913040_MigrationsName39.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704090915119_MigrationsName40.cs" />
+    <Compile Include="Migrations\201704090915119_MigrationsName40.Designer.cs">
+      <DependentUpon>201704090915119_MigrationsName40.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704090917202_MigrationsName41.cs" />
+    <Compile Include="Migrations\201704090917202_MigrationsName41.Designer.cs">
+      <DependentUpon>201704090917202_MigrationsName41.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704090921194_MigrationsName42.cs" />
+    <Compile Include="Migrations\201704090921194_MigrationsName42.Designer.cs">
+      <DependentUpon>201704090921194_MigrationsName42.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704090923580_MigrationsName43.cs" />
+    <Compile Include="Migrations\201704090923580_MigrationsName43.Designer.cs">
+      <DependentUpon>201704090923580_MigrationsName43.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705281021193_MigrationsName44.cs" />
+    <Compile Include="Migrations\201705281021193_MigrationsName44.Designer.cs">
+      <DependentUpon>201705281021193_MigrationsName44.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705281025363_MigrationsName45.cs" />
+    <Compile Include="Migrations\201705281025363_MigrationsName45.Designer.cs">
+      <DependentUpon>201705281025363_MigrationsName45.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705281026502_MigrationsName46.cs" />
+    <Compile Include="Migrations\201705281026502_MigrationsName46.Designer.cs">
+      <DependentUpon>201705281026502_MigrationsName46.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705281028079_MigrationsName47.cs" />
+    <Compile Include="Migrations\201705281028079_MigrationsName47.Designer.cs">
+      <DependentUpon>201705281028079_MigrationsName47.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705290940190_MigrationsName48.cs" />
+    <Compile Include="Migrations\201705290940190_MigrationsName48.Designer.cs">
+      <DependentUpon>201705290940190_MigrationsName48.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705300959505_MigrationsName49.cs" />
+    <Compile Include="Migrations\201705300959505_MigrationsName49.Designer.cs">
+      <DependentUpon>201705300959505_MigrationsName49.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706170439592_MigrationsName50.cs" />
+    <Compile Include="Migrations\201706170439592_MigrationsName50.Designer.cs">
+      <DependentUpon>201706170439592_MigrationsName50.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706300657292_MigrationsName51.cs" />
+    <Compile Include="Migrations\201706300657292_MigrationsName51.Designer.cs">
+      <DependentUpon>201706300657292_MigrationsName51.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707081136090_MigrationsName52.cs" />
+    <Compile Include="Migrations\201707081136090_MigrationsName52.Designer.cs">
+      <DependentUpon>201707081136090_MigrationsName52.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707081307418_MigrationsName53.cs" />
+    <Compile Include="Migrations\201707081307418_MigrationsName53.Designer.cs">
+      <DependentUpon>201707081307418_MigrationsName53.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707090344137_MigrationsName54.cs" />
+    <Compile Include="Migrations\201707090344137_MigrationsName54.Designer.cs">
+      <DependentUpon>201707090344137_MigrationsName54.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707100804593_MigrationsName55.cs" />
+    <Compile Include="Migrations\201707100804593_MigrationsName55.Designer.cs">
+      <DependentUpon>201707100804593_MigrationsName55.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707250809353_MigrationsName56.cs" />
+    <Compile Include="Migrations\201707250809353_MigrationsName56.Designer.cs">
+      <DependentUpon>201707250809353_MigrationsName56.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707251039000_MigrationsName57.cs" />
+    <Compile Include="Migrations\201707251039000_MigrationsName57.Designer.cs">
+      <DependentUpon>201707251039000_MigrationsName57.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804250634289_MigrationsName970205.cs" />
+    <Compile Include="Migrations\201804250634289_MigrationsName970205.Designer.cs">
+      <DependentUpon>201804250634289_MigrationsName970205.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804260528070_MigrationsName970206.cs" />
+    <Compile Include="Migrations\201804260528070_MigrationsName970206.Designer.cs">
+      <DependentUpon>201804260528070_MigrationsName970206.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804260529284_MigrationsName97020601.cs" />
+    <Compile Include="Migrations\201804260529284_MigrationsName97020601.Designer.cs">
+      <DependentUpon>201804260529284_MigrationsName97020601.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909221219073_sp-TrainingCoursesWithAttendancesSearch.cs" />
+    <Compile Include="Migrations\201909221219073_sp-TrainingCoursesWithAttendancesSearch.Designer.cs">
+      <DependentUpon>201909221219073_sp-TrainingCoursesWithAttendancesSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909260648101_migrationsName58.cs" />
+    <Compile Include="Migrations\201909260648101_migrationsName58.Designer.cs">
+      <DependentUpon>201909260648101_migrationsName58.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008241208292_MigrationsName990603.cs" />
+    <Compile Include="Migrations\202008241208292_MigrationsName990603.Designer.cs">
+      <DependentUpon>202008241208292_MigrationsName990603.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008250439356_MigrationsName990604.cs" />
+    <Compile Include="Migrations\202008250439356_MigrationsName990604.Designer.cs">
+      <DependentUpon>202008250439356_MigrationsName990604.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009050606220_MigrationName990615.cs" />
+    <Compile Include="Migrations\202009050606220_MigrationName990615.Designer.cs">
+      <DependentUpon>202009050606220_MigrationName990615.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009120456067_MigrationName13980622.cs" />
+    <Compile Include="Migrations\202009120456067_MigrationName13980622.Designer.cs">
+      <DependentUpon>202009120456067_MigrationName13980622.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009140654198_MigrationName13990624.cs" />
+    <Compile Include="Migrations\202009140654198_MigrationName13990624.Designer.cs">
+      <DependentUpon>202009140654198_MigrationName13990624.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009200521591_MigrationName13990630.cs" />
+    <Compile Include="Migrations\202009200521591_MigrationName13990630.Designer.cs">
+      <DependentUpon>202009200521591_MigrationName13990630.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009211121300_sp-GetReportOfEmployeme.cs" />
+    <Compile Include="Migrations\202009211121300_sp-GetReportOfEmployeme.Designer.cs">
+      <DependentUpon>202009211121300_sp-GetReportOfEmployeme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009220549035_MigrationName990701.cs" />
+    <Compile Include="Migrations\202009220549035_MigrationName990701.Designer.cs">
+      <DependentUpon>202009220549035_MigrationName990701.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009270511362_MigrationName13990706.cs" />
+    <Compile Include="Migrations\202009270511362_MigrationName13990706.Designer.cs">
+      <DependentUpon>202009270511362_MigrationName13990706.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012020545042_sp-GetSignature.cs" />
+    <Compile Include="Migrations\202012020545042_sp-GetSignature.Designer.cs">
+      <DependentUpon>202012020545042_sp-GetSignature.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101060616109_CursorEmployemeJob.cs" />
+    <Compile Include="Migrations\202101060616109_CursorEmployemeJob.Designer.cs">
+      <DependentUpon>202101060616109_CursorEmployemeJob.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105220957207_sp-SearchDetailoffertraining.cs" />
+    <Compile Include="Migrations\202105220957207_sp-SearchDetailoffertraining.Designer.cs">
+      <DependentUpon>202105220957207_sp-SearchDetailoffertraining.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106010652019_MigrationsHardwareEquipment.cs" />
+    <Compile Include="Migrations\202106010652019_MigrationsHardwareEquipment.Designer.cs">
+      <DependentUpon>202106010652019_MigrationsHardwareEquipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106020731515_MigrationHardwareInformation.cs" />
+    <Compile Include="Migrations\202106020731515_MigrationHardwareInformation.Designer.cs">
+      <DependentUpon>202106020731515_MigrationHardwareInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202107240941561_spGetReportOfEmployemeChange.cs" />
+    <Compile Include="Migrations\202107240941561_spGetReportOfEmployemeChange.Designer.cs">
+      <DependentUpon>202107240941561_spGetReportOfEmployemeChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108170729358_Migrations14000526.cs" />
+    <Compile Include="Migrations\202108170729358_Migrations14000526.Designer.cs">
+      <DependentUpon>202108170729358_Migrations14000526.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108220501442_Migration14000531.cs" />
+    <Compile Include="Migrations\202108220501442_Migration14000531.Designer.cs">
+      <DependentUpon>202108220501442_Migration14000531.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109040716195_Migration14000613.cs" />
+    <Compile Include="Migrations\202109040716195_Migration14000613.Designer.cs">
+      <DependentUpon>202109040716195_Migration14000613.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109260741281_spGetTestScoreChang.cs" />
+    <Compile Include="Migrations\202109260741281_spGetTestScoreChang.Designer.cs">
+      <DependentUpon>202109260741281_spGetTestScoreChang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109260819401_Employee.cs" />
+    <Compile Include="Migrations\202109260819401_Employee.Designer.cs">
+      <DependentUpon>202109260819401_Employee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109260821565_spGetReportOfEmployemeChang.cs" />
+    <Compile Include="Migrations\202109260821565_spGetReportOfEmployemeChang.Designer.cs">
+      <DependentUpon>202109260821565_spGetReportOfEmployemeChang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111231230494_MigrationDesignTrainingCourse14000902.cs" />
+    <Compile Include="Migrations\202111231230494_MigrationDesignTrainingCourse14000902.Designer.cs">
+      <DependentUpon>202111231230494_MigrationDesignTrainingCourse14000902.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202140914438_InventoryjobCopyRow.cs" />
+    <Compile Include="Migrations\202202140914438_InventoryjobCopyRow.Designer.cs">
+      <DependentUpon>202202140914438_InventoryjobCopyRow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202190711016_PlacementTabJobCopyRow.cs" />
+    <Compile Include="Migrations\202202190711016_PlacementTabJobCopyRow.Designer.cs">
+      <DependentUpon>202202190711016_PlacementTabJobCopyRow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205221048592_FinancialCommitment.cs" />
+    <Compile Include="Migrations\202205221048592_FinancialCommitment.Designer.cs">
+      <DependentUpon>202205221048592_FinancialCommitment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205230426333_DesignTrainingCourseDate.cs" />
+    <Compile Include="Migrations\202205230426333_DesignTrainingCourseDate.Designer.cs">
+      <DependentUpon>202205230426333_DesignTrainingCourseDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202205231206163_EmployemeTrainingCourse.cs" />
+    <Compile Include="Migrations\202205231206163_EmployemeTrainingCourse.Designer.cs">
+      <DependentUpon>202205231206163_EmployemeTrainingCourse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccessAndLog\AccessMenuUser.cs" />
+    <Compile Include="Models\AccessAndLog\AccessUser.cs" />
+    <Compile Include="Models\AccessAndLog\EmployemeSignatury.cs" />
+    <Compile Include="Models\AccessAndLog\LogError.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\AccessMenuUserMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\AccessUserMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\EmployemeSignaturyMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\LogErrorMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\MenuMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\NameOfSignatoryMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\OperationLogMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\PostGroupMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\RoleMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\SideSignatoryMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\SignatureResponsibilityMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\SupervisorMap.cs" />
+    <Compile Include="Models\AccessAndLog\Mapping\UserMap.cs" />
+    <Compile Include="Models\AccessAndLog\Menu.cs" />
+    <Compile Include="Models\AccessAndLog\NameOfSignatory.cs" />
+    <Compile Include="Models\AccessAndLog\OperationLog.cs" />
+    <Compile Include="Models\AccessAndLog\PostGroup.cs" />
+    <Compile Include="Models\AccessAndLog\Role.cs" />
+    <Compile Include="Models\AccessAndLog\SideSignatory.cs" />
+    <Compile Include="Models\AccessAndLog\SignatureResponsibility.cs" />
+    <Compile Include="Models\AccessAndLog\Supervisor.cs" />
+    <Compile Include="Models\AccessAndLog\User.cs" />
+    <Compile Include="Models\BasicInformation\AbsenceCount.cs" />
+    <Compile Include="Models\BasicInformation\Assessor.cs" />
+    <Compile Include="Models\BasicInformation\CodingTrainingPage.cs" />
+    <Compile Include="Models\BasicInformation\Department.cs" />
+    <Compile Include="Models\BasicInformation\DetailTypeRate.cs" />
+    <Compile Include="Models\BasicInformation\DeviceCollection.cs" />
+    <Compile Include="Models\BasicInformation\EducationEmployeme.cs" />
+    <Compile Include="Models\BasicInformation\EmployeeTrainingPassed.cs" />
+    <Compile Include="Models\BasicInformation\EmployemeJob.cs" />
+    <Compile Include="Models\BasicInformation\Employeme.cs" />
+    <Compile Include="Models\BasicInformation\FileRepository.cs" />
+    <Compile Include="Models\BasicInformation\HoursCertification.cs" />
+    <Compile Include="Models\BasicInformation\JobGroup.cs" />
+    <Compile Include="Models\BasicInformation\ListResponsibilitiePower.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\AbsenceCountMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\AssessorMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\CodingTrainingPageMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\DepartmentMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\DetailTypeRateMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\DeviceCollectionMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\EducationEmployemeMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\EmployeeTrainingPassedMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\EmployemeJobMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\EmployemeMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\FileRepositoryMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\HoursCertificationMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\JobGroupMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\ListResponsibilitiePowerMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\MasterRateItMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\NumberSucceedMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\PointsMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\RatingEvaluationMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\SectionMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\SetDateForReportMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\TableInterfaceMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\TableInterfaceValueMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\TableTypeOfTrainingMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\TariffMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\TeacherLevelDateMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\TeacherLevelMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\TeacherMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\TestsCollectionMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\TrainingCourseMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\TypeOfEvaluationMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\TypesRateMap.cs" />
+    <Compile Include="Models\BasicInformation\MasterRateIt.cs" />
+    <Compile Include="Models\BasicInformation\NumberSucceed.cs" />
+    <Compile Include="Models\BasicInformation\Point.cs" />
+    <Compile Include="Models\BasicInformation\RatingEvaluation.cs" />
+    <Compile Include="Models\BasicInformation\Section.cs" />
+    <Compile Include="Models\BasicInformation\SetDateForReport.cs" />
+    <Compile Include="Models\BasicInformation\TableInterface.cs" />
+    <Compile Include="Models\BasicInformation\TableInterfaceValue.cs" />
+    <Compile Include="Models\BasicInformation\TableTypeOfTraining.cs" />
+    <Compile Include="Models\BasicInformation\Tariff.cs" />
+    <Compile Include="Models\BasicInformation\TeacherLevel.cs" />
+    <Compile Include="Models\BasicInformation\Teacher.cs" />
+    <Compile Include="Models\BasicInformation\TeacherLevelDate.cs" />
+    <Compile Include="Models\BasicInformation\TestsCollection.cs" />
+    <Compile Include="Models\BasicInformation\TrainingCourse.cs" />
+    <Compile Include="Models\BasicInformation\TypeOfEvaluation.cs" />
+    <Compile Include="Models\BasicInformation\TypesRate.cs" />
+    <Compile Include="Models\IT\HardwareEquipment.cs" />
+    <Compile Include="Models\IT\HardwareInformation.cs" />
+    <Compile Include="Models\IT\HardwareName.cs" />
+    <Compile Include="Models\IT\Mapping\HardwareEquipmentMap.cs" />
+    <Compile Include="Models\IT\Mapping\HardwareInformationMap.cs" />
+    <Compile Include="Models\IT\Mapping\HardwareNameMap.cs" />
+    <Compile Include="Models\Promotion\CompetencyOperateTheMachine.cs" />
+    <Compile Include="Models\Promotion\CompetencyTesting.cs" />
+    <Compile Include="Models\Promotion\EmployeeEvaluation.cs" />
+    <Compile Include="Models\Promotion\HistoryQualificationOfStaff.cs" />
+    <Compile Include="Models\Promotion\ListEmployeeEvaluation.cs" />
+    <Compile Include="Models\Promotion\ListQualificationOfStaff.cs" />
+    <Compile Include="Models\Promotion\Mapping\CompetencyOperateTheMachineMap.cs" />
+    <Compile Include="Models\Promotion\Mapping\CompetencyTestingMap.cs" />
+    <Compile Include="Models\Promotion\Mapping\EmployeeEvaluationMap.cs" />
+    <Compile Include="Models\Promotion\Mapping\HistoryQualificationOfStaffMap.cs" />
+    <Compile Include="Models\Promotion\Mapping\ListEmployeeEvaluationMap.cs" />
+    <Compile Include="Models\Promotion\Mapping\ListQualificationOfStaffMap.cs" />
+    <Compile Include="Models\TrainingContext.cs" />
+    <Compile Include="Models\Training\AssessmentOfTrainingService.cs" />
+    <Compile Include="Models\Training\AssessmentOfTrainingServiceInformation.cs" />
+    <Compile Include="Models\Training\Attendance.cs" />
+    <Compile Include="Models\Training\AttendanceDate.cs" />
+    <Compile Include="Models\Training\CourseObjectivesEffectivenessTraining.cs" />
+    <Compile Include="Models\Training\CourseRegistration.cs" />
+    <Compile Include="Models\Training\CriterionAssessmentOfTrainingService.cs" />
+    <Compile Include="Models\Training\DesignTrainingCourse.cs" />
+    <Compile Include="Models\Training\DesignTrainingCourseDate.cs" />
+    <Compile Include="Models\Training\DetailOfferTrainingForEmployeme.cs" />
+    <Compile Include="Models\Training\DetailOfferTrainingForJob.cs" />
+    <Compile Include="Models\Training\DetailPlacementTabJobTraining.cs" />
+    <Compile Include="Models\Training\DetialHistoryTrainingUploadPage.cs" />
+    <Compile Include="Models\Training\EffectivenessTraining.cs" />
+    <Compile Include="Models\Training\EvaluationTrainingProgram.cs" />
+    <Compile Include="Models\Training\FinancialCommitment.cs" />
+    <Compile Include="Models\Training\HistoryTrainingUploadPage.cs" />
+    <Compile Include="Models\Training\Inventoryjob.cs" />
+    <Compile Include="Models\Training\ListAbilityRequiredJob.cs" />
+    <Compile Include="Models\Training\ListCommunityOrganization.cs" />
+    <Compile Include="Models\Training\ListEffectivenessOfCourse.cs" />
+    <Compile Include="Models\Training\ListHealthCondition.cs" />
+    <Compile Include="Models\Training\ListLearningAssistTool.cs" />
+    <Compile Include="Models\Training\ListOfCorporateJob.cs" />
+    <Compile Include="Models\Training\ListOfCorporateJobDate.cs" />
+    <Compile Include="Models\Training\ListPhysicalCondition.cs" />
+    <Compile Include="Models\Training\ListStyleCourse.cs" />
+    <Compile Include="Models\Training\ListTrainingRequired.cs" />
+    <Compile Include="Models\Training\ListTypeTestScore.cs" />
+    <Compile Include="Models\Training\Mapping\AssessmentOfTrainingServiceInformationMap.cs" />
+    <Compile Include="Models\Training\Mapping\AssessmentOfTrainingServiceMap.cs" />
+    <Compile Include="Models\Training\Mapping\AttendanceDateMap.cs" />
+    <Compile Include="Models\Training\Mapping\AttendanceMap.cs" />
+    <Compile Include="Models\Training\Mapping\CourseObjectivesEffectivenessTrainingMap.cs" />
+    <Compile Include="Models\Training\Mapping\CourseRegistrationMap.cs" />
+    <Compile Include="Models\Training\Mapping\CriterionAssessmentOfTrainingServiceMap.cs" />
+    <Compile Include="Models\Training\Mapping\DesignTrainingCourseDateMap.cs" />
+    <Compile Include="Models\Training\Mapping\DesignTrainingCourseMap.cs" />
+    <Compile Include="Models\Training\Mapping\DetailOfferTrainingForEmployemeMap.cs" />
+    <Compile Include="Models\Training\Mapping\DetailOfferTrainingForJobsMap.cs" />
+    <Compile Include="Models\Training\Mapping\DetailPlacementTabJobTrainingMap.cs" />
+    <Compile Include="Models\Training\Mapping\DetialHistoryTrainingUploadPageMap.cs" />
+    <Compile Include="Models\Training\Mapping\EffectivenessTrainingMap.cs" />
+    <Compile Include="Models\Training\Mapping\EvaluationTrainingProgramMap.cs" />
+    <Compile Include="Models\Training\Mapping\FinancialCommitmentMap.cs" />
+    <Compile Include="Models\Training\Mapping\HistoryTrainingUploadPageMap.cs" />
+    <Compile Include="Models\Training\Mapping\InventoryjobMap.cs" />
+    <Compile Include="Models\Training\Mapping\ListAbilityRequiredJobMap.cs" />
+    <Compile Include="Models\Training\Mapping\ListCommunityOrganizationMap.cs" />
+    <Compile Include="Models\Training\Mapping\ListEffectivenessOfCourseMap.cs" />
+    <Compile Include="Models\Training\Mapping\ListHealthConditionMap.cs" />
+    <Compile Include="Models\Training\Mapping\ListLearningAssistToolMap.cs" />
+    <Compile Include="Models\Training\Mapping\ListOfCorporateJobDateMap.cs" />
+    <Compile Include="Models\Training\Mapping\ListOfCorporateJobMap.cs" />
+    <Compile Include="Models\Training\Mapping\ListPhysicalConditionMap.cs" />
+    <Compile Include="Models\Training\Mapping\ListStyleCourseMap.cs" />
+    <Compile Include="Models\Training\Mapping\ListTrainingRequiredMap.cs" />
+    <Compile Include="Models\Training\Mapping\ListTypeTestScoreMap.cs" />
+    <Compile Include="Models\Training\Mapping\NoteAbsenceMap.cs" />
+    <Compile Include="Models\Training\Mapping\OfferTrainingForEmployeeDateMap.cs" />
+    <Compile Include="Models\Training\Mapping\OfferTrainingForEmployemeMap.cs" />
+    <Compile Include="Models\Training\Mapping\OfferTrainingForJobDateMap.cs" />
+    <Compile Include="Models\Training\Mapping\OfferTrainingForJobMap.cs" />
+    <Compile Include="Models\BasicInformation\Mapping\OJTLevelMap.cs" />
+    <Compile Include="Models\Training\Mapping\PlacementTabJobTrainingDateMap.cs" />
+    <Compile Include="Models\Training\Mapping\PlacementTabJobTrainingMap.cs" />
+    <Compile Include="Models\Training\Mapping\TablesRelatedAssessmentOfTrainingServiceMap.cs" />
+    <Compile Include="Models\Training\Mapping\TestScoreMap.cs" />
+    <Compile Include="Models\Training\Mapping\TrainingCalendarDateMap.cs" />
+    <Compile Include="Models\Training\Mapping\TrainingCalendarMap.cs" />
+    <Compile Include="Models\Training\Mapping\TrainingPageFileMap.cs" />
+    <Compile Include="Models\Training\NoteAbsence.cs" />
+    <Compile Include="Models\Training\OfferTrainingForEmployeeDate.cs" />
+    <Compile Include="Models\Training\OfferTrainingForEmployeme.cs" />
+    <Compile Include="Models\Training\OfferTrainingForJob.cs" />
+    <Compile Include="Models\BasicInformation\OJTLevel.cs" />
+    <Compile Include="Models\Training\OfferTrainingForJobDate.cs" />
+    <Compile Include="Models\Training\PlacementTabJobTraining.cs" />
+    <Compile Include="Models\Training\PlacementTabJobTrainingDate.cs" />
+    <Compile Include="Models\Training\TablesRelatedAssessmentOfTrainingService.cs" />
+    <Compile Include="Models\Training\TestScore.cs" />
+    <Compile Include="Models\Training\TrainingCalendar.cs" />
+    <Compile Include="Models\Training\TrainingCalendarDate.cs" />
+    <Compile Include="Models\Training\TrainingPageFile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201608021328595_MigrationsName.resx">
+      <DependentUpon>201608021328595_MigrationsName.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608060428225_MigrationsName1.resx">
+      <DependentUpon>201608060428225_MigrationsName1.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608110456401_MigrationsName2.resx">
+      <DependentUpon>201608110456401_MigrationsName2.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608110509365_MigrationsName3.resx">
+      <DependentUpon>201608110509365_MigrationsName3.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608141112501_MigrationsName4.resx">
+      <DependentUpon>201608141112501_MigrationsName4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608160613158_MigrationsName5.resx">
+      <DependentUpon>201608160613158_MigrationsName5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609051016077_MigrationsName6.resx">
+      <DependentUpon>201609051016077_MigrationsName6.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609101225454_MigrationsName7.resx">
+      <DependentUpon>201609101225454_MigrationsName7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609150851098_MigrationsName8.resx">
+      <DependentUpon>201609150851098_MigrationsName8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609190637421_MigrationsName9.resx">
+      <DependentUpon>201609190637421_MigrationsName9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609190642200_MigrationsName10.resx">
+      <DependentUpon>201609190642200_MigrationsName10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609240736571_MigrationsName11.resx">
+      <DependentUpon>201609240736571_MigrationsName11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610240430021_MigrationsName12.resx">
+      <DependentUpon>201610240430021_MigrationsName12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611030841596_MigrationsName13.resx">
+      <DependentUpon>201611030841596_MigrationsName13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611060552504_MigrationsNam.resx">
+      <DependentUpon>201611060552504_MigrationsNam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611100546276_MigrationsName14.resx">
+      <DependentUpon>201611100546276_MigrationsName14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612131401587_MigrationsName15.resx">
+      <DependentUpon>201612131401587_MigrationsName15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612190547548_MigrationsName16.resx">
+      <DependentUpon>201612190547548_MigrationsName16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612220851323_MigrationsName17.resx">
+      <DependentUpon>201612220851323_MigrationsName17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701140842104_MigrationsName18.resx">
+      <DependentUpon>201701140842104_MigrationsName18.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701160902535_MigrationsName19.resx">
+      <DependentUpon>201701160902535_MigrationsName19.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701171444269_MigrationsName20.resx">
+      <DependentUpon>201701171444269_MigrationsName20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701180707376_MigrationsName21.resx">
+      <DependentUpon>201701180707376_MigrationsName21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701230929004_MigrationsName22.resx">
+      <DependentUpon>201701230929004_MigrationsName22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701281407399_MigrationsName23.resx">
+      <DependentUpon>201701281407399_MigrationsName23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702260557151_MigrationsName24.resx">
+      <DependentUpon>201702260557151_MigrationsName24.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703060904402_MigrationsName25.resx">
+      <DependentUpon>201703060904402_MigrationsName25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703070714200_MigrationsName26.resx">
+      <DependentUpon>201703070714200_MigrationsName26.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703091020133_MigrationsName27.resx">
+      <DependentUpon>201703091020133_MigrationsName27.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703120506592_MigrationsName28.resx">
+      <DependentUpon>201703120506592_MigrationsName28.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703121139073_MigrationsName29.resx">
+      <DependentUpon>201703121139073_MigrationsName29.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703130627131_MigrationsName30.resx">
+      <DependentUpon>201703130627131_MigrationsName30.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703290624104_MigrationsName31.resx">
+      <DependentUpon>201703290624104_MigrationsName31.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703290743085_MigrationsName32.resx">
+      <DependentUpon>201703290743085_MigrationsName32.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704050528533_MigrationsName33.resx">
+      <DependentUpon>201704050528533_MigrationsName33.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704050533157_MigrationsName34.resx">
+      <DependentUpon>201704050533157_MigrationsName34.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704050544402_MigrationsName35.resx">
+      <DependentUpon>201704050544402_MigrationsName35.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704090614081_MigrationsName36.resx">
+      <DependentUpon>201704090614081_MigrationsName36.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704090722573_MigrationsName37.resx">
+      <DependentUpon>201704090722573_MigrationsName37.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704090909148_MigrationsName38.resx">
+      <DependentUpon>201704090909148_MigrationsName38.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704090913040_MigrationsName39.resx">
+      <DependentUpon>201704090913040_MigrationsName39.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704090915119_MigrationsName40.resx">
+      <DependentUpon>201704090915119_MigrationsName40.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704090917202_MigrationsName41.resx">
+      <DependentUpon>201704090917202_MigrationsName41.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704090921194_MigrationsName42.resx">
+      <DependentUpon>201704090921194_MigrationsName42.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704090923580_MigrationsName43.resx">
+      <DependentUpon>201704090923580_MigrationsName43.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705281021193_MigrationsName44.resx">
+      <DependentUpon>201705281021193_MigrationsName44.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705281025363_MigrationsName45.resx">
+      <DependentUpon>201705281025363_MigrationsName45.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705281026502_MigrationsName46.resx">
+      <DependentUpon>201705281026502_MigrationsName46.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705281028079_MigrationsName47.resx">
+      <DependentUpon>201705281028079_MigrationsName47.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705290940190_MigrationsName48.resx">
+      <DependentUpon>201705290940190_MigrationsName48.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705300959505_MigrationsName49.resx">
+      <DependentUpon>201705300959505_MigrationsName49.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706170439592_MigrationsName50.resx">
+      <DependentUpon>201706170439592_MigrationsName50.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706300657292_MigrationsName51.resx">
+      <DependentUpon>201706300657292_MigrationsName51.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707081136090_MigrationsName52.resx">
+      <DependentUpon>201707081136090_MigrationsName52.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707081307418_MigrationsName53.resx">
+      <DependentUpon>201707081307418_MigrationsName53.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707090344137_MigrationsName54.resx">
+      <DependentUpon>201707090344137_MigrationsName54.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707100804593_MigrationsName55.resx">
+      <DependentUpon>201707100804593_MigrationsName55.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707250809353_MigrationsName56.resx">
+      <DependentUpon>201707250809353_MigrationsName56.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707251039000_MigrationsName57.resx">
+      <DependentUpon>201707251039000_MigrationsName57.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804250634289_MigrationsName970205.resx">
+      <DependentUpon>201804250634289_MigrationsName970205.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804260528070_MigrationsName970206.resx">
+      <DependentUpon>201804260528070_MigrationsName970206.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804260529284_MigrationsName97020601.resx">
+      <DependentUpon>201804260529284_MigrationsName97020601.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909221219073_sp-TrainingCoursesWithAttendancesSearch.resx">
+      <DependentUpon>201909221219073_sp-TrainingCoursesWithAttendancesSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909260648101_migrationsName58.resx">
+      <DependentUpon>201909260648101_migrationsName58.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008241208292_MigrationsName990603.resx">
+      <DependentUpon>202008241208292_MigrationsName990603.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008250439356_MigrationsName990604.resx">
+      <DependentUpon>202008250439356_MigrationsName990604.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009050606220_MigrationName990615.resx">
+      <DependentUpon>202009050606220_MigrationName990615.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009120456067_MigrationName13980622.resx">
+      <DependentUpon>202009120456067_MigrationName13980622.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009140654198_MigrationName13990624.resx">
+      <DependentUpon>202009140654198_MigrationName13990624.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009200521591_MigrationName13990630.resx">
+      <DependentUpon>202009200521591_MigrationName13990630.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009211121300_sp-GetReportOfEmployeme.resx">
+      <DependentUpon>202009211121300_sp-GetReportOfEmployeme.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009220549035_MigrationName990701.resx">
+      <DependentUpon>202009220549035_MigrationName990701.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009270511362_MigrationName13990706.resx">
+      <DependentUpon>202009270511362_MigrationName13990706.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012020545042_sp-GetSignature.resx">
+      <DependentUpon>202012020545042_sp-GetSignature.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101060616109_CursorEmployemeJob.resx">
+      <DependentUpon>202101060616109_CursorEmployemeJob.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105220957207_sp-SearchDetailoffertraining.resx">
+      <DependentUpon>202105220957207_sp-SearchDetailoffertraining.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106010652019_MigrationsHardwareEquipment.resx">
+      <DependentUpon>202106010652019_MigrationsHardwareEquipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106020731515_MigrationHardwareInformation.resx">
+      <DependentUpon>202106020731515_MigrationHardwareInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107240941561_spGetReportOfEmployemeChange.resx">
+      <DependentUpon>202107240941561_spGetReportOfEmployemeChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108170729358_Migrations14000526.resx">
+      <DependentUpon>202108170729358_Migrations14000526.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108220501442_Migration14000531.resx">
+      <DependentUpon>202108220501442_Migration14000531.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109040716195_Migration14000613.resx">
+      <DependentUpon>202109040716195_Migration14000613.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109260741281_spGetTestScoreChang.resx">
+      <DependentUpon>202109260741281_spGetTestScoreChang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109260819401_Employee.resx">
+      <DependentUpon>202109260819401_Employee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109260821565_spGetReportOfEmployemeChang.resx">
+      <DependentUpon>202109260821565_spGetReportOfEmployemeChang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111231230494_MigrationDesignTrainingCourse14000902.resx">
+      <DependentUpon>202111231230494_MigrationDesignTrainingCourse14000902.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202140914438_InventoryjobCopyRow.resx">
+      <DependentUpon>202202140914438_InventoryjobCopyRow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202190711016_PlacementTabJobCopyRow.resx">
+      <DependentUpon>202202190711016_PlacementTabJobCopyRow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205221048592_FinancialCommitment.resx">
+      <DependentUpon>202205221048592_FinancialCommitment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205230426333_DesignTrainingCourseDate.resx">
+      <DependentUpon>202205230426333_DesignTrainingCourseDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205231206163_EmployemeTrainingCourse.resx">
+      <DependentUpon>202205231206163_EmployemeTrainingCourse.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

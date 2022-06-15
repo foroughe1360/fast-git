@@ -1,0 +1,1256 @@
+﻿@model IEnumerable<InterfaceEntity.InventoryjobEntity>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        var _DateOfProducer = '@ViewBag.DateOfProducer';
+        var _DateOfApprover = '@ViewBag.DateOfApprover';
+        var _DateOfRegistrar = '@ViewBag.DateOfRegistrar';
+
+         var ReportNameId  =  '@ViewBag.ReportNameId';
+       
+        //Operation Inventoryjob-------------------------
+        function SaveDataInventoryjob() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.SectionId = $("#SectionId").val();
+            myObject.PostGroupName = $("#PostGroupName").val();
+            myObject.NumberEmployees = $("#NumberEmployees").val();
+            myObject.AsJobs2 = $("#AsJobs2").val();
+            myObject.AsJobs3 = $("#AsJobs3").val();
+            myObject.Education = $("#Education").val();
+            myObject.Experience = $("#Experience").val();
+            myObject.ListResponsibilitiePowerId = $("#ListResponsibilitiePowerId").val();
+            myObject.PercentPhysicalActivity = $("#PercentPhysicalActivity").val();
+            myObject.PercentMentalActivity = $("#PercentMentalActivity").val();
+            myObject.TheoreticalKnowledge = $("#TheoreticalKnowledge").val();
+            myObject.Qualified = $("#Qualified").val();
+            myObject.OtherTraining = $("#OtherTraining").val();
+            myObject.OtherAbilityRequiredJob = $("#OtherAbilityRequiredJob").val();
+            myObject.ListCommunityOrganizationComment = $("#ListCommunityOrganizationComment").val();
+
+            var url = "/Inventoryjob/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListInventoryjob();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditDataInventoryjob() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.InventoryjobId = $("#InventoryjobId").val();
+            myObject.SectionId = $("#SectionId").val();
+            myObject.PostGroupName = $("#PostGroupName").val();
+            myObject.NumberEmployees = $("#NumberEmployees").val();
+            myObject.AsJobs2 = $("#AsJobs2").val();
+            myObject.AsJobs3 = $("#AsJobs3").val();
+            myObject.Education = $("#Education").val();
+            myObject.Experience = $("#Experience").val();
+            myObject.ListResponsibilitiePowerId = $("#ListResponsibilitiePowerId").val();
+            myObject.PercentPhysicalActivity = $("#PercentPhysicalActivity").val();
+            myObject.PercentMentalActivity = $("#PercentMentalActivity").val();
+            myObject.TheoreticalKnowledge = $("#TheoreticalKnowledge").val();
+            myObject.Qualified = $("#Qualified").val();
+            myObject.OtherTraining = $("#OtherTraining").val();
+            myObject.OtherAbilityRequiredJob = $("#OtherAbilityRequiredJob").val();
+            myObject.ListCommunityOrganizationComment = $("#ListCommunityOrganizationComment").val();
+
+            var url = "/Inventoryjob/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListInventoryjob();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataInventoryjob() {
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/Inventoryjob/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListInventoryjob();
+            });
+
+        }
+        function _GetListInventoryjob() {
+            $.ajax({
+                url: "/Inventoryjob/_GetListInventoryjob",
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGrid').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+            
+            if ($('#UnitSCenterId').val() == '') {
+                $('#UnitSCenterId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#UnitSCenterId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#DepartmentId').val() == '') {
+                $('#DepartmentId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DepartmentId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#SectionId').val() == '') {
+                $('#SectionId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#SectionId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#PostGroupName').val() == '') {
+                $('#PostGroupName').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#PostGroupName').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#NumberEmployees').val() == '') {
+                $('#NumberEmployees').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#NumberEmployees').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#AsJobs2').val() == '') {
+                $('#AsJobs2').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#AsJobs2').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#AsJobs3').val() == '') {
+                $('#AsJobs3').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#AsJobs3').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#Education').val() == '') {
+                $('#Education').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Education').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#Experience').val() == '') {
+                $('#Experience').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Experience').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#Responsibilities').val() == '') {
+                $('#Responsibilities').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Responsibilities').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#PercentPhysicalActivity').val() == '') {
+                $('#PercentPhysicalActivity').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#PercentPhysicalActivity').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#PercentMentalActivity').val() == '') {
+                $('#PercentMentalActivity').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#PercentMentalActivity').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#TheoreticalKnowledge').val() == '') {
+                $('#TheoreticalKnowledge').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#TheoreticalKnowledge').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#Qualified').val() == '') {
+                $('#Qualified').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Qualified').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#OtherTraining').val() == '') {
+                $('#OtherTraining').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#OtherTraining').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#OtherAbilityRequiredJob').val() == '') {
+                $('#OtherAbilityRequiredJob').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#OtherAbilityRequiredJob').css('border-color', '#d5d5d5');
+            } 
+
+            if ($('#ListCommunityOrganizationComment').val() == '') {
+                $('#ListCommunityOrganizationComment').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#ListCommunityOrganizationComment').css('border-color', '#d5d5d5');
+            } 
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+
+
+        function _GetListInventoryjob(typesearch) {
+            debugger;
+
+            //typesearch { WithoutParameter =1, WithParameter = 2}
+            if (typesearch == 1) {
+                var myObjectSearch = new Object();
+
+                myObjectSearch.UnitSCenterId = $("#UnitSCenterSearch").val();
+                myObjectSearch.DepartmentId = $("#DepartmentSearch").val();
+
+                myObjectSearch.typesearch = 1;
+            }
+            else if (typesearch == 2) {
+                var myObjectSearch = new Object();
+  
+                myObjectSearch.UnitSCenterId = $("#UnitSCenterSearch").val();
+                myObjectSearch.DepartmentId = $("#DepartmentSearch").val();
+
+                myObjectSearch.typesearch = 2;
+            }
+
+            var url = "/Inventoryjob/_GetListInventoryjob"; // the url to the controller
+            $.post(url, myObjectSearch, function (data) {
+
+                $('#theGrid').html(data);
+            });
+        }
+        function _GetPrintListEmployeme() {
+            debugger;
+
+            $("#ajaxloader").css("display", "inline");
+            location.href = "/Employeme/PrintToPdf";
+            /*
+            var url = "/Employeme/PrintToPdf"; // the url to the controller
+            $.post(url, function (data) {
+                $('#theGrid').html(data);
+            });
+            */
+        }
+
+
+        function CopyDataInventoryjob(inventoryjobld) {
+            $("#ajaxloader").css("display", "inline");
+            var inventoryjobld = inventoryjobld; //$(this).attr('data-Id');
+            //location.href = "/Inventoryjob/CopyDataInventoryjob";
+            //location.href = "/Inventoryjob/CopyDataInventoryjob?ID=" + inventoryjobld;
+
+            var myObject = new Object();
+            myObject.ID = inventoryjobld;
+
+            var url = "/Inventoryjob/CopyDataInventoryjob";
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    alert(".اطلاعات با موفقیت کپی گردید");
+                }
+                else {
+                    alert("کپی اطلاعات با خطا مواجه شد. !");
+                }
+
+                _GetListInventoryjob();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+
+        //-----------------------------------------------
+
+        //Operation ListTrainingRequired------------
+        function SaveDataListCommunityOrganization() {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.ListCommunityOrganizationId = $("#ListCommunityOrganizationId").val();
+            myObject.InventoryjobsId = $("#InventoryjobsId").val();
+            myObject.CommunityOrganizationsId = $("#CommunityOrganizationsId").val();
+
+            var url = "/ListCommunityOrganization/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+        //--------------------------------------------
+
+        //Operation ListTrainingRequired------------
+        function SaveDataListTrainingRequired() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var TableTypeOfTrainingFace = new Object();
+            //In Table TableInterfaceValues Is TableIUnterfaceId=11(Table) And TableValue (پرسشنامه شناسنامه مشاغل) : TableInterfaceValueId=213
+            TableTypeOfTrainingFace.TableId = "213";       // پرسشنامه شناسنامه مشاغل
+            //In Table TableInterfaceValues Is TableIUnterfaceId=13(UsedTable) And TableValue (شکل انجام آموزش) : TableInterfaceValueId=217
+            TableTypeOfTrainingFace.UsedTableId = "217";   // شکل انجام آموزش
+            TableTypeOfTrainingFace.C = $('#C').is(':checked');
+            TableTypeOfTrainingFace.Sd = $('#SD').is(':checked');
+            TableTypeOfTrainingFace.Ojt = $('#OJT').is(':checked');
+
+            var ListTrainingRequired = new Object();
+            ListTrainingRequired.InventoryjobsId = $("#InventoryjobsId").val();
+            ListTrainingRequired.Description = $("#Description").val();
+            ListTrainingRequired.TableTypeOfTrainingFaceId = $("#TableTypeOfTrainingFaceId").val();
+            ListTrainingRequired.TitleTraining = $("#TitleTraining").val();
+            ListTrainingRequired.SDTime = $("#SDTime").val();
+            ListTrainingRequired.OJTTime = $("#OJTTime").val();
+            ListTrainingRequired.CTime = $("#CTime").val();
+
+            $.ajax({
+                url: '/ListTrainingRequired/Create',
+                type: 'post',
+                dataType: 'json',
+                // It is important to set the content type
+                // request header to application/json because
+                // that's how the client will send the request
+                contentType: 'application/json',
+                data: JSON.stringify({ _TableTypeOfTrainingFaceEntity: TableTypeOfTrainingFace, _ListTrainingRequiredEntity: ListTrainingRequired }),
+                cache: false,
+                success: function (result) {
+                    if (result == true) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                        $("#messageOp").css("color", "green");
+                        $("#MessageOperation").css("display", "block");
+                        _GetListListTrainingRequired();
+                    }
+                    else {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+            });
+            window.setTimeout(function () {
+                $("#MessageOperation").css("display", "none");
+            }, 5000);
+        }
+        function EditDataListTrainingRequired() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var TableTypeOfTrainingFace = new Object();
+            TableTypeOfTrainingFace.TableTypeOfTrainingId = $("#TableTypeOfTrainingFaceId").val();
+
+            //In Table TableInterfaceValues Is TableIUnterfaceId=11(Table) And TableValue (پرسشنامه شناسنامه مشاغل) : TableInterfaceValueId=213
+            TableTypeOfTrainingFace.TableId = "213";       // پرسشنامه شناسنامه مشاغل
+            //In Table TableInterfaceValues Is TableIUnterfaceId=13(UsedTable) And TableValue (شکل انجام آموزش) : TableInterfaceValueId=217
+            TableTypeOfTrainingFace.UsedTableId = "217";   // شکل انجام آموزش
+            TableTypeOfTrainingFace.C = $('#C').is(':checked');
+            TableTypeOfTrainingFace.Sd = $('#SD').is(':checked');
+            TableTypeOfTrainingFace.Ojt = $('#OJT').is(':checked');
+
+            //var TableTypeOfTrainingTime = new Object();
+            //TableTypeOfTrainingTime.TableTypeOfTrainingId = $("#TableTypeOfTrainingTimeId").val();
+            //TableTypeOfTrainingTime.TableId = "75";       // پرسشنامه شناسنامه مشاغل
+            //TableTypeOfTrainingTime.UsedTableId = "74";   // مدت زمان
+            //TableTypeOfTrainingTime.C = $('#CTime').is(':checked');
+            //TableTypeOfTrainingTime.Sd = $('#SDTime').is(':checked');
+            //TableTypeOfTrainingTime.Ojt = $('#OJTTime').is(':checked');
+
+            var ListTrainingRequired = new Object();
+            ListTrainingRequired.ListTrainingRequiredId = $("#ListTrainingRequiredId").val();
+            ListTrainingRequired.InventoryjobsId = $("#InventoryjobsId").val();
+            //ListTrainingRequired.TrainingRequiredId = $("#TrainingRequiredId").val();
+            ListTrainingRequired.Description = $("#Description").val();
+            ListTrainingRequired.TableTypeOfTrainingFaceId = $("#TableTypeOfTrainingFaceId").val();
+            //ListTrainingRequired.TableTypeOfTrainingTimeId = $("#TableTypeOfTrainingTimeId").val();
+            ListTrainingRequired.TitleTraining = $("#TitleTraining").val();
+            ListTrainingRequired.SDTime = $("#SDTime").val();
+            ListTrainingRequired.OJTTime = $("#OJTTime").val();
+            ListTrainingRequired.CTime = $("#CTime").val();
+
+            $.ajax({
+                url: '/ListTrainingRequired/Edit',
+                type: 'post',
+                dataType: 'json',
+                // It is important to set the content type
+                // request header to application/json because
+                // that's how the client will send the request
+                contentType: 'application/json',
+                data: JSON.stringify({ _TableTypeOfTrainingFaceEntity: TableTypeOfTrainingFace,  _ListTrainingRequiredEntity: ListTrainingRequired }),
+                cache: false,
+                success: function (result) {
+                    if (result == true) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                        $("#messageOp").css("color", "green");
+                        $("#MessageOperation").css("display", "block");
+                        _GetListListTrainingRequired();
+                    }
+                    else {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+            });
+            window.setTimeout(function () {
+                $("#MessageOperation").css("display", "none");
+            }, 5000);
+        }
+        function DeleteDataListTrainingRequired(tabletypeoftrainingfaceid,listtrainingrequiredid) {
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/ListTrainingRequired/Delete"; // the url to the controller
+            $.post(url, { tabletypeoftrainingfaceid: tabletypeoftrainingfaceid, listtrainingrequiredid: listtrainingrequiredid }, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListListTrainingRequired();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#TitleTraining').val() == '') {
+                $('#TitleTraining').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#TitleTraining').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#SDTime').val() == '') {
+                $('#SDTime').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#SDTime').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#OJTTime').val() == '') {
+                $('#OJTTime').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#OJTTime').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#CTime').val() == '') {
+                $('#CTime').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#CTime').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#Description').val() == '') {
+                $('#Description').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Description').css('border-color', '#d5d5d5');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        //--------------------------------------------
+
+        //Fill Drop Down--------------------------------
+        function GetDepartment(_unitscenterid) {
+            $('#SectionId').empty();
+            var procemessage = "<option value=''> لطفا صبر کنید ....</option>";
+            $("#DepartmentId").html(procemessage).show();
+            var url = "/Department/GetDepartmentByunitscenterid/";
+
+            $.ajax({
+                url: url,
+                data: { unitscenterid: _unitscenterid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>-- نام بخش را انتخاب نمائبد --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#DepartmentId").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+        function GetSection(_departmentid) {
+            var procemessage = "<option value=''> لطفا صبر کنید ....</option>";
+            $("#SectionId").html(procemessage).show();
+            var url = "/Section/GetSectionByuDepartmentId/";
+
+            $.ajax({
+                url: url,
+                data: { departmentid: _departmentid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value=''>-- نام قسمت را انتخاب نمائبد --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#SectionId").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+        //----------------------------------------------
+
+
+        //Operation SetDateForReport----------------------
+        function SaveDataSetDateForReport() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var PlacementTabJobTrainingId = $("#PublicCode").val();
+
+            var myObject = new Object();
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.ReportNameId = $("#ReportNameId").val();
+            myObject.PublicCode = PlacementTabJobTrainingId;
+            myObject.DateOfProducerStr = $("#DateOfProducerstr").val();
+            myObject.DateOfApproverStr = $("#DateOfApproverstr").val();
+            myObject.DateOfRegistrarStr = $("#DateOfRegistrarstr").val();
+
+            var url = "/SetDateForReport/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListSetDateForReport();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditDataSetDateForReport() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+
+            var myObject = new Object();
+            myObject.SetDateForReportId = $("#SetDateForReportId").val();
+            myObject.ReportNameId = $("#ReportNameId").val();
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.PublicCode = $("#PublicCode").val();
+            myObject.DateOfProducerstr = $("#DateOfProducerstr").val();
+            myObject.DateOfApproverstr = $("#DateOfApproverstr").val();
+            myObject.DateOfRegistrarstr = $("#DateOfRegistrarstr").val();
+
+            var url = "/SetDateForReport/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListSetDateForReport();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function _GetListSetDateForReport() {
+            var PlacementTabJobTrainingId = $("#PublicCode").val();
+            alert("_GetListSetDateForReport");
+     
+            $.ajax({
+                url: "/SetDateForReport/_GetListSetDateForReport/",
+                type: 'GET',
+                datatype: 'json',
+                data: { PublicCode: PlacementTabJobTrainingId, ReportNameId: ReportNameId },
+                success: function (data) {
+                    $('#theGridSetDateForReport').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#DateOfProducerstr').val() == '') {
+                $('#DateOfProducerstr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DateOfProducerstr').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#DateOfApproverstr').val() == '') {
+                $('#DateOfApproverstr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DateOfApproverstr').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#DateOfRegistrarstr').val() == '') {
+                $('#DateOfRegistrarstr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DateOfRegistrarstr').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#ReportNameId').val() == '') {
+                $('#ReportNameId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#ReportNameId').css('border-color', '#d5d5d5');
+            }
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        //------------------------------------------------------------
+        
+        $(document).ready(function () {
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on("click", "#btnAddNew", function () {
+                $("div#divLoading").addClass('show');
+                $.get('/Inventoryjob/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت پرسشنامه شناسنامه مشاغل،( آموزش)</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+            });
+
+            $(document).on("click", ".BtnEdit", function () {
+                $("div#divLoading").addClass('show');
+                var Inventoryjobld = $(this).attr('data-Id');
+                $.get('/Inventoryjob/Edit', "ID=" + Inventoryjobld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ویرایش پرسشنامه شناسنامه مشاغل،( آموزش)</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on("click", ".BtnDelete", function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم حذف پرسشنامه شناسنامه مشاغل،( آموزش)</span>");
+                var InventoryjobId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', { id: InventoryjobId, viewname: ViewName }, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on("click", ".BtnListCommunityOrganization", function () {
+                $("div#divLoading").addClass('show');
+                var Tariffld = $(this).attr('data-Id');
+                $.get('/ListCommunityOrganization/Index', { ID: Tariffld, communicationorganizationid: 257 }, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فهرست ارتباطات درون و برون سازمانی و شیوه ارتباط (پرسشنامه شناسنامه مشاغل)&nbsp;&nbsp; </span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on("click", ".BtnListPhysicalCondition", function () {
+                $("div#divLoading").addClass('show');
+                var Tariffld = $(this).attr('data-Id');
+                $.get('/ListPhysicalCondition/Index', "ID=" + Tariffld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>شرایط فیزیکی و میزان فعالیت فیزیکی و ذهنی شغل (پرسشنامه شناسنامه مشاغل)&nbsp;&nbsp; </span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on("click", ".BtnListHealthCondition", function () {
+                $("div#divLoading").addClass('show');
+                var Inventoryjobld = $(this).attr('data-Id');
+                $.get('/ListHealthCondition/Index', "ID=" + Inventoryjobld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>عوامل و شرایط ایمنی و بهداشت شغل ، پرسشنامه شناسنامه مشاغل&nbsp;&nbsp; </span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on("click", ".BtnListAbilityRequiredJob", function () {
+                $("div#divLoading").addClass('show');
+                var Inventoryjobld = $(this).attr('data-Id');
+                $.get('/ListAbilityRequiredJob/Index', "ID=" + Inventoryjobld, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فهرست توانایی های ویژه موردنیاز شغل ، پرسشنامه شناسنامه مشاغل)</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on("click", ".BtnListTrainingRequired", function () {
+                $("div#divLoading").addClass('show');
+                var InventoryjobsId = $(this).attr('data-Id');
+                $.get('/ListTrainingRequired/Index', { ID: InventoryjobsId }, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فهرست آموزش های موردنیاز شغل ، (پرسشنامه شناسنامه مشاغل)</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on("click", "#btnSaveListCommunityOrganization", function (e) {
+                var array = [];
+                $("[id*=sample-table-1] tr [id*=chkSelect]").each(function () {
+                    var myObject = new Object();
+                    myObject.CommunicationOrganizationId = $("#ListCommunicationOrganization").val();
+                    myObject.ListCommunityOrganizationId = $(this).attr('data-ListCommunityOrganizationId');
+                    myObject.InventoryjobsId = InventoryjobsId;
+                    myObject.CommunityOrganizationsId = $(this).attr('data-CommunityOrganizationsId');
+                    myObject.State = this.checked;
+                    array.push(myObject);
+                });
+
+                $.ajax({
+                    url: "/ListCommunityOrganization/Createlist",
+                    data: JSON.stringify(array),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result == true) {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                        else {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                });
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+            $(document).on("click", "#btnSaveListPhysicalCondition", function (e) {
+                var array = [];
+                $("[id*=sample-table-1] tr [id*=chkSelect]").each(function () {
+                    var myObject = new Object();
+                    myObject.ListPhysicalConditionId = $(this).attr('data-ListPhysicalConditionId');
+                    myObject.InventoryjobsId = InventoryjobsId;
+                    myObject.PhysicalConditionsId = $(this).attr('data-PhysicalConditionsId');
+                    myObject.State = this.checked;
+                    array.push(myObject);
+                });
+
+                $.ajax({
+                    url: "/ListPhysicalCondition/Createlist",
+                    data: JSON.stringify(array),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result == true) {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                        else {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                });
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+            $(document).on("click", "#btnSaveListHealthCondition", function (e) {
+                var array = [];
+                $('#sample-table-2 tbody tr').each(function () {
+                    var myObject = new Object();
+                    myObject.ListHealthConditionId = $(this).attr('data-ListHealthConditionId');
+                    myObject.InventoryjobsId = InventoryjobsId;
+                    myObject.HealthConditionsId = $(this).attr('data-HealthConditionsId');
+                    myObject.Description = $(this).find('#Description').val();
+                    myObject.State = $(this).find("#chkSelect").is(":checked");
+
+                    array.push(myObject);
+                });
+
+                $.ajax({
+                    url: "/ListHealthCondition/Createlist",
+                    data: JSON.stringify(array),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result == true) {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                        else {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                });
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+            $(document).on("click", "#btnSaveListAbilityRequiredJob", function (e) {
+                var array = [];
+                $("[id*=sample-table-1] tr [id*=chkSelect]").each(function () {
+                    var myObject = new Object();
+                    myObject.ListAbilityRequiredJobId = $(this).attr('data-ListAbilityRequiredJobId');
+                    myObject.InventoryjobsId = InventoryjobsId;
+                    myObject.AbilityRequiredJobId = $(this).attr('data-AbilityRequiredJobId');
+                    myObject.State = this.checked;
+
+                    array.push(myObject);
+                });
+
+                $.ajax({
+                    url: "/ListAbilityRequiredJob/Createlist",
+                    data: JSON.stringify(array),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result == true) {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                        else {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                });
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+            $(document).on('click', '.BtnSetDateReport', function () {
+               
+                $("div#sdivLoading").addClass('show');
+                
+                var PlacementTabJobTrainingId = $(this).attr('data-Id');
+                var dataEmployemeId = $(this).attr('data-EmployemeId');
+                var EmployemeName = $(this).attr('data-EmployemeName');
+
+                $.get('/SetDateForReport/Index', { PublicCode: PlacementTabJobTrainingId, EmployemeId: dataEmployemeId, ReportNameId: ReportNameId }, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<spanتنظیم تاریخ  &nbsp;&nbsp; </span>");// + 'تنظیم تاریخ -' + ' ' + EmployemeName);// + EmployemeName);
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+            
+            $(document).on('click', '.BtnCopyDataInventoryjob', function () {
+                
+                var inventoryjobld = $(this).attr('data-Id');
+                CopyDataInventoryjob(inventoryjobld);
+            });
+
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">پرسشنامه شناسنامه مشاغل</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+
+    <div class="widget-box collapsed" id="WidgetBoxEmployemeSearch">
+        <div class="widget-header">
+
+            <ul class="breadcrumb">
+                <li class="active bigger-150"><a href="#">جستجو</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEmployemeSearch"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;height:250px" id="WidgetBodyEmployemeSearch">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+
+                    <div class="col-xs-6">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">واحد : </label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("UnitSCenterSearch", new MultiSelectList(ViewBag.TableInterfaceValueIdUnitSCenter, "Value", "Text"), "-- نام واحد را انتخاب نمائید --", new { @id = "UnitSCenterSearch", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label no-padding-right" for="form-field-1">نام بخش : </label>
+                                <div class="col-md-10">
+                                    @Html.DropDownList("DepartmentSearch", new MultiSelectList(ViewBag.DepartmentId, "Value", "Text"), "-- نام بخش را انتخاب نمائبد --", new { @id = "DepartmentSearch", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-xs-6">
+                                <div class="col-md-offset-6">
+                                    <button onclick="_GetListEmployeme(2)" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-search bigger-125"></i>
+                                        جستجو
+                                    </button>
+                                    <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+
+                                    <button onclick="_GetPrintListEmployeme()" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-print bigger-125"></i>
+                                        پرینت
+                                    </button>
+                                    <img class="col-md-offset-5" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-11 col-md-9" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+            </div>
+
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListInventoryjob", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:900px !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

@@ -1,0 +1,236 @@
+﻿@model IEnumerable<InterfaceEntity.CourseRegistrationEntity>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+        var designtrainingcourseid = '@ViewBag.DesignTrainingCourseId';
+
+        $("#EmployemeId").select2();
+
+        function _GetListCourseRegistration() {
+            $.ajax({
+                url: "/CourseRegistration/_GetListCourseRegistration",
+                data: { designtrainingcourseid: designtrainingcourseid },
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGridCourseRegistration').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+
+        $("#btnAddCourseRegistration").click(function () {
+            $("#CourseRegistrationId").val('');
+            $("#DesignTrainingCourseId").val(designtrainingcourseid);
+            $("#EmployemeId").select2("val", "");
+            $("#EmployemeStateID").val('');
+            $('#lblEmployemeId').css('color', 'black');
+            $('#lblEmployemeStateID').css('color', 'black');
+            $("#MessageOperation").css("display", "none");
+        });
+
+        $(document).on('click', '.btnEditCourseRegistration',function () {
+            debugger;
+            $("#WidgetBoxEducationEmployeme").removeClass("collapsed");
+            $("#AceIconEducationEmployeme").removeClass("fa-chevron-down");
+            $("#AceIconEducationEmployeme").addClass("fa-chevron-up");
+            $("#WidgetBodyEducationEmployeme").css("display", "block");
+
+
+            $("#CourseRegistrationId").val($(this).attr('data-CourseRegistrationId'));
+            $("#DesignTrainingCourseId").val($(this).attr('data-DesignTrainingCourseId'));
+            $("#EmployemeId").select2("val", $(this).attr('data-EmployemeId'));
+            $("#EmployemeStateID").val($(this).attr('data-EmployemeStateID'));
+
+
+        });
+
+        $("#btnSaveCourseRegistration").click(function () {
+            var result = Validation();
+            if (result == false) return;
+
+            if ($("#CourseRegistrationId").val() == "")
+                SaveDataCourseRegistration()
+            else
+                EditDataCourseRegistration()
+        });
+
+        $(document).on('click', '.btnDeleteCourseRegistration',function () {
+            var ID = $(this).attr('data-CourseRegistrationId');
+            DeleteDataCourseRegistration(ID);
+        });
+
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#EmployemeId').val() == '') {
+                $('#lblEmployemeId').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblEmployemeId').css('color', 'black');
+            }
+
+            if ($('#EmployemeStateID').val() == '') {
+                $('#lblEmployemeStateID').css('color', 'red');
+                StateValue = true;
+            }
+            else {
+                $('#lblEmployemeStateID').css('color', 'black');
+            }
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+
+    </script>
+
+</head>
+
+<body> 
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none;margin-bottom:10px" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <div class="widget-box collapsed" id="WidgetBoxEducationEmployeme">
+        <div class="widget-header">
+            <ul class="breadcrumb">
+                <li class="active"><a href="#">ثبت / ویرایش</a></li>
+            </ul>
+            <div class="widget-toolbar">
+                <a href="#" data-action="collapse">
+                    <i class="ace-icon fa fa-chevron-down" id="AceIconEducationEmployeme"></i>
+                </a>
+            </div>
+        </div>
+        <div class="widget-body" style="display: none;" id="WidgetBodyEducationEmployeme">
+            <div class="widget-main">
+                <!-- /section:basics/sidebar -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" role="form">
+                            <!-- #section:elements.form -->
+
+                            <div class="form-group" hidden="hidden">
+                                <label id="lblCourseRegistrationId" class="col-sm-3 control-label no-padding-right" for="form-field-1">کد ثبت نام دوره : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("CourseRegistrationId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد ثبت نام دوره" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" hidden="hidden">
+                                <label id="lblDesignTrainingCourseId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام  طرح دوره آموزشی : </label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("DesignTrainingCourseId", null, new { @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "کد ثبت نام دوره" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="lblEmployemeId" class="col-sm-3 control-label no-padding-right" for="form-field-1">نام کارمند: </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("EmployemeId", new MultiSelectList(ViewBag.Employeme, "Value", "Text"), "-- نام کارمند را انتخاب نمائید --", new { @id = "EmployemeId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label id="lblEmployemeStateID" class="col-sm-3 control-label no-padding-right" for="form-field-1">وضعیت کارمند: </label>
+                                <div class="col-md-9">
+                                    @Html.DropDownList("EmployemeStateID", new MultiSelectList(ViewBag.TableInterfaceIdEmployemeState, "Value", "Text"), "-- وضعیت دانشجو را انتخاب نمائید --", new { @id = "EmployemeStateID", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                </div>
+                            </div>
+
+                            <div class="breadcrumbs" id="breadcrumbs">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button id="btnAddCourseRegistration" class="btn btn-info btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        جدید
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button id="btnSaveCourseRegistration" class="btn btn-success btn-white btn-round" type="button">
+                                        <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                        ذخیره
+                                    </button>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                        <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                        بازگشت
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+    <!-- /section:basics/content.breadcrumbs -->
+
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGridCourseRegistration">
+                        @Html.Partial("_GetListCourseRegistration", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

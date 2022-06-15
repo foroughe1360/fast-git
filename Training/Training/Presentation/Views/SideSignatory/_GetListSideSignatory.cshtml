@@ -1,0 +1,90 @@
+﻿@model IEnumerable<InterfaceEntity.SideSignatoryEntity>
+<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="center">
+                <label class="position-relative">
+                    #
+                </label>
+            </th>
+            <th>سمت امضاء کننده</th>
+            <th>سمت امضاء کننده انگلیسی</th>
+            <th>کد سمت امضاء کننده</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    @{
+        int i = 1;
+        foreach (var item in Model)
+        {
+            <tr>
+                <td class="center">
+                    <label class="position-relative">
+                        @i
+                    </label>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TitleEN)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SideSignatoryCode)
+                </td>
+
+                <td>
+                    <div class="hidden-sm hidden-xs btn-group">
+                        <button data-Id="@item.SideSignatoryId" title="ویرایش" class="BtnEdit btn btn-xs btn-warning tooltip1">
+                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                        </button>
+
+                        <button data-Id="@item.SideSignatoryId" title="حذف" data-DeleteName="DeleteSideSignatory()" class="BtnDelete btn btn-xs btn-danger tooltip1">
+                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                        </button>
+
+                        @*<a href="/NameOfSignatory/Index/@item.SideSignatoryId" data-original-title="افراد امضاء کننده" data-placement="top" data-toggle="tooltip" class="btn btn-xs btn-info tooltip1">
+                            <i class="ace-icon fa fa-list bigger-120"></i>
+                        </a>*@
+
+                        <a href="/EmployemeSignatury/Index/@item.SideSignatoryId" data-original-title="اشخاص امضاء کننده" data-placement="top" data-toggle="tooltip" class="btn btn-xs btn-corner tooltip1">
+                            <i class="ace-icon fa fa-list bigger-120"></i>
+                        </a>
+                    </div>
+
+                    <div class="hidden-md hidden-lg">
+                        <div class="inline position-relative">
+                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+                                <li>
+                                    <a data-Id="@item.SideSignatoryId" class="BtnEdit tooltip-success" data-rel="tooltip" title="ویرایش">
+                                        <span class="green">
+                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a data-Id="@item.SideSignatoryId" class="BtnDelete tooltip-error" data-rel="tooltip" title="حدف">
+                                        <span class="red">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            i++;
+        }
+    }
+</table>
+
+

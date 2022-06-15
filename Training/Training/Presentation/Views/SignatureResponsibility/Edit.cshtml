@@ -1,0 +1,142 @@
+﻿@model InterfaceEntity.SignatureResponsibilityEntity
+@{
+    var img = String.Format("data:image/jpeg;base64,{0}", Convert.ToBase64String(Model.Signature));
+}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <script language="javascript">
+        $("#EmployemeId").select2();
+        $('#UploadedFile').change(function (event) {
+            var files;
+            var temppath;
+            var filename;
+            //Set Title In Span
+            $('.ace-file-name').attr('data-title', $("#UploadedFile").val());
+            //Read Path URL Select File In Input File
+            temppath = URL.createObjectURL(event.target.files[0]);
+            files = event.target.files;
+            //Set Path to Src Element Image
+            $("#Imagecontainer").attr("src", temppath);
+            //Getting just the filename from a path with Javascript
+            var fileNameIndex = temppath.lastIndexOf("/") + 1;
+            filename = temppath.substr(fileNameIndex);
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+
+                    <form class="form-horizontal" role="form">
+
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.SignatureResponsibilityId, new { @id = "SignatureResponsibilityId" })
+                        @Html.HiddenFor(model => model.Signature, new { @id = "Signature" })
+
+                        <div class="form-group" hidden>
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">کاربر : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("UserId", new MultiSelectList(ViewBag.UserIdTemp, "Value", "Text"), "--کاربر را انتخاب نمائید --", new { @id = "UserId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.UserId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">شخص : </label>
+                            <div class="col-md-9">
+                                @Html.DropDownList("EmployemeId", new MultiSelectList(ViewBag.EmployemeIdTemp, "Value", "Text"), "--شخص را انتخاب نمائید --", new { @id = "EmployemeId", @class = "col-xs-10 col-sm-5 col-md-10 fs" })
+                                @Html.ValidationMessageFor(model => model.EmployemeId)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">امضاء : </label>
+                            <div class="col-md-9">
+                                <label class="ace-file-input">
+                                    <input id="UploadedFile" type="file">
+                                    <span class="ace-file-container" data-title="Choose">
+                                        <span class="ace-file-name" data-title="No File ...">
+                                            <i class="ace-icon fa fa-upload"></i>
+                                        </span>
+                                    </span>
+                                    <a class="remove" href="#">
+                                        <i class="ace-icon fa fa-times"></i>
+                                    </a>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="profile-picture center width-50" style="margin-right:100px;">
+                                <img style="height:200px" id="Imagecontainer" src="@img" class="editable img-responsive editable-click editable-empty" alt="" src="../assets/avatars/profile-pic.jpg">
+                            </span>
+                            <!-- /section:pages/profile.picture -->
+                            <div class="space-4"></div>
+
+                            <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+                                <div class="inline position-relative">
+                                    <i class="ace-icon fa fa-circle light-green"></i>
+                                    &nbsp;
+                                    <span class="white">امضاء</span>
+
+                                </div>
+                            </div>
+                        </div><br />
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <div class="col-md-offset-3">
+                                <button id="btnEditSignatureResponsibility" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+</body>
+
+</html>
+
+
+
+

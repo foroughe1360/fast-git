@@ -1,0 +1,596 @@
+﻿
+@model IEnumerable<InterfaceEntity.AssessmentOfTrainingServiceEntity>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+
+         var ReportNameId = '@ViewBag.ReportNameId';
+        //Operation Employeme-------------------------
+        function SaveDataAssessmentOfTrainingService() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.InstitutionName = $("#InstitutionName").val();
+            myObject.ManagingDirector = $("#ManagingDirector").val();
+            myObject.TypeOfCompanyId = $("#TypeOfCompanyId").val();
+            myObject.TypeOfInstitutionId = $("#TypeOfInstitutionId").val();
+            myObject.ScopeOfTheActivities = $("#ScopeOfTheActivities").val();
+            myObject.EconomicCode = $("#EconomicCode").val();
+            myObject.EducationId = $("#EducationId").val();
+            myObject.TeacherName = $("#TeacherName").val();
+            myObject.Address = $("#Address").val();
+
+            var url = "/AssessmentOfTrainingService/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+                _GetListAssessmentOfTrainingService();
+            });
+
+        }
+        function EditDataAssessmentOfTrainingService() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+            myObject.AssessmentOfTrainingServiceId = $("#AssessmentOfTrainingServiceId").val();
+            myObject.InstitutionName = $("#InstitutionName").val();
+            myObject.ManagingDirector = $("#ManagingDirector").val();
+            myObject.TypeOfCompanyId = $("#TypeOfCompanyId").val();
+            myObject.TypeOfInstitutionId = $("#TypeOfInstitutionId").val();
+            myObject.ScopeOfTheActivities = $("#ScopeOfTheActivities").val();
+            myObject.EconomicCode = $("#EconomicCode").val();
+            myObject.TeacherName = $("#TeacherName").val();
+            myObject.EducationId = $("#EducationId").val();
+            myObject.Address = $("#Address").val();
+
+            var url = "/AssessmentOfTrainingService/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListAssessmentOfTrainingService();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function DeleteDataAssessmentOfTrainingService() {
+            $("#ajaxloader").css("display", "inline");
+            var myObject = new Object();
+
+            myObject.ID = $("#TableId").val();
+            var url = "/AssessmentOfTrainingService/Delete"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                $("#DeleteContent").css("display", "none");
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت حذف گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>حذف اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListAssessmentOfTrainingService();
+            });
+        }
+        function _GetListAssessmentOfTrainingService() {
+            $.ajax({
+                url: "/AssessmentOfTrainingService/_GetListAssessmentOfTrainingService",
+                type: 'GET',
+                datatype: 'json',
+                success: function (data) {
+                    $('#theGrid').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#InstitutionName').val() == '') {
+                $('#InstitutionName').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#InstitutionName').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#ManagingDirector').val() == '') {
+                $('#ManagingDirector').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#ManagingDirector').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#TypeOfCompanyId').val() == '') {
+                $('#TypeOfCompanyId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#TypeOfCompanyId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#TypeOfInstitutionId').val() == '') {
+                $('#TypeOfInstitutionId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#TypeOfInstitutionId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#ScopeOfTheActivities').val() == '') {
+                $('#ScopeOfTheActivities').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#ScopeOfTheActivities').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#EconomicCode').val() == '') {
+                $('#EconomicCode').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#EconomicCode').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#EducationId').val() == '') {
+                $('#EducationId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#EducationId').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#TeacherName').val() == '') {
+                $('#TeacherName').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#TeacherName').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#Address').val() == '') {
+                $('#Address').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#Address').css('border-color', '#d5d5d5');
+            } 
+
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        //--------------------------------------------
+
+
+        //Operation SetDateForReport----------------------
+        function SaveDataSetDateForReport() {
+            //var result = Validation();
+            //if (result == false) return;
+
+
+            alert('SaveDataSetDateForReport');
+
+            $("#ajaxloader").css("display", "inline");
+            var OfferTrainingForEmployemeId = $("#PublicCode").val();
+
+            var myObject = new Object();
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.ReportNameId = $("#ReportNameId").val();
+            myObject.PublicCode = OfferTrainingForEmployemeId;
+            myObject.DateOfProducerstr = $("#DateOfProducerstr").val();
+            myObject.DateOfApproverstr = $("#DateOfApproverstr").val();
+            myObject.DateOfRegistrarstr = $("#DateOfRegistrarstr").val();
+
+            var url = "/SetDateForReport/Create"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                    $("#MessageOperation").css("display", "block");
+                }
+                _GetListSetDateForReport();
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function EditDataSetDateForReport() {
+            var result = Validation();
+            if (result == false) return;
+
+            $("#ajaxloader").css("display", "inline");
+
+            var myObject = new Object();
+            myObject.SetDateForReportId = $("#SetDateForReportId").val();
+            myObject.ReportNameId = $("#ReportNameId").val();
+            myObject.EmployemeId = $("#EmployemeId").val();
+            myObject.PublicCode = $("#PublicCode").val();
+            myObject.DateOfProducerstr = $("#DateOfProducerstr").val();
+            myObject.DateOfApproverstr = $("#DateOfApproverstr").val();
+            myObject.DateOfRegistrarstr = $("#DateOfRegistrarstr").val();
+
+            var url = "/SetDateForReport/Edit"; // the url to the controller
+            $.post(url, myObject, function (data) {
+                if (data == true) {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>اطلاعات با موفقیت ویرایش گردید!</p>");
+                    $("#messageOp").css("color", "green");
+                    $("#MessageOperation").css("display", "block");
+                }
+                else {
+                    $("#ajaxloader").css("display", "none");
+                    $("#messageOp").empty();
+                    $("#messageOp").append("<p>ویرایش اطلاعات با خطا مواجه شد !</p>");
+                    $("#messageOp").css("color", "red");
+                    $("#MessageOperation").css("display", "block");
+                }
+
+                _GetListSetDateForReport();
+
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+        }
+        function _GetListSetDateForReport() {
+            var OfferTrainingForEmployemeId = $("#PublicCode").val();
+            $.ajax({
+                url: "/SetDateForReport/_GetListSetDateForReport/",
+                type: 'GET',
+                datatype: 'json',
+                data: { PublicCode: OfferTrainingForEmployemeId, ReportNameId: ReportNameId },
+                success: function (data) {
+                    $('#theGridSetDateForReport').html(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        function Validation() {
+            $("#MessageOperation").css("display", "none");
+            var StateValue = false;
+
+            if ($('#DateOfProducerstr').val() == '') {
+                $('#DateOfProducerstr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DateOfProducerstr').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#DateOfApproverstr').val() == '') {
+                $('#DateOfApproverstr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DateOfApproverstr').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#DateOfRegistrarstr').val() == '') {
+                $('#DateOfRegistrarstr').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#DateOfRegistrarstr').css('border-color', '#d5d5d5');
+            }
+
+            if ($('#ReportNameId').val() == '') {
+                $('#ReportNameId').css('border-color', '#E16D56');
+                StateValue = true;
+            }
+            else {
+                $('#ReportNameId').css('border-color', '#d5d5d5');
+            }
+            if (StateValue == true) {
+                $("#ajaxloader").css("display", "none");
+                $("#messageOp").empty();
+                $("#messageOp").append("<p>لطفا موارد مشخص شده را وارد نمائید !</p>");
+                $("#messageOp").css("color", "red");
+                $("#MessageOperation").css("display", "block");
+                return false;
+            }
+        }
+        //------------------------------------------------------------
+
+
+        $(document).ready(function () {
+
+            $(document).on('mousemove', '.tooltip1', function () {
+                $('.tooltip1').tooltip();
+            });
+
+            $(document).on("click", "#btnAddNew",function () {
+                $("div#divLoading").addClass('show');
+                $.get('/AssessmentOfTrainingService/Create', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت عنوان معیار ارزیابی،(ارزیابی تامین کنندگان خدمات آموزشی)</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(document).on("click", ".BtnEdit",function () {
+                $("div#divLoading").addClass('show');
+                var AssessmentOfTrainingServiceId = $(this).attr('data-Id');
+                $.get('/AssessmentOfTrainingService/Edit', "ID=" + AssessmentOfTrainingServiceId, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ویرایش عنوان معیار ارزیابی،(ارزیابی تامین کنندگان خدمات آموزشی)</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on("click", ".BtnDelete",function () {
+                $("div#divLoading").addClass('show');
+                $("#TitleModal").empty();
+                $("#TitleModal").append("<span>فرم حذف عنوان معیار ارزیابی،(ارزیابی تامین کنندگان خدمات آموزشی)</span>");
+                var AssessmentOfTrainingServiceId = $(this).attr('data-Id');
+                var ViewName = $(this).attr('data-DeleteName');
+                $.get('/Home/DeletePage', {id:AssessmentOfTrainingServiceId,viewname:ViewName}, function (data) {
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+
+            $(document).on("click", ".BtnCriterionAssessmentOfTrainingService", function () {
+                $("div#divLoading").addClass('show');
+                var AssessmentOfTrainingServiceId = $(this).attr('data-Id');
+                $.get('/CriterionAssessmentOfTrainingService/Index', { ID: AssessmentOfTrainingServiceId }, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم امتیازدهی عنوان معیار ارزیابی،(ارزیابی تامین کنندگان خدمات آموزشی)</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+            
+            $(document).on("click", "#btnCriterionAssessmentOfTrainingService", function (e) {
+
+                alert("#btnCriterionAssessmentOfTrainingService");
+                var array = [];
+
+                $('#sample-table-2 tbody tr').each(function () {
+                    var myObject = new Object();
+                    myObject.CriterionAssessmentOfTrainingServiceId = $(this).attr('data-CriterionAssessmentOfTrainingServiceId');
+                    myObject.AssessmentOfTrainingServiceId = AssessmentOfTrainingServiceId;
+                    myObject.TypeOfEvaluationId = $(this).attr('data-TypeOfEvaluationId');
+                    myObject.Earnpoints = $(this).find('#Earnpoints').val();
+                    myObject.Description = $(this).find('#Description').val();
+                    array.push(myObject);
+                });
+
+                $.ajax({
+                    url: "/CriterionAssessmentOfTrainingService/CreateList",
+                    data: JSON.stringify(array),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result == true) {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>اطلاعات با موفقیت ثبت گردید!</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                        else {
+                            $("#ajaxloader").css("display", "none");
+                            $("#messageOp").empty();
+                            $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                            $("#MessageOperation").css("display", "block");
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        $("#ajaxloader").css("display", "none");
+                        $("#messageOp").empty();
+                        $("#messageOp").append("<p>ثبت اطلاعات با خطا مواجه شد !</p>");
+                        $("#MessageOperation").css("display", "block");
+                    }
+                });
+                window.setTimeout(function () {
+                    $("#MessageOperation").css("display", "none");
+                }, 5000);
+            });
+
+            $(document).on("click", "#btnAssessmentOfTrainingServiceInformation", function () {
+                $("div#divLoading").addClass('show');
+                $.get('/AssessmentOfTrainingServiceInformation/Index', null, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت اطلاعات تکمیلی ارزیابی تامین کنندگان خدمات آموزشی</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(document).on("click", ".btnTablesRelatedAssessmentOfTrainingService", function () {
+                $("div#divLoading").addClass('show');
+                var AssessmentOfTrainingServiceId = $(this).attr('data-Id');
+                $.get('/TablesRelatedAssessmentOfTrainingService/Index', {ID : AssessmentOfTrainingServiceId}, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<span>فرم ثبت اطلاعات تکمیلی ارزیابی تامین کنندگان خدمات آموزشی</span>");
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                })
+
+            });
+
+            $(document).on('click', '.BtnSetDateReport', function () {
+                $("div#divLoading").addClass('show');
+                
+                var AssessmentOfTrainingServiceId = $(this).attr('data-Id');
+                var dataEmployemeId = $(this).attr('data-EmployemeId');
+                
+                var EmployemeName = $(this).attr('data-EmployemeName');
+             
+                $.get('/SetDateForReport/Index', { PublicCode: AssessmentOfTrainingServiceId, EmployemeId: dataEmployemeId, ReportNameId: ReportNameId }, function (data) {
+                    $("#TitleModal").empty();
+                    $("#TitleModal").append("<spanتنظیم تاریخ تهیه و تایید &nbsp;&nbsp; </span>" + 'تنظیم تاریخ -' + ' ' + EmployemeName);// + EmployemeName);
+                    $("#MainModalContent").html(data);
+                    $("#AddNewModal").modal("show");
+                    $("div#divLoading").removeClass('show');
+                });
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <div id="divLoading"></div>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">صفحه اصلی</a>
+            </li>
+            <li class="active">آموزش</li>
+            <li class="active">ارزیابی تامین کنندگان خدمات آموزشی</li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+            <div class="col-md-offset-9" style="margin-bottom: 5px">
+                <button class="btn btn-success btn-white btn-round" type="button" id="btnAddNew">
+                    <i class="ace-icon fa fa-plus bigger-125"></i>
+                    جدید
+                </button>
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-info btn-white btn-round" type="button" id="btnAssessmentOfTrainingServiceInformation">
+                    <i class="ace-icon fa fa-check bigger-125"></i>
+                    اطلاعات تکمیلی
+                </button>
+
+            </div>
+
+            <!-- PAGE CONTENT BEGINS -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="theGrid">
+                        @Html.Partial("_GetListAssessmentOfTrainingService", Model)
+                    </div>
+                </div>
+                <!-- /.span -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+    <div class="modal fade" id="AddNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog"  style="width:900px !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="breadcrumbs">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="ace-icon fa fa-home home-icon"></i>
+                                <a id="TitleModal" href="#"></a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="modal-body" id="MainModalContent">
+                    salam susage
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

@@ -1,0 +1,82 @@
+﻿@using Bussiness
+@model InterfaceEntity.HistoryTrainingUploadPageEntity
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script>
+        new AMIB.persianCalendar('HistoryTrainingUploadPageDateStr');
+    </script>
+</head>
+
+<body>
+
+    <!-- #section:basics/content.breadcrumbs -->
+    <div class="breadcrumbs" style="display:none" id="MessageOperation">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-check"></i>
+                <a href="#" id="messageOp"></a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+    </div>
+
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" role="form">
+
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.HistoryTrainingUploadPageId, new { @id = "HistoryTrainingUploadPageId" })
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">توضیحات : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.HTUPDescripption, new { @id = "HTUPDescripption", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "توضیحات" })
+                                @Html.ValidationMessageFor(model => model.HTUPDescripption)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">تاریخ ثبت : </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.HistoryTrainingUploadPageDate, new { @Value=Model.HistoryTrainingUploadPageDate.MiladiToPersion() , @id = "HistoryTrainingUploadPageDateStr", @class = "col-xs-10 col-sm-5 col-md-10 fs", @placeholder = "تاریخ ثبت" })
+                                @Html.ValidationMessageFor(model => model.HistoryTrainingUploadPageDate)
+                            </div>
+                        </div>
+
+                        <div class="breadcrumbs" id="breadcrumbs">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="btnEdit" onclick="EditData()" class="btn btn-success btn-white btn-round" type="button">
+                                    <i class="ace-icon fa fa-floppy-o bigger-125"></i>
+                                    ذخیره
+                                </button>
+                                &nbsp; &nbsp; &nbsp;
+                                <button type="button" class="btn btn-danger btn-white btn-round" data-dismiss="modal" aria-label="Close">
+                                    <i class="ace-icon fa fa-undo bigger-125"></i>
+
+                                    بازگشت
+                                </button>
+                                <img class="col-md-offset-1" style="display:none" id="ajaxloader" src="~/AceTemplate/assets/img/ajax-loader2.gif" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.page-content-area -->
+    </div>
+    <!-- /.page-content -->
+</body>
+
+</html>
